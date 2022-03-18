@@ -1,3 +1,0 @@
-from MainLoop import *
-
-mainLoop()
