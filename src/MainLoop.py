@@ -1,8 +1,10 @@
+import pygame
 import sys
 import time
 from time import sleep
-from Objects import *
-from Settings import *
+
+from src.Objects import *
+from src.Settings import *
 
 frameTime = frameDuration
 windowX = xResolution
