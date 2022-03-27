@@ -1,10 +1,16 @@
+from src.AtomicObjects.CircleSprite import CircleSprite
+
+
 class PlayerVisualManager:
-    def __init__(self):
-        self.playerSprite = None
-        self.window = None
+    def __init__(self, DISPLAY):
+        self.playerSprite = CircleSprite(50)
+        self.DISPLAY = DISPLAY
+        self.x = None  # initialized in update()
+        self.y = None
 
     def draw(self):
-        pass
+        self.playerSprite.draw(self.DISPLAY, self.x, self.y)
 
-    def update(self):
-        pass
+    def update(self, x, y):
+        self.x = x
+        self.y = y

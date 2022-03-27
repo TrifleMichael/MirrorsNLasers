@@ -1,5 +1,6 @@
 import pygame
 
+
 class Field:
     def __init__(self, width, height):
         self.width = width
@@ -85,11 +86,12 @@ class CircleSprite:
     def draw(self, DISPLAY, x, y):
         pygame.draw.circle(DISPLAY, self.color, (x, y), self.r)
 
+
 class RectangleSprite:
-    def __init__(width, height):
+    def __init__(self, width, height):
         self.width = width
         self.height = height
         self.color = (0, 255, 0)
 
-    def draw(DISPLAY, x, y):
+    def draw(self, DISPLAY, x, y):
         pygame.draw.rect(DISPLAY, self.color, (x, y, self.width, self.height))

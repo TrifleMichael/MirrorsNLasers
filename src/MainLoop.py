@@ -10,6 +10,7 @@ frameTime = frameDuration
 windowX = xResolution
 windowY = yResolution
 
+
 def mainLoop():
     pygame.init()
 
@@ -39,3 +40,5 @@ def mainLoop():
         while time.time() < endTime:
             sleep(0.001)
 
+
+mainLoop()
