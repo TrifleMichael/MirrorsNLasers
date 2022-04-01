@@ -1,5 +1,6 @@
 import pygame
 
+
 class CircleSprite:
     def __init__(self, r):
         self.r = r
