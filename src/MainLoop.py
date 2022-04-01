@@ -14,7 +14,10 @@ def mainLoop():
     display = pygame.display.set_mode((xResolution, yResolution), 0, 32)
     level = LevelSimulationManager(display, Field(xResolution, yResolution))
 
-    level.addColumn(500, 300, 60)
+    level.addColumn(500, 300, 60)  # TESTING
+    level.addColumn(700, 500, 20)
+    level.addColumn(800, 100, 30)
+    level.addColumn(700, 250, 30)
 
     while True:
         startTime = time.time()
