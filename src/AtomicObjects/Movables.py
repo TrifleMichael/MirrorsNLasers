@@ -1,3 +1,6 @@
+import copy
+
+
 class NonInertialObject:
     def __init__(self, x, y):
         self.x = x
@@ -9,19 +12,18 @@ class NonInertialObject:
         self.x += self.vx*dir_x*dt
         self.y += self.vy*dir_y*dt
 
-    def stayInField(self, field):
-        self.x = min(self.x, field.width)
-        self.y = min(self.y, field.height)
-        self.x = max(self.x, 0)
-        self.y = max(self.y, 0)
+    def nextState(self, dir_x, dir_y, dt):
+        ownNextState = copy.deepcopy(self)
+        ownNextState.move(dir_x, dir_y, dt)
+        return ownNextState
 
 
 class InertialObject(NonInertialObject):
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.acc = 1000
-        self.slowing = 300
-        self.maxSpeed = 300
+        self.acc = 3000
+        self.slowing = 900
+        self.maxSpeed = 400
         self.vx = 0
         self.vy = 0
 
@@ -40,7 +42,10 @@ class InertialObject(NonInertialObject):
         self.vx = max(self.vx-self.slowing*dt, 0) if self.vx > 0 else min(self.vx+self.slowing*dt, 0)
         self.vy = max(self.vy-self.slowing*dt, 0) if self.vy > 0 else min(self.vy+self.slowing*dt, 0)
 
-
+    def nextState(self, dir_x, dir_y, dt):
+        ownNextState = copy.deepcopy(self)
+        ownNextState.move(dir_x, dir_y, dt)
+        return ownNextState
 
 
 

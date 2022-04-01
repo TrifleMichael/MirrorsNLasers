@@ -3,6 +3,7 @@ import sys
 import time
 from time import sleep
 
+from src.AtomicObjects.Field import Field
 from src.Level import LevelSimulationManager
 from src.Settings import frameDuration, xResolution, yResolution
 
@@ -11,7 +12,9 @@ def mainLoop():
     pygame.init()
 
     display = pygame.display.set_mode((xResolution, yResolution), 0, 32)
-    level = LevelSimulationManager(display, xResolution, yResolution)
+    level = LevelSimulationManager(display, Field(xResolution, yResolution))
+
+    level.addColumn(500, 300, 60)
 
     while True:
         startTime = time.time()
@@ -21,7 +24,6 @@ def mainLoop():
             pygame.quit()
             sys.exit()
 
-        display.fill((0, 0, 0))
         level.update(keys)
         level.levelVisualManager.draw()
         pygame.display.update()
