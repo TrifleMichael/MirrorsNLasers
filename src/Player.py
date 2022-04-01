@@ -15,7 +15,7 @@ class PlayerSimulationManager(InertialObject, RoundCollisionModel):  # (Inertial
 
         self.field = field
 
-    def update(self, keys, dt):
+    def update(self, keys, dt):  # shadowing nazwy dziedziczonych
         self.readKeys(keys)
         self.move(self.dir_x, self.dir_y, dt)
         self.stayInField()
@@ -60,8 +60,8 @@ class PlayerSimulationManager(InertialObject, RoundCollisionModel):  # (Inertial
 class PlayerVisualManager:
     def __init__(self, display, x, y):
         self.playerSprite = CircleSprite(x, y, 50, display)
-        self.x = None  # initialized in update()
-        self.y = None
+        self.x = x  # initialized in update()
+        self.y = y
 
     def draw(self):
         self.playerSprite.draw()
