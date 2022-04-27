@@ -38,5 +38,5 @@ def mainLoop():
         sleep(max(frameDuration + startTime - time.time(), 0))
 
 
-
-mainLoop()
+if __name__ == "__main__":
+    mainLoop()
