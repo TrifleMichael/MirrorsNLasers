@@ -12,11 +12,6 @@ class NonInertialObject:
         self.x += self.vx*dir_x*dt
         self.y += self.vy*dir_y*dt
 
-    def nextState(self, dir_x, dir_y, dt):
-        ownNextState = copy.deepcopy(self)
-        ownNextState.move(dir_x, dir_y, dt)
-        return ownNextState
-
 
 class InertialObject(NonInertialObject):
     def __init__(self, x, y):
@@ -41,11 +36,6 @@ class InertialObject(NonInertialObject):
 
         self.vx = max(self.vx-self.slowing*dt, 0) if self.vx > 0 else min(self.vx+self.slowing*dt, 0)
         self.vy = max(self.vy-self.slowing*dt, 0) if self.vy > 0 else min(self.vy+self.slowing*dt, 0)
-
-    def nextState(self, dir_x, dir_y, dt):
-        ownNextState = copy.deepcopy(self)
-        ownNextState.move(dir_x, dir_y, dt)
-        return ownNextState
 
 
 

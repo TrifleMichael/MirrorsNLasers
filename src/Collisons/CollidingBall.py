@@ -1,12 +1,10 @@
-from AtomicObjects.Movables import NonInertialObject
-from Collisons.RoundCollisonModel import RoundCollisionModel
+from src.AtomicObjects.Movables import NonInertialObject
+from src.Collisons.RoundCollisonModel import RoundCollisionModel
 
 
 class CollidingBall(RoundCollisionModel):
     def __init__(self, x, y, r):
-        self.x = x
-        self.y = y
-        self.r = r
+        super().__init__(x, y, r)
         self.moveModel = NonInertialObject(x, y)
 
     def update(self):
