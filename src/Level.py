@@ -33,6 +33,10 @@ class LevelSimulationManager:
         self.collisionManager.roundCollisionModels.append(column)
         self.levelVisualManager.addObject(column.sprite)
 
+    # JUST FOR TESTING
+    def addObject(self, obj):
+        self.levelVisualManager.addObject(obj.visualManager.sprite)
+
 
 class LevelVisualManager:
     def __init__(self, DISPLAY, width, height):
