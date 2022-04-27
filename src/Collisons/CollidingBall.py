@@ -15,3 +15,4 @@ class CollidingBall(RoundCollisionModel):
         self.moveModel.move(dir_x, dir_y, dt)
         self.x = self.moveModel.x
         self.y = self.moveModel.y
+

@@ -5,7 +5,7 @@ class LineSprite:
     def __init__(self, p1, p2, display):
         self.p1 = p1
         self.p2 = p2
-        self.color = (0, 255, 255)
+        self.color = (255, 0, 255)
         self.display = display
 
     def draw(self):
