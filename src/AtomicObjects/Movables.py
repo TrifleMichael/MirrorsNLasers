@@ -12,6 +12,10 @@ class NonInertialObject:
         self.x += self.vx*dir_x*dt
         self.y += self.vy*dir_y*dt
 
+    def setPosition(self, x, y):
+        self.x = x
+        self.y = y
+
     def nextState(self, dir_x, dir_y, dt):
         ownNextState = copy.deepcopy(self)
         ownNextState.move(dir_x, dir_y, dt)

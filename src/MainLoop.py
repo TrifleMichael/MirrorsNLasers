@@ -4,6 +4,7 @@ import time
 from time import sleep
 
 from src.AtomicObjects.Field import Field
+from src.AtomicObjects.Mirror import Mirror
 from src.Level import LevelSimulationManager
 from src.Settings import frameDuration, xResolution, yResolution
 
@@ -18,6 +19,9 @@ def mainLoop():
     level.addColumn(700, 500, 20)
     level.addColumn(800, 100, 30)
     level.addColumn(700, 250, 30)
+
+    # JUST FOR TESTING
+    level.addObject(Mirror(100, 100, 200, 1, display))
 
     while True: # pygame tick do koordynacji czasu
         startTime = time.time()
@@ -34,5 +38,5 @@ def mainLoop():
         sleep(max(frameDuration + startTime - time.time(), 0))
 
 
-
-mainLoop()
+if __name__ == "__main__":
+    mainLoop()
