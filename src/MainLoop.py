@@ -23,7 +23,7 @@ def mainLoop():
     # JUST FOR TESTING
     level.addObject(Mirror(100, 100, 200, 1, display))
 
-    while True:
+    while True: # pygame tick do koordynacji czasu
         startTime = time.time()
 
         keys = pygame.key.get_pressed()
