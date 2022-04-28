@@ -24,7 +24,7 @@ def mainLoop():
     level.addColumn(700, 250, 30)
 
     laserManager = LaserManager(frameDuration, display)
-    laserManager.createLaser(10, 200, 200, 100, 100, 300)  # test
+    laserManager.createLaser(10, 150, 150, 100, 100, 300)  # test
 
     deb = 0
     while True:  # pygame tick for time coordination
