@@ -12,6 +12,9 @@ class NonInertialObject:
         self.x += self.vx*dir_x*dt
         self.y += self.vy*dir_y*dt
 
+    def setPosition(self, x, y):
+        self.x = x
+        self.y = y
 
 class InertialObject(NonInertialObject):
     def __init__(self, x, y):

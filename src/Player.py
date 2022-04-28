@@ -1,5 +1,6 @@
 import pygame
 from src.AtomicObjects.CircleSprite import CircleSprite
+from src.AtomicObjects.Mirror import Mirror
 from src.AtomicObjects.Movables import InertialObject
 from src.Collisons.RoundCollisonModel import RoundCollisionModel
 
@@ -13,11 +14,14 @@ class PlayerSimulationManager(InertialObject, RoundCollisionModel):  # (Inertial
         self.dir_y = 0
         self.dir_x = 0
 
+        self.mirror = Mirror(self.x+70, self.y, 150, 1.57, DISPLAY)
+
         self.field = field
 
     def update(self, keys, dt):  # shadowing nazwy dziedziczonych
         self.readKeys(keys)
         self.move(self.dir_x, self.dir_y, dt)
+        self.mirror.setPosition(self.x+70, self.y)
         self.stayInField()
         self.updateVisualManager()
 
@@ -52,9 +56,11 @@ class PlayerSimulationManager(InertialObject, RoundCollisionModel):  # (Inertial
 
     def updateVisualManager(self):  # updates sprite position
         self.playerVisualManager.update(self.x, self.y)
+        self.mirror.visualManager.update(*self.mirror.getSurface())
 
     def draw(self):  # draws sprite
         self.playerVisualManager.draw()
+        self.mirror.visualManager.draw()
 
 
 class PlayerVisualManager:

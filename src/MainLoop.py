@@ -8,6 +8,7 @@ from time import sleep
 from src.AtomicObjects.Field import Field
 from src.LaserUtility.Laser import Laser
 from src.LaserUtility.LaserManager import LaserManager
+from src.AtomicObjects.Mirror import Mirror
 from src.Level import LevelSimulationManager
 from src.Settings import frameDuration, xResolution, yResolution
 
@@ -25,12 +26,15 @@ def mainLoop():
 
     laserManager = LaserManager(frameDuration, display)
     laserManager.createLaser(10, 150, 150, 100, 100, 300)  # test
+       # JUST FOR TESTING
+    level.addObject(Mirror(100, 100, 200, 1, display))
 
     deb = 0
     while True:  # pygame tick for time coordination
         deb += 1
         if deb == 100:
             laserManager.laserList[0].reactToCollision() # INTENSIVE TESTING IN PROGRESS :)
+
         startTime = time.time()
 
         keys = pygame.key.get_pressed()
@@ -49,5 +53,5 @@ def mainLoop():
         sleep(max(frameDuration + startTime - time.time(), 0))
 
 
-
-mainLoop()
+if __name__ == "__main__":
+    mainLoop()
