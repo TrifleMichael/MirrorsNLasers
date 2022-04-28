@@ -12,7 +12,7 @@ class RoundCollisionModel:
         return distance(otherRCM.x, otherRCM.y, self.x, self.y) < self.r + otherRCM.r
 
     @abstractmethod
-    def reactToCollision():
+    def reactToCollision(self):
         pass
 
     def update(self, x, y):

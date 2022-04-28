@@ -1,9 +1,13 @@
+import random
+
 import pygame
 import sys
 import time
 from time import sleep
 
 from src.AtomicObjects.Field import Field
+from src.LaserUtility.Laser import Laser
+from src.LaserUtility.LaserManager import LaserManager
 from src.AtomicObjects.Mirror import Mirror
 from src.Level import LevelSimulationManager
 from src.Settings import frameDuration, xResolution, yResolution
@@ -20,10 +24,17 @@ def mainLoop():
     level.addColumn(800, 100, 30)
     level.addColumn(700, 250, 30)
 
-    # JUST FOR TESTING
+    laserManager = LaserManager(frameDuration, display)
+    laserManager.createLaser(10, 150, 150, 100, 100, 300)  # test
+       # JUST FOR TESTING
     level.addObject(Mirror(100, 100, 200, 1, display))
 
-    while True: # pygame tick do koordynacji czasu
+    deb = 0
+    while True:  # pygame tick for time coordination
+        deb += 1
+        if deb == 100:
+            laserManager.laserList[0].reactToCollision() # INTENSIVE TESTING IN PROGRESS :)
+
         startTime = time.time()
 
         keys = pygame.key.get_pressed()
@@ -31,8 +42,12 @@ def mainLoop():
             pygame.quit()
             sys.exit()
 
+        laserManager.move()
         level.update(keys)
+
         level.levelVisualManager.draw()
+        laserManager.draw()  # needs changing: check LaserManager.py
+
         pygame.display.update()
 
         sleep(max(frameDuration + startTime - time.time(), 0))
