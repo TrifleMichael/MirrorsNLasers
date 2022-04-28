@@ -1,10 +1,10 @@
 import math
 
 from src.AtomicObjects.LineSprite import LineSprite
-from src.AtomicObjects.Movables import InertialObject
+from src.AtomicObjects.Movables import NonInertialObject
 
 
-class Mirror(InertialObject):
+class Mirror(NonInertialObject):
     """A mirror object."""
     def __init__(self, x, y, width, rotation, display):
         super().__init__(x, y)
