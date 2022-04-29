@@ -3,11 +3,12 @@ import time
 from src.AtomicObjects.RectangleSprite import RectangleSprite
 from src.Collisons.CollisionManager import CollisionManager
 from src.Collisons.Column import Column
+from src.LaserUtility.LaserManager import LaserManager
 from src.Player import PlayerSimulationManager
 
 
 class LevelSimulationManager:
-    def __init__(self, DISPLAY, field):
+    def __init__(self, DISPLAY, field, dt):
         self.field = field
         self.levelVisualManager = LevelVisualManager(DISPLAY, self.field.width, self.field.height)
 
@@ -15,6 +16,7 @@ class LevelSimulationManager:
         self.levelVisualManager.addObject(self.playerSimulationManager)
         self.collisionManager = CollisionManager()
         self.collisionManager.roundCollisionModels.append(self.playerSimulationManager)
+        self.laserManager = LaserManager(dt, DISPLAY)
 
         self.time = time.time()
 
@@ -23,6 +25,11 @@ class LevelSimulationManager:
         self.time = time.time()
         self.playerSimulationManager.update(keys, dt)
         self.collisionManager.checkCollisions()
+        self.laserManager.move()
+
+    def createLaser(self, r, x1, y1, x2, y2, speed):
+        self.laserManager.createLaser(r, x1, y1, x2, y2, speed)
+        # TODO: add laser hitbox to collision manager
 
     def updateVisualManager(self):
         pass  # stand holder function, might want to change background in the future
