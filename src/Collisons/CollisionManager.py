@@ -1,6 +1,12 @@
 class CollisionManager:
-    def __init__(self):
+    def __init__(self, playerMirror):
         self.roundCollisionModels = [] # colliders that don't move
+        self.laserList = []  # Laser type
+        self.playerMirror = playerMirror
+
+
+    def addLaser(self, headOfLaser):
+        self.laserList.append(headOfLaser)
 
     def checkCollisions(self):
         for i in range(len(self.roundCollisionModels)):
@@ -10,3 +16,5 @@ class CollisionManager:
                     self.roundCollisionModels[i].reactToCollision()
                     self.roundCollisionModels[j].reactToCollision()
 
+        for laser in self.laserList:
+            laser.collidesWithSurface(self.playerMirror.getSurface())

@@ -1,9 +1,10 @@
+import math
 from math import sin, cos, atan2, pi, sqrt
 
 from src.AtomicObjects.LineSprite import LineSprite
 from src.AtomicObjects.MultiLineSprite import MultiLineSprite
 from src.Collisons.CollidingBall import CollidingBall
-from src.Utility.EuclidianFunctions import lineAngle, bounceVector
+from src.Utility.EuclidianFunctions import lineAngle, bounceVector, pointToLineDistance
 
 
 class Laser:
@@ -26,12 +27,18 @@ class Laser:
         self.flipCoords = None
         self.flipSurfaceLine = None
 
+        self.collisionEpsilon = 1
+        self.bounceImmunityFrames = 0
+        self.maxBounceImmunityFrames = 30
+
     def move(self):
-        dir_x = sin(self.angle)
-        dir_y = cos(self.angle)
+        dir_x = sin(self.angle + math.pi / 2)
+        dir_y = cos(self.angle + math.pi / 2)
         self.front.move(dir_x, dir_y, self.dt)
         self.end.move(dir_x, dir_y, self.dt)
         self.flipCountDown()
+        if self.bounceImmunityFrames != 0:
+            self.bounceImmunityFrames -= 1
 
     def updateMultiLineSprite(self):
         self.multiLineSprite.update([(self.front.moveModel.x, self.front.moveModel.y),
@@ -41,11 +48,18 @@ class Laser:
     def ifCollidesWithRCM(self, otherRCM):
         return otherRCM.ifCollides(self.front)
 
+    def collidesWithSurface(self, surface):
+        ptld = pointToLineDistance(surface, (self.front.moveModel.x, self.front.moveModel.y))
+        if self.collisionEpsilon >= ptld and self.bounceImmunityFrames == 0:
+            self.reactToCollision(surface)
+
+
     def reactToCollision(self, flipSurface):
         """Bounces of surface defined by two points"""
         self.flipSurfaceLine = flipSurface
         self.front.moveModel.vx, self.front.moveModel.vy = bounceVector((self.front.moveModel.vx, self.front.moveModel.vy), flipSurface[0], flipSurface[1])
 
+        self.bounceImmunityFrames = self.maxBounceImmunityFrames
         self.flipCoords = (self.front.moveModel.x, self.front.moveModel.y)
         currentSpeed = sqrt(self.end.moveModel.vx ** 2 + self.end.moveModel.vy ** 2)
         self.framesUntilFlip = int(self.length / currentSpeed / self.dt * 1.4)
