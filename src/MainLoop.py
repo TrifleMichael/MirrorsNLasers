@@ -1,14 +1,9 @@
-import random
-
 import pygame
 import sys
 import time
 from time import sleep
 
 from src.AtomicObjects.Field import Field
-from src.LaserUtility.Laser import Laser
-from src.LaserUtility.LaserManager import LaserManager
-from src.AtomicObjects.Mirror import Mirror
 from src.Level import LevelSimulationManager
 from src.Settings import frameDuration, xResolution, yResolution
 
@@ -19,13 +14,8 @@ def mainLoop():
     display = pygame.display.set_mode((xResolution, yResolution), 0, 32)
     level = LevelSimulationManager(display, Field(xResolution, yResolution), frameDuration)
 
-    #level.addColumn(500, 300, 60)  # TESTING
-    level.addColumn(700, 500, 20)
-    #level.addColumn(800, 100, 30)
-    #level.addColumn(700, 250, 30)
-
+    level.addColumn(xResolution-50, yResolution-50, 20)  # TESTING
     level.createLaser(10, 150, 150, 100, 100, 150)  # test
-
 
     while True:  # pygame tick for time coordination
 

@@ -30,9 +30,9 @@ def lineAngle(p1, p2):
 
 def bounceVector(vec, p1, p2):
     surfaceAngle = lineAngle(p1, p2)
-    vec = apply2dRotation(vec, surfaceAngle - math.pi / 2)
-    vec[1] *= -1
-    vec = apply2dRotation(vec, -surfaceAngle + math.pi / 2)
+    vec = apply2dRotation(vec, -surfaceAngle)
+    vec[0] *= -1
+    vec = apply2dRotation(vec, surfaceAngle)
     return vec
 
 
@@ -44,5 +44,10 @@ def pointToLineDistance(line, point):
     point = apply2dRotation(point, angle)
     start, end = rotate2dLine(start, end, [0, 0], angle)
 
+    # TODO: detect if point cast is beyond mirrors edges
+    # TODO: fix weird angle calculations
     return abs(point[0] - start[0])
 
+
+def pointToPointDistance(p1, p2):
+    return math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
