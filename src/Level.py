@@ -11,7 +11,7 @@ class LevelSimulationManager:
         self.field = field
         self.levelVisualManager = LevelVisualManager(DISPLAY, self.field.width, self.field.height)
 
-        self.playerSimulationManager = PlayerSimulationManager(DISPLAY, 200, 200, 50, self.field)
+        self.playerSimulationManager = PlayerSimulationManager(DISPLAY, 200, 400, 50, self.field)
         self.levelVisualManager.addObject(self.playerSimulationManager)
         self.collisionManager = CollisionManager()
         self.collisionManager.roundCollisionModels.append(self.playerSimulationManager)

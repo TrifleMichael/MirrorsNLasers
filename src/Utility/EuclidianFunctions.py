@@ -19,6 +19,18 @@ def rotate2dLine(p1, p2, rotationP, angle):
 
 
 def apply2dRotation(vec, angle):
-    return (vec[0] * math.cos(angle) - vec[1] * math.sin(angle),
-            vec[0] * math.sin(angle) + vec[1] * math.cos(angle))
+    return [vec[0] * math.cos(angle) - vec[1] * math.sin(angle),
+            vec[0] * math.sin(angle) + vec[1] * math.cos(angle)]
 
+
+def lineAngle(p1, p2):
+    """Angle in relation to up direction, counted clockwise"""
+    return (math.atan2(p2[0] - p1[0], p2[1] - p1[1]) + math.pi) % (2 * math.pi)
+
+
+def bounceVector(vec, p1, p2):
+    surfaceAngle = lineAngle(p1, p2)
+    vec = apply2dRotation(vec, surfaceAngle - math.pi / 2)
+    vec[1] *= -1
+    vec = apply2dRotation(vec, -surfaceAngle + math.pi / 2)
+    return vec

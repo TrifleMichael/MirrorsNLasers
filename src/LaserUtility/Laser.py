@@ -3,6 +3,7 @@ from math import sin, cos, atan2, pi, sqrt
 from src.AtomicObjects.LineSprite import LineSprite
 from src.AtomicObjects.MultiLineSprite import MultiLineSprite
 from src.Collisons.CollidingBall import CollidingBall
+from src.Utility.EuclidianFunctions import lineAngle, bounceVector
 
 
 class Laser:
@@ -19,11 +20,11 @@ class Laser:
         self.lineSprite = LineSprite((x1, y1), (x2, y2), display)
         self.multiLineSprite = MultiLineSprite([], display)
 
-        self.angle = (atan2(x2 - x1, y2 - y1) + pi) % (2 * pi)
+        self.angle = lineAngle((x1, y1), (x2, y2))
         self.dt = dt
         self.framesUntilFlip = -1  # -1 means not waiting for flip, > 0 means executing flip, 0 means ending flip
         self.flipCoords = None
-        self.flipDirection = None
+        self.flipSurfaceLine = None
 
     def move(self):
         dir_x = sin(self.angle)
@@ -40,13 +41,10 @@ class Laser:
     def ifCollidesWithRCM(self, otherRCM):
         return otherRCM.ifCollides(self.front)
 
-    def reactToCollision(self, direction):
-        """Bounces of surface"""
-        self.flipDirection = direction
-        if direction == 0 or direction == 2:
-            self.front.moveModel.vy *= -1
-        if direction == 1 or direction == 3:
-            self.front.moveModel.vx *= -1
+    def reactToCollision(self, flipSurface):
+        """Bounces of surface defined by two points"""
+        self.flipSurfaceLine = flipSurface
+        self.front.moveModel.vx, self.front.moveModel.vy = bounceVector((self.front.moveModel.vx, self.front.moveModel.vy), flipSurface[0], flipSurface[1])
 
         self.flipCoords = (self.front.moveModel.x, self.front.moveModel.y)
         currentSpeed = sqrt(self.end.moveModel.vx ** 2 + self.end.moveModel.vy ** 2)
