@@ -6,6 +6,7 @@ from src.AtomicObjects.Movables import NonInertialObject
 
 class Mirror(NonInertialObject):
     """A mirror object."""
+
     def __init__(self, x, y, width, rotation, display):
         super().__init__(x, y)
         self.width = width
@@ -17,8 +18,8 @@ class Mirror(NonInertialObject):
         """Returns the surface of the mirror represented by 2 points"""
         cos, sin = math.cos(self.rotation), math.sin(self.rotation)
 
-        p1 = self.x + (self.width / 2) * cos, self.y + (self.width / 2) * sin
-        p2 = self.x - (self.width / 2) * cos, self.y - (self.width / 2) * sin
+        p1 = self.x - (self.width / 2) * sin, self.y + (self.width / 2) * cos
+        p2 = self.x + (self.width / 2) * sin, self.y - (self.width / 2) * cos
 
         return p1, p2
 
@@ -27,12 +28,16 @@ class Mirror(NonInertialObject):
         cos, sin = math.cos(self.rotation), math.sin(self.rotation)
         return -sin, cos
 
+    def setRotation(self, rotation):
+        """Sets the rotation of the mirror"""
+        self.rotation = rotation
+
 
 class MirrorVisualManager:
     def __init__(self, p1, p2, display):
         self.p1, self.p2 = p1, p2
 
-        self.sprite = LineSprite(p1, p2, display)
+        self.sprite = LineSprite(p1, p2, display, color=(0, 255, 255))
 
     def draw(self):
         self.sprite.draw()
