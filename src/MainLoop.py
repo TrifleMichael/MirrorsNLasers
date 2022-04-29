@@ -26,14 +26,12 @@ def mainLoop():
 
     laserManager = LaserManager(frameDuration, display)
     laserManager.createLaser(10, 150, 150, 100, 100, 300)  # test
-       # JUST FOR TESTING
-    level.addObject(Mirror(100, 100, 200, 1, display))
 
     deb = 0
     while True:  # pygame tick for time coordination
         deb += 1
         if deb == 100:
-            laserManager.laserList[0].reactToCollision() # INTENSIVE TESTING IN PROGRESS :)
+            laserManager.laserList[0].reactToCollision(2) # INTENSIVE TESTING IN PROGRESS :)
 
         startTime = time.time()
 

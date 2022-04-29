@@ -23,6 +23,7 @@ class Laser:
         self.dt = dt
         self.framesUntilFlip = -1  # -1 means not waiting for flip, > 0 means executing flip, 0 means ending flip
         self.flipCoords = None
+        self.flipDirection = None
 
     def move(self):
         dir_x = sin(self.angle)
@@ -39,9 +40,15 @@ class Laser:
     def ifCollidesWithRCM(self, otherRCM):
         return otherRCM.ifCollides(self.front)
 
-    def reactToCollision(self):  # should have a surface to collide with
+    def reactToCollision(self, direction):
+        """Bounces of surface"""
+        self.flipDirection = direction
+        if direction == 0 or direction == 2:
+            self.front.moveModel.vy *= -1
+        if direction == 1 or direction == 3:
+            self.front.moveModel.vx *= -1
+
         self.flipCoords = (self.front.moveModel.x, self.front.moveModel.y)
-        self.front.moveModel.vy *= -1
         currentSpeed = sqrt(self.end.moveModel.vx ** 2 + self.end.moveModel.vy ** 2)
         self.framesUntilFlip = int(self.length / currentSpeed / self.dt * 1.4)
 
