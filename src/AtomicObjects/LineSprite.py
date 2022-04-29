@@ -2,10 +2,10 @@ import pygame
 
 
 class LineSprite:
-    def __init__(self, p1, p2, display):
+    def __init__(self, p1, p2, display, color=None):
         self.p1 = p1
         self.p2 = p2
-        self.color = (255, 0, 255)
+        self.color = color or (255, 0, 255)
         self.display = display
 
     def draw(self):
