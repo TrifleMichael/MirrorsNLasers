@@ -14,7 +14,7 @@ class LevelSimulationManager:
 
         self.playerSimulationManager = PlayerSimulationManager(DISPLAY, 200, 400, 50, self.field)
         self.levelVisualManager.addObject(self.playerSimulationManager)
-        self.collisionManager = CollisionManager()
+        self.collisionManager = CollisionManager(self.playerSimulationManager.mirror)
         self.collisionManager.roundCollisionModels.append(self.playerSimulationManager)
         self.laserManager = LaserManager(dt, DISPLAY)
 
@@ -29,7 +29,7 @@ class LevelSimulationManager:
 
     def createLaser(self, r, x1, y1, x2, y2, speed):
         self.laserManager.createLaser(r, x1, y1, x2, y2, speed)
-        # TODO: add laser hitbox to collision manager
+        self.collisionManager.addLaser(self.laserManager.laserList[-1])
 
     def updateVisualManager(self):
         pass  # stand holder function, might want to change background in the future
