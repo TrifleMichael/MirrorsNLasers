@@ -14,7 +14,7 @@ class LevelSimulationManager:
 
         self.playerSimulationManager = PlayerSimulationManager(DISPLAY, 200, 400, 50, self.field)
         self.levelVisualManager.addObject(self.playerSimulationManager)
-        self.collisionManager = CollisionManager(self.playerSimulationManager.mirror)
+        self.collisionManager = CollisionManager(self.playerSimulationManager.mirror, self.playerSimulationManager)
         self.collisionManager.roundCollisionModels.append(self.playerSimulationManager)
         self.laserManager = LaserManager(dt, DISPLAY)
 
