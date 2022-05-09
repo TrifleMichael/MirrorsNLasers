@@ -21,7 +21,7 @@ class Laser:
         self.lineSprite = LineSprite((x1, y1), (x2, y2), display)
         self.multiLineSprite = MultiLineSprite([], display)
 
-        self.angle = lineAngle((x1, y1), (x2, y2))
+        self.angle = lineAngle((x2, y2), (x1, y1))
         self.dt = dt
         self.framesUntilFlip = -1  # -1 means not waiting for flip, > 0 means executing flip, 0 means ending flip
         self.flipCoords = None
