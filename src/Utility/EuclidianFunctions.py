@@ -40,6 +40,7 @@ def bounceVector(vec, p1, p2):
 
 
 def pointToLineDistance(line, point):
+    # assumes line is infinite
     start = line[0]
     end = line[1]
     angle = -lineAngle(start, end)
@@ -53,8 +54,11 @@ def pointToLineDistance(line, point):
 
 
 def surfaceContainsPointShadow(surface, point):
-    """Checks if the shadow cast perpendicular to the surface lands on it"""
-    pass
+    """Checks if the shadow of point cast perpendicular to the surface lands on it"""
+    surfaceAngle = lineAngle(surface[0], surface[1])
+    rotatedPoint = apply2dRotation(point, -surfaceAngle)
+    rotatedSurface = rotate2dLine(surface[0], surface[1], [0, 0], -surfaceAngle)
+    return rotatedSurface[0][1] <= rotatedPoint[1] <= rotatedSurface[1][1]
 
 
 def pointToPointDistance(p1, p2):

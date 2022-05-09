@@ -4,7 +4,7 @@ from math import sin, cos, atan2, pi, sqrt
 from src.AtomicObjects.LineSprite import LineSprite
 from src.AtomicObjects.MultiLineSprite import MultiLineSprite
 from src.Collisons.CollidingBall import CollidingBall
-from src.Utility.EuclidianFunctions import lineAngle, bounceVector, pointToLineDistance
+from src.Utility.EuclidianFunctions import lineAngle, bounceVector, pointToLineDistance, surfaceContainsPointShadow
 
 
 class Laser:
@@ -50,8 +50,9 @@ class Laser:
 
     def collidesWithSurface(self, surface):
         ptld = pointToLineDistance(surface, (self.front.moveModel.x, self.front.moveModel.y))
-        if self.collisionEpsilon >= ptld and self.bounceImmunityFrames == 0:
-            self.reactToCollision(surface)
+        if self.collisionEpsilon >= ptld and surfaceContainsPointShadow(surface, [self.front.moveModel.x, self.front.moveModel.y]):
+            if self.bounceImmunityFrames == 0:
+                self.reactToCollision(surface)
 
 
     def reactToCollision(self, flipSurface):
