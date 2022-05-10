@@ -6,13 +6,19 @@ from time import sleep
 from src.AtomicObjects.Field import Field
 from src.Level import LevelSimulationManager
 from src.Settings import frameDuration, xResolution, yResolution
+from src.Structures.StructureManager import StructureManager
+
 
 
 def mainLoop():
     pygame.init()
 
     display = pygame.display.set_mode((xResolution, yResolution), 0, 32)
+
     level = LevelSimulationManager(display, Field(xResolution, yResolution), frameDuration)
+    # structureManager = StructureManager(display, levelSimulationManager) # TODO: Add interpreting input
+
+    level.addWall(500, 500, 100, 200)
 
     level.addColumn(xResolution-50, yResolution-50, 20)  # TESTING
     level.createLaser(10, 150, 150, 100, 100, 150)  # test
@@ -37,7 +43,7 @@ def mainLoop():
         level.update(keys)
 
         level.levelVisualManager.draw()
-        level.laserManager.draw()  # needs changing: check LaserManager.py
+        level.laserManager.draw()  # TODO: needs changing: check LaserManager.py
 
         pygame.display.update()
 

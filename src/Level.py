@@ -5,6 +5,7 @@ from src.Collisons.CollisionManager import CollisionManager
 from src.Collisons.Column import Column
 from src.LaserUtility.LaserManager import LaserManager
 from src.Player import PlayerSimulationManager
+from src.Structures.Wall import Wall
 
 
 class LevelSimulationManager:
@@ -17,8 +18,11 @@ class LevelSimulationManager:
         self.collisionManager = CollisionManager(self.playerSimulationManager.mirror, self.playerSimulationManager)
         self.collisionManager.roundCollisionModels.append(self.playerSimulationManager)
         self.laserManager = LaserManager(dt, DISPLAY)
+        self.display = DISPLAY
 
         self.time = time.time()
+
+        self.wallList = []
 
     def update(self, keys):
         dt = time.time() - self.time
@@ -32,9 +36,10 @@ class LevelSimulationManager:
         self.collisionManager.addLaser(self.laserManager.laserList[-1])
 
     def updateVisualManager(self):
-        pass  # stand holder function, might want to change background in the future
+        pass  # Placeholder function, might want to change background in the future
 
     def addColumn(self, x, y, r):
+        # TODO: Add column list so columns can be effectively removed
         column = Column(x, y, r, self.levelVisualManager.display)
         column.update(x, y)
         self.collisionManager.roundCollisionModels.append(column)
@@ -44,18 +49,25 @@ class LevelSimulationManager:
     def addObject(self, obj):
         self.levelVisualManager.addObject(obj.visualManager.sprite)
 
+    def addWall(self, x, y, width, height):
+        # Placeholder
+        wall = Wall(self.display, x, y, width, height)
+        self.wallList.append(wall)
+        self.levelVisualManager.addObject(wall.sprite)  # Needs to be added in correct place in hierarchy
+
 
 class LevelVisualManager:
     def __init__(self, DISPLAY, width, height):
         self.display = DISPLAY
         self.sprite = RectangleSprite(DISPLAY, width, height)
+        self.sprite.update(0, 0)
         self.objectsToDraw = []  # hierarchy and layers will be needed
 
     def addObject(self, obj):
         self.objectsToDraw.append(obj)
 
     def draw(self):
-        self.sprite.draw(0, 0)
+        self.sprite.draw()
         for obj in self.objectsToDraw:
             obj.draw()
 

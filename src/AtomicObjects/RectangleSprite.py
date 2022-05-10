@@ -7,6 +7,12 @@ class RectangleSprite:
         self.width = width
         self.height = height
         self.color = (0, 255, 0)
+        self.x = None
+        self.y = None
 
-    def draw(self, x, y):
-        pygame.draw.rect(self.DISPLAY, self.color, (x, y, self.width, self.height))
+    def draw(self):
+        pygame.draw.rect(self.DISPLAY, self.color, (self.x, self.y, self.width, self.height))
+
+    def update(self, x, y):
+        self.x = x
+        self.y = y
