@@ -53,23 +53,31 @@ class LevelSimulationManager:
         # Placeholder
         wall = Wall(self.display, x, y, width, height)
         self.wallList.append(wall)
-        self.levelVisualManager.addObject(wall.sprite)  # Needs to be added in correct place in hierarchy
+        self.levelVisualManager.addWallSprite(wall.sprite)  # Needs to be added in correct place in hierarchy
 
 
 class LevelVisualManager:
     def __init__(self, DISPLAY, width, height):
         self.display = DISPLAY
         self.sprite = RectangleSprite(DISPLAY, width, height)
+        self.sprite.color = (0, 50, 50)
         self.sprite.update(0, 0)
         self.objectsToDraw = []  # hierarchy and layers will be needed
+        self.wallSprites = []
 
     def addObject(self, obj):
         self.objectsToDraw.append(obj)
+
+    def addWallSprite(self, sprite):
+        self.wallSprites.append(sprite)
 
     def draw(self):
         self.sprite.draw()
         for obj in self.objectsToDraw:
             obj.draw()
+
+        for wallSprite in self.wallSprites:
+            wallSprite.draw()
 
     def update(self):
         pass  # mock function, level sprite should not move
