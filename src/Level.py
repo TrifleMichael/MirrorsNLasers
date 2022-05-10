@@ -1,11 +1,11 @@
 import time
 
-from src.AtomicObjects.RectangleSprite import RectangleSprite
+from src.Sprites.RectangleSprite import RectangleSprite
 from src.Collisons.CollisionManager import CollisionManager
 from src.Collisons.Column import Column
 from src.LaserUtility.LaserManager import LaserManager
 from src.Player import PlayerSimulationManager
-from src.Structures.Wall import Wall
+from src.Structures.RectangleWall import RectangleWall
 
 
 class LevelSimulationManager:
@@ -51,7 +51,7 @@ class LevelSimulationManager:
 
     def addWall(self, x, y, width, height):
         # Placeholder
-        wall = Wall(self.display, x, y, width, height)
+        wall = RectangleWall(self.display, x, y, width, height)
         self.wallList.append(wall)
         self.levelVisualManager.addWallSprite(wall.sprite)  # Needs to be added in correct place in hierarchy
 

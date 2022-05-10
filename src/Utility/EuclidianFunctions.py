@@ -5,6 +5,9 @@ def distance(x1, y1, x2, y2):
     return math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
 
 
+def pointToPointDistance(p1, p2):
+    return math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
+
 def apply2dRotation(vec, angle):
     return [vec[0] * math.cos(angle) - vec[1] * math.sin(angle),
             vec[0] * math.sin(angle) + vec[1] * math.cos(angle)]
@@ -39,8 +42,8 @@ def bounceVector(vec, p1, p2):
     return vec
 
 
-def pointToLineDistance(line, point):
-    # assumes line is infinite
+def pointToLineDistance(line, point):  # TODO: Name does not match order of arguments
+    """Distance from point to infinite line defined by two points"""
     start = line[0]
     end = line[1]
     angle = -lineAngle(start, end)
@@ -48,8 +51,6 @@ def pointToLineDistance(line, point):
     point = apply2dRotation(point, angle)
     start, end = rotate2dLine(start, end, [0, 0], angle)
 
-    # TODO: detect if point cast is beyond mirrors edges
-    # TODO: fix weird angle calculations
     return abs(point[0] - start[0])
 
 
@@ -61,5 +62,21 @@ def surfaceContainsPointShadow(surface, point):
     return rotatedSurface[0][1] <= rotatedPoint[1] <= rotatedSurface[1][1]
 
 
-def pointToPointDistance(p1, p2):
-    return math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
+def pointToSegmentDistance(segment, point):
+    """Distance from point to segment defined by two points"""
+    start = segment[0]
+    end = segment[1]
+    angle = -lineAngle(start, end)
+
+    point = apply2dRotation(point, angle)
+    start, end = rotate2dLine(start, end, [0, 0], angle)
+
+    if surfaceContainsPointShadow(segment, point):
+        return abs(point[0] - start[0])
+    else:
+        a = pointToPointDistance(segment[0], point)
+        b = pointToPointDistance(segment[1], point)
+        return min(pointToPointDistance(segment[0], point),  # TODO: Debug
+                   pointToPointDistance(segment[1], point))
+
+# print(pointToSegmentDistance([[0,0], [1,0]], [1.1, 0.1]))

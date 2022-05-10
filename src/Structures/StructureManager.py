@@ -1,4 +1,4 @@
-from src.Structures.Wall import Wall
+from src.Structures.RectangleWall import RectangleWall
 
 
 class StructureManager:

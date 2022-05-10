@@ -1,4 +1,4 @@
-from src.AtomicObjects.CircleSprite import CircleSprite
+from src.Sprites.CircleSprite import CircleSprite
 from src.Collisons.RoundCollisonModel import RoundCollisionModel
 
 

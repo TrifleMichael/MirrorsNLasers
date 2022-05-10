@@ -1,6 +1,6 @@
 import math
 
-from src.AtomicObjects.LineSprite import LineSprite
+from src.Sprites.LineSprite import LineSprite
 from src.AtomicObjects.Movables import NonInertialObject
 
 

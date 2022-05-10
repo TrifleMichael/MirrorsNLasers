@@ -1,8 +1,8 @@
-from src.AtomicObjects.RectangleSprite import RectangleSprite
+from src.Sprites.RectangleSprite import RectangleSprite
 from src.Structures.BasicStructure import BasicStructure
 
 
-class Wall(BasicStructure):
+class RectangleWall(BasicStructure):
     def __init__(self, DISPLAY, x, y, width, height):
         super().__init__()
         self.sprite = RectangleSprite(DISPLAY, width, height)
@@ -11,5 +11,6 @@ class Wall(BasicStructure):
         self.x = x
         self.y = y
         self.sprite.update(self.x, self.y)
+
 
 

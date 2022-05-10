@@ -1,3 +1,6 @@
+from src.Collisons.CollisionFunctions import ifPolygonCollidesWithRound
+
+
 class CollisionManager:
     def __init__(self, playerMirror, player):
         self.roundCollisionModels = []  # colliders that don't move
@@ -25,3 +28,6 @@ class CollisionManager:
         if player.ifCollides(laser.front) and not self.playerDed:
             self.playerDed = True
             print("U died to a bad laser.")
+
+    def wallPlayerCollision(self, player, wall):
+        ifPolygonCollidesWithRound(player.move, wall) # TODO: Transfer wall to polygon

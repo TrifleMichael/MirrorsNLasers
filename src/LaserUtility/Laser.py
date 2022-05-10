@@ -1,8 +1,8 @@
 import math
-from math import sin, cos, atan2, pi, sqrt
+from math import sin, cos, sqrt
 
-from src.AtomicObjects.LineSprite import LineSprite
-from src.AtomicObjects.MultiLineSprite import MultiLineSprite
+from src.Sprites.LineSprite import LineSprite
+from src.Sprites.MultiLineSprite import MultiLineSprite
 from src.Collisons.CollidingBall import CollidingBall
 from src.Utility.EuclidianFunctions import lineAngle, bounceVector, pointToLineDistance, surfaceContainsPointShadow
 
