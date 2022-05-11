@@ -82,3 +82,6 @@ class Laser:  # FIXME: sometimes quirky behavior on bounce
             p1 = (self.front.moveModel.x, self.front.moveModel.y)
             p2 = (self.end.moveModel.x, self.end.moveModel.y)
             self.lineSprite.draw(p1, p2)
+
+    def getFrontPoint(self):
+        return self.front.moveModel.x, self.front.moveModel.y

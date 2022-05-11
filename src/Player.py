@@ -57,5 +57,9 @@ class Player(InertialObject, RoundCollisionModel):
         self.sprite.draw(self.x, self.y)
         self.mirror.draw()
 
+    def getPosition(self):
+        return self.x, self.y
+
+
 
 

@@ -80,3 +80,23 @@ def pointToSegmentDistance(segment, point):
         return min(pointToPointDistance(start, rPoint),
                    pointToPointDistance(end, rPoint))
 
+
+
+# point = [400, 400]
+# segment = [[440, 358], [343, 470]]
+# print(pointToSegmentDistance(segment, point))
+
+# print(pointToSegmentDistance([[0, 0], [1, 0]], [2, 0.5]))
+
+# l = 100
+# for i in range(l):
+#     angle = i / l * 2 * math.pi
+#     print("angle:", angle, "line angle:", lineAngle(rotate2dLine([0, 0], [0, -1], [0, 0], angle)[0], rotate2dLine([0, 0], [0, -1], [0, 0], angle)[1]))
+
+# print(rotate2dLine([0, 0], [0, -1], [0, 0], math.pi/2))
+
+# print(lineAngle([0, 0], [0, -1]))
+# print(lineAngle([0, 0], [1, -1]))
+# print(lineAngle([0, 0], [1, 0]))
+# print(lineAngle([0, 0], [1, 1]))
+# print(lineAngle([0, 0], [0, 1]))
