@@ -1,12 +1,12 @@
 import math
 from math import sin, cos, sqrt
 
-from src.sprites import LineSprite, MultiLineSprite
+from src.Sprites import LineSprite, MultiLineSprite
 from src.Collisons.CollidingBall import CollidingBall
 from src.Utility.EuclidianFunctions import lineAngle, bounceVector, pointToLineDistance, surfaceContainsPointShadow
 from src.Settings import frameDuration
 
-# TODO refactor this class
+
 class Laser:
     def __init__(self, r, x1, y1, x2, y2, speed):
         self.front = CollidingBall(x1, y1, r)
@@ -18,10 +18,10 @@ class Laser:
         self.end.moveModel.vy = speed
 
         self.length = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-        self.lineSprite = LineSprite()
-        self.multiLineSprite = MultiLineSprite()
+        self.lineSprite = LineSprite(color=(255, 0, 255))
+        self.multiLineSprite = MultiLineSprite(color=(255, 0, 255))
 
-        self.angle = lineAngle((x2, y2), (x1, y1))
+        self.angle = lineAngle((x1, y1), (x2, y2))
         self.framesUntilFlip = -1  # -1 means not waiting for flip, > 0 means executing flip, 0 means ending flip
         self.flipCoords = None
         self.flipSurfaceLine = None
@@ -68,6 +68,9 @@ class Laser:
             self.end.moveModel.x, self.end.moveModel.y = self.flipCoords
         elif self.framesUntilFlip != -1:
             self.framesUntilFlip -= 1
+
+    def getFrontPoint(self):
+        return self.front.moveModel.x, self.front.moveModel.y
 
     def draw(self):
         if self.framesUntilFlip >= 0 and self.framesUntilFlip != -1:

@@ -56,10 +56,9 @@ class RectangleSprite(Sprite):
 
 
 class PolygonSprite(Sprite):
-    def __init__(self, segmentList, color):
-        self.segmentList = segmentList
-        self.display = display
-        self.color = color
+    """A polygon sprite. Needs a list of points to be drawn."""
+    def __init__(self, color=None):
+        self.color = color or (0, 0, 0)
 
     def draw(self, segmentList):
         pygame.draw.polygon(display, self.color, segmentList)

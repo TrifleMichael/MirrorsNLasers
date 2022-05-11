@@ -1,22 +1,19 @@
 import time
 
-from src.sprites import RectangleSprite
+from src.Sprites import RectangleSprite
 from src.Collisons.CollisionManager import CollisionManager
-from src.managers import LaserManager, StructureManager
-from src.Player import Player
-
+from src.Managers import LaserManager, StructureManager
 from src.Settings import xResolution, yResolution
-from src.structures import Structure
 
 
 class Level:
-    """Level is responsible for managing the level simulation"""
+    """Responsible for managing the level simulation."""
     def __init__(self, player):
         self.player = player
 
         self.structureManager = StructureManager()
         self.laserManager = LaserManager()
-        #self.collisionManager = CollisionManager()  # TODO
+        self.collisionManager = CollisionManager(player.mirror, player)
 
         self.sprite = RectangleSprite(xResolution, yResolution, color=(40, 40, 40))
         self.time = time.time()
@@ -28,7 +25,7 @@ class Level:
 
         self.player.update(keys, dt)
         self.structureManager.update(dt)
-        #self.collisionManager.update()  # TODO
+        self.collisionManager.update()
         self.laserManager.update(dt)
 
     def addObject(self, obj):

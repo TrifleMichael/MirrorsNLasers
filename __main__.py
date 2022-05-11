@@ -8,7 +8,7 @@ from src.Settings import frameDuration, xResolution, yResolution
 
 
 def mainLoop():
-    level = LevelBuilder().getTestLevel()
+    level = LevelBuilder().build('lvls/1.json')
 
     while True:
         startTime = time.time()

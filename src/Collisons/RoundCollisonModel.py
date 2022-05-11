@@ -2,7 +2,7 @@ from src.Utility.EuclidianFunctions import distance
 from abc import ABC, abstractmethod
 
 
-class RoundCollisionModel(ABC):
+class RoundCollisionModel:
     def __init__(self, x, y, r):
         self.x = x
         self.y = y
@@ -14,3 +14,10 @@ class RoundCollisionModel(ABC):
     @abstractmethod
     def reactToCollision(self):
         pass
+
+    def update(self, x, y):
+        self.x = x
+        self.y = y
+
+    def getPoint(self):
+        return self.x, self.y

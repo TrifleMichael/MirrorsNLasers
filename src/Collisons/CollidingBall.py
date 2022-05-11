@@ -1,7 +1,7 @@
 from src.AtomicObjects.Movables import NonInertialObject
 from src.Collisons.RoundCollisonModel import RoundCollisionModel
 
-# TODO
+
 class CollidingBall(RoundCollisionModel):
     def __init__(self, x, y, r):
         super().__init__(x, y, r)

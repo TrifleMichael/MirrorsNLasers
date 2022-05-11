@@ -1,7 +1,7 @@
 import math
 
 import pygame
-from src.sprites import CircleSprite
+from src.Sprites import CircleSprite
 from src.AtomicObjects.Mirror import Mirror
 from src.AtomicObjects.Movables import InertialObject
 from src.Collisons.RoundCollisonModel import RoundCollisionModel
@@ -25,7 +25,7 @@ class Player(InertialObject, RoundCollisionModel):
         self.readKeys(keys)
         self.move(self.dir_x, self.dir_y, dt)
 
-        self.mirror.setPosition(self.x + 70*math.cos(self.rotation), self.y + 70*math.sin(self.rotation))
+        self.mirror.setPosition(self.x + 60*math.cos(self.rotation), self.y + 60*math.sin(self.rotation))
         self.mirror.setRotation(self.rotation)
 
     def readKeys(self, keys):
@@ -37,8 +37,16 @@ class Player(InertialObject, RoundCollisionModel):
             self.dir_x /= norm
             self.dir_y /= norm
 
-        cursor = pygame.mouse.get_pos()
-        self.rotation = math.atan2((cursor[1] - self.y), (cursor[0] - self.x))
+        if not keys[pygame.K_SPACE]:
+            cursor = pygame.mouse.get_pos()
+            self.rotation = math.atan2((cursor[1] - self.y), (cursor[0] - self.x))
+
+        if keys[pygame.K_LSHIFT]:
+            self.setAcceleration(6000)
+            self.setMaxSpeed(600)
+        else:
+            self.setAcceleration(3500)
+            self.setMaxSpeed(350)
 
     def reactToCollision(self):
         self.vx *= -1

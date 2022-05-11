@@ -1,9 +1,10 @@
 from abc import ABC, abstractmethod
 
+from src.Collisons.PolygonCollisionModel import PolygonCollisionModel
 from src.Collisons.RoundCollisonModel import RoundCollisionModel
-from src.sprites import RectangleSprite, CircleSprite
+from src.Sprites import RectangleSprite, CircleSprite
 
-# TODO add more structures
+
 class Structure(ABC):
     """Abstract class for all sprites. Forces child classes to implement draw."""
     @abstractmethod
@@ -11,13 +12,17 @@ class Structure(ABC):
         pass
 
 
-class Wall(Structure):
-    """ A wall is a ..."""  # TODO add description
+class RectangleWall(Structure):
+    """ A wall is a ..."""
     def __init__(self, x, y, width, height):
-        self.sprite = RectangleSprite(width, height)
-        self.collisionShape = None  # TODO: Add rectangle collision simulation
+        pts = [(x, y), (x + width, y), (x + width, y + height), (x, y + height)]
+        self.collisionModel = PolygonCollisionModel(pts)
+        self.sprite = RectangleSprite(width, height, color=(0, 100, 0))
         self.x = x
         self.y = y
+        self.width = width
+        self.height = height
+        self.reflective = True
 
     def draw(self):
         self.sprite.draw(self.x, self.y)
@@ -28,13 +33,9 @@ class Column(Structure, RoundCollisionModel):
 
     def __init__(self, x, y, radius):
         RoundCollisionModel.__init__(self, x, y, radius)
-        self.sprite = CircleSprite(radius, color=(0, 0, 255))
+        self.sprite = CircleSprite(radius, color=(128, 128, 0))
         self.x = x
         self.y = y
 
     def draw(self):
         self.sprite.draw(self.x, self.y)
-
-    def reactToCollision(self):
-        # The column doesn't react to collisions
-        pass

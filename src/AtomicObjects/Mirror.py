@@ -1,6 +1,6 @@
 import math
 
-from src.sprites import LineSprite
+from src.Sprites import LineSprite
 from src.AtomicObjects.Movables import NonInertialObject
 
 
@@ -12,7 +12,7 @@ class Mirror(NonInertialObject):
         self.width = width
         self.rotation = rotation
 
-        self.sprite = LineSprite()
+        self.sprite = LineSprite(width=10, color=(32, 178, 170))
 
     def getSurface(self):
         """Returns the surface of the mirror represented by 2 points"""
