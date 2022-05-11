@@ -1,4 +1,5 @@
-from src.Collisons.CollisionFunctions import ifPolygonCollidesWithRound
+from src.Collisons.CollisionFunctions import ifPolygonCollidesWithRound, ifPointCollidesWithLine
+from src.Utility.EuclidianFunctions import pointToSegmentDistance
 
 
 class CollisionManager:
@@ -21,7 +22,7 @@ class CollisionManager:
                     self.roundCollisionModels[j].reactToCollision()
 
         for laser in self.laserList:
-            laser.collidesWithSurface(self.playerMirror.getSurface())
+            self.laserMirrorCollision(self.playerMirror, laser)
             self.playerLaserCollision(self.player, laser)
 
     def playerLaserCollision(self, player, laser):
@@ -31,3 +32,7 @@ class CollisionManager:
 
     def wallPlayerCollision(self, player, wall):
         ifPolygonCollidesWithRound(player.move, wall) # TODO: Transfer wall to polygon
+
+    def laserMirrorCollision(self, mirror, laser):
+        if ifPointCollidesWithLine(laser.getFrontPoint(), mirror.getSurface()):
+            laser.reactToCollision(mirror.getSurface())

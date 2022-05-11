@@ -10,7 +10,15 @@ class RectangleWall(BasicStructure):
         self.collisionShape = None  # TODO: Add rectangle collision simulation
         self.x = x
         self.y = y
+        self.width = width
+        self.height = height
         self.sprite.update(self.x, self.y)
+
+    def getPointList(self):
+        return [[self.x, self.y],
+                [self.x + self.width, self.y],
+                [self.x + self.width, self.y + self.height],
+                [self.x, self.y + self.height]]
 
 
 
