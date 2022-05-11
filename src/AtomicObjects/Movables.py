@@ -26,7 +26,7 @@ class InertialObject(NonInertialObject):
         NonInertialObject.__init__(self, x, y)
         self.acc = 4000
         self.slow = 0.90
-        self.slow_const = 20
+        self.slow_const = 30
         self.maxSpeed = 400
         self.vx = 0
         self.vy = 0

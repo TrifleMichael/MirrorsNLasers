@@ -7,7 +7,7 @@ from src.Utility.EuclidianFunctions import lineAngle, bounceVector, pointToLineD
 from src.Settings import frameDuration
 
 
-class Laser:
+class Laser:  # FIXME: sometimes quirky behavior on bounce
     def __init__(self, r, x1, y1, x2, y2, speed):
         self.front = CollidingBall(x1, y1, r)
         self.end = CollidingBall(x2, y2, r)

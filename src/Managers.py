@@ -34,7 +34,7 @@ class LaserManager(Manager):
             laser.draw()
 
 
-class StructureManager(Manager):  # TODO
+class StructureManager(Manager):  # TODO: add proper functionality
     """Manages the structures"""
     def __init__(self,):
         self.structureList = []
