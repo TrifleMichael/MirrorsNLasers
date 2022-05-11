@@ -2,6 +2,7 @@ import copy
 
 
 class NonInertialObject:
+    """An object that moves with constant velocity in a given direction."""
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -16,7 +17,9 @@ class NonInertialObject:
         self.x = x
         self.y = y
 
+
 class InertialObject(NonInertialObject):
+    """An object that accelerates in a given direction. Moves in the direction of its momentum."""
     def __init__(self, x, y):
         super().__init__(x, y)
         self.acc = 3000

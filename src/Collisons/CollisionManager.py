@@ -1,4 +1,4 @@
-class CollisionManager:
+class CollisionManager: # TODO refactor
     def __init__(self, playerMirror, player):
         self.roundCollisionModels = []  # colliders that don't move
         self.laserList = []  # Laser type
@@ -25,3 +25,9 @@ class CollisionManager:
         if player.ifCollides(laser.front) and not self.playerDed:
             self.playerDed = True
             print("U died to a bad laser.")
+
+    def addRoundCollisionModel(self, rcm):
+        self.roundCollisionModels.append(rcm)
+
+    def addLaser(self, laser):
+        self.laserList.append(laser)
