@@ -18,3 +18,6 @@ class RoundCollisionModel:
     def update(self, x, y):
         self.x = x
         self.y = y
+
+    def getPoint(self):
+        return self.x, self.y

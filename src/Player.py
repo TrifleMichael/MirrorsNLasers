@@ -1,7 +1,7 @@
 import math
 
 import pygame
-from src.AtomicObjects.CircleSprite import CircleSprite
+from src.Sprites.CircleSprite import CircleSprite
 from src.AtomicObjects.Mirror import Mirror
 from src.AtomicObjects.Movables import InertialObject
 from src.Collisons.RoundCollisonModel import RoundCollisionModel
@@ -68,6 +68,9 @@ class PlayerSimulationManager(InertialObject, RoundCollisionModel):  # (Inertial
     def draw(self):  # draws sprite
         self.playerVisualManager.draw()
         self.mirror.visualManager.draw()
+
+    def getPosition(self):
+        return self.x, self.y
 
 
 class PlayerVisualManager:

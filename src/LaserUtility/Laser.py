@@ -1,8 +1,8 @@
 import math
-from math import sin, cos, atan2, pi, sqrt
+from math import sin, cos, sqrt
 
-from src.AtomicObjects.LineSprite import LineSprite
-from src.AtomicObjects.MultiLineSprite import MultiLineSprite
+from src.Sprites.LineSprite import LineSprite
+from src.Sprites.MultiLineSprite import MultiLineSprite
 from src.Collisons.CollidingBall import CollidingBall
 from src.Utility.EuclidianFunctions import lineAngle, bounceVector, pointToLineDistance, surfaceContainsPointShadow
 
@@ -21,7 +21,7 @@ class Laser:
         self.lineSprite = LineSprite((x1, y1), (x2, y2), display)
         self.multiLineSprite = MultiLineSprite([], display)
 
-        self.angle = lineAngle((x2, y2), (x1, y1))
+        self.angle = lineAngle((x1, y1), (x2, y2))
         self.dt = dt
         self.framesUntilFlip = -1  # -1 means not waiting for flip, > 0 means executing flip, 0 means ending flip
         self.flipCoords = None
@@ -54,7 +54,6 @@ class Laser:
             if self.bounceImmunityFrames == 0:
                 self.reactToCollision(surface)
 
-
     def reactToCollision(self, flipSurface):
         """Bounces of surface defined by two points"""
         self.flipSurfaceLine = flipSurface
@@ -82,3 +81,6 @@ class Laser:
         else:
             self.lineSprite.update((self.front.x, self.front.y), (self.end.x, self.end.y))
             self.lineSprite.draw()
+
+    def getFrontPoint(self):
+        return self.front.moveModel.x, self.front.moveModel.y

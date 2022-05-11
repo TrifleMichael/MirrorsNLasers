@@ -6,7 +6,7 @@ class RectangleSprite:
         self.DISPLAY = DISPLAY
         self.width = width
         self.height = height
-        self.color = (0, 255, 0)
+        self.color = (0, 255, 255)
         self.x = None
         self.y = None
 
