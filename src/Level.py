@@ -53,6 +53,7 @@ class LevelSimulationManager:
         # Placeholder
         wall = RectangleWall(self.display, x, y, width, height)
         self.wallList.append(wall)
+        self.collisionManager.addWall(wall)
         self.levelVisualManager.addWallSprite(wall.sprite)  # Needs to be added in correct place in hierarchy
 
 

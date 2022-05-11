@@ -74,9 +74,6 @@ def pointToSegmentDistance(segment, point):
     rPoint = apply2dRotation(point, angle)
     start, end = rotate2dLine(start, end, [0, 0], angle)
 
-    testStartEnd = start, end
-    test = lineAngle(start, end)
-
     if surfaceContainsPointShadow((start, end), rPoint):
         return abs(rPoint[0] - start[0])
     else:

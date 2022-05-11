@@ -18,10 +18,10 @@ def mainLoop():
     level = LevelSimulationManager(display, Field(xResolution, yResolution), frameDuration)
     # structureManager = StructureManager(display, levelSimulationManager) # TODO: Add interpreting input
 
-    level.addWall(500, 500, 100, 200)
+    level.addWall(400, 500, 100, 200)
 
     level.addColumn(xResolution-50, yResolution-50, 20)  # TESTING
-    level.createLaser(10, 150, 150, 100, 100, 150)  # test
+    level.createLaser(1, 150, 150, 100, 100, 150)  # test
 
     while True:  # pygame tick for time coordination
 
