@@ -25,7 +25,6 @@ class Laser:  # FIXME: sometimes quirky behavior on bounce
         self.angle = lineAngle((x1, y1), (x2, y2))
         self.framesUntilFlip = -1  # -1 means not waiting for flip, > 0 means executing flip, 0 means ending flip
         self.flipCoords = None
-        self.flipSurfaceLine = None
 
         self.collisionEpsilon = 5
 
@@ -52,7 +51,6 @@ class Laser:  # FIXME: sometimes quirky behavior on bounce
 
     def reactToCollision(self, flipSurface):
         """Bounces of surface defined by two points"""
-        self.flipSurfaceLine = flipSurface
         self.front.moveModel.vx, self.front.moveModel.vy = bounceVector((self.front.moveModel.vx, self.front.moveModel.vy), flipSurface[0], flipSurface[1])
 
         self.bounceImmunityFrames = self.maxBounceImmunityFrames

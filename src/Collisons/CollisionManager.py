@@ -37,14 +37,13 @@ class CollisionManager:
             self.playerLaserCollision(self.player, laser)
 
         for wall in self.wallList:
-            if self.wallPlayerCollision(self.player, wall):
-                self.player.reactToCollision()
+            self.wallPlayerCollision(self.player, wall)
 
         for wall in self.wallList:
             if wall.reflective:
                 for laser in self.laserList:
                     self.wallLaserCollision(wall, laser)
-                    
+
     def playerLaserCollision(self, player, laser):
         if player.ifCollides(laser.front) and not self.playerDed:
             self.playerDed = True
@@ -56,11 +55,12 @@ class CollisionManager:
             laser.reactToCollision(surface)
 
     def wallPlayerCollision(self, player, wall):
-        return ifPolygonCollidesWithRound(wall.collisionModel, player) # TODO: Transfer wall to polygon
+        if ifPolygonCollidesWithRound(wall.collisionModel, player): # TODO: Transfer wall to polygon
+            player.reactToFlatCollision( whichSurfaceOfPolygonCollidesWithRound(wall.collisionModel, player) )
 
-    def columnPlayerCollision(self, player, column):
+    def columnPlayerCollision(self, column, player):
         if ifRoundCollidesWithRound(player, column):
-            player.reactToCollision()
+            player.reactToRoundCollision(column.getPoint())
 
     def laserColumnCollision(self, laser, column):
         if ifRoundCollidesWithRound(laser.front, column):
