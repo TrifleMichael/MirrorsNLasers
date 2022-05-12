@@ -1,4 +1,4 @@
-from src.Utility.EuclidianFunctions import pointToLineDistance, pointToSegmentDistance
+from src.Utility.EuclidianFunctions import pointToLineDistance, pointToSegmentDistance, pointToPointDistance
 
 # TODO: Transfer all main collision functions here
 
@@ -9,13 +9,15 @@ def ifPolygonCollidesWithRound(polygonCollisonModel, roundCollisionModel):
     minDistance = float('inf')
     listLen = len(polygonCollisonModel.pointList)
     for i in range(listLen):
-        pld = pointToSegmentDistance([polygonCollisonModel.pointList[i % listLen], polygonCollisonModel.pointList[(i + 1) % listLen]],
-                                  roundCollisionModel.getPoint())
+        pld = pointToSegmentDistance(
+            [polygonCollisonModel.pointList[i % listLen], polygonCollisonModel.pointList[(i + 1) % listLen]],
+            roundCollisionModel.getPoint())
         minDistance = min(pld, minDistance)
     return minDistance < pointLineEpsilon + roundCollisionModel.r
 
 
-def whichSurfaceOfPolygonCollidesWithRound(polygonCollisonModel, roundCollisionModel):  # TODO: Make one function with the one above
+def whichSurfaceOfPolygonCollidesWithRound(polygonCollisonModel,
+                                           roundCollisionModel):  # TODO: Make one function with the one above
     minDistance = float('inf')
     listLen = len(polygonCollisonModel.pointList)
     for i in range(listLen):
@@ -30,3 +32,7 @@ def whichSurfaceOfPolygonCollidesWithRound(polygonCollisonModel, roundCollisionM
 
 def ifPointCollidesWithLine(point, line):
     return pointToSegmentDistance(line, point) < pointLineEpsilon
+
+
+def ifRoundCollidesWithRound(r1, r2):
+    return pointToPointDistance(r1.getPoint(), r2.getPoint()) < r1.r + r2.r

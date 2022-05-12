@@ -3,7 +3,8 @@ from math import sin, cos, sqrt
 
 from src.Sprites import LineSprite, MultiLineSprite
 from src.Collisons.CollidingBall import CollidingBall
-from src.Utility.EuclidianFunctions import lineAngle, bounceVector, pointToLineDistance, surfaceContainsPointShadow
+from src.Utility.EuclidianFunctions import lineAngle, bounceVector, pointToLineDistance, surfaceContainsPointShadow, \
+    lineTangentToPoints
 from src.Settings import frameDuration
 
 
@@ -58,6 +59,10 @@ class Laser:  # FIXME: sometimes quirky behavior on bounce
         self.flipCoords = (self.front.moveModel.x, self.front.moveModel.y)
         currentSpeed = sqrt(self.end.moveModel.vx ** 2 + self.end.moveModel.vy ** 2)
         self.framesUntilFlip = int(self.length / currentSpeed / frameDuration * 1.4)
+
+    def reactToRoundCollision(self, point):
+        flipSurface = lineTangentToPoints(self.front.getPoint(), point)
+        self.reactToCollision(flipSurface)
 
     def flipCountDown(self):
         if self.framesUntilFlip == 0:

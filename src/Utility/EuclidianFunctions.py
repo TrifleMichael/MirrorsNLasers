@@ -81,6 +81,16 @@ def pointToSegmentDistance(segment, point):
                    pointToPointDistance(end, rPoint))
 
 
+def lineTangentToPoints(p1, p2):
+    m = (p1[0]+p2[0]) / 2, (p1[1]+p2[1]) / 2
+    rAng = lineAngle(m, p2)
+    line = [[0, 0], [1, 0]]
+    return rotate2dLine(line[0], line[1], [0, 0], rAng)
+
+
+#lineTangentToPoints([-2.3, 0], [0, 1])
+#print(lineAngle([-1, -1], [1, 1]))
+
 
 # point = [400, 400]
 # segment = [[440, 358], [343, 470]]
