@@ -81,6 +81,7 @@ def pointToSegmentDistance(segment, point):
                    pointToPointDistance(end, rPoint))
 
 
+
 # point = [400, 400]
 # segment = [[440, 358], [343, 470]]
 # print(pointToSegmentDistance(segment, point))

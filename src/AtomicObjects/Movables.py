@@ -1,7 +1,7 @@
-import copy
-
+from math import copysign
 
 class NonInertialObject:
+    """An object that moves with constant velocity in a given direction."""
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -12,18 +12,32 @@ class NonInertialObject:
         self.x += self.vx*dir_x*dt
         self.y += self.vy*dir_y*dt
 
+    def getPosition(self):
+        return self.x, self.y
+
     def setPosition(self, x, y):
         self.x = x
         self.y = y
 
+
 class InertialObject(NonInertialObject):
+    """An object that accelerates in a given direction. Moves in the direction of its momentum."""
     def __init__(self, x, y):
-        super().__init__(x, y)
-        self.acc = 3000
-        self.slowing = 900
+        NonInertialObject.__init__(self, x, y)
+        self.acc = 4000
+        self.slow = 0.90
+        self.slow_const = 30
         self.maxSpeed = 400
         self.vx = 0
         self.vy = 0
+
+        self.sgn = lambda n: copysign(1, n)
+
+    def setAcceleration(self, acc):
+        self.acc = acc
+
+    def setMaxSpeed(self, maxSpeed):
+        self.maxSpeed = maxSpeed
 
     def move(self, dir_x, dir_y, dt):
         self.x += self.vx*dt
@@ -32,13 +46,15 @@ class InertialObject(NonInertialObject):
         self.vx += self.acc*dir_x*dt
         self.vy += self.acc*dir_y*dt
 
-        self.vx = max(self.vx, -self.maxSpeed)
-        self.vx = min(self.vx, self.maxSpeed)
-        self.vy = max(self.vy, -self.maxSpeed)
-        self.vy = min(self.vy, self.maxSpeed)
+        self.vx *= self.slow
+        self.vy *= self.slow
 
-        self.vx = max(self.vx-self.slowing*dt, 0) if self.vx > 0 else min(self.vx+self.slowing*dt, 0)
-        self.vy = max(self.vy-self.slowing*dt, 0) if self.vy > 0 else min(self.vy+self.slowing*dt, 0)
+        speed = (self.vx**2 + self.vy**2)**0.5
+        if speed > self.maxSpeed:
+            self.vx *= self.maxSpeed/speed
+            self.vy *= self.maxSpeed/speed
 
+        self.vx = (self.vx - self.slow_const*self.sgn(self.vx)*dt) if abs(self.vx) > self.slow_const else 0
+        self.vy = (self.vy - self.slow_const*self.sgn(self.vy)*dt) if abs(self.vy) > self.slow_const else 0
 
 
