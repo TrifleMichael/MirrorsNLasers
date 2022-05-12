@@ -99,6 +99,12 @@ def movePointAwayFromSurface(point, surface, distance):
     p = apply2dRotation(p, -ang)
     return p
 
+def shiftLineToPoint(line, point):
+    xShift = point[0] - line[0][0]
+    yShift = point[1] - line[0][1]
+    return [[line[0][0] + xShift, line[0][1] + yShift], [line[1][0] + xShift, line[1][1] + yShift]]
+
+
 #print(movePointAwayFromSurface([0.5, 0.5], [[0, 0], [1, 1]], 1))
 
 #print(surfaceContainsPointShadow([[950, 330], [800, 500]], [900, 430]))

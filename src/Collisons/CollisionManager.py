@@ -81,7 +81,7 @@ class CollisionManager:
             player.x, player.y = movePointAwayFromSurface([player.x, player.y], surface, 1)
 
     def playerLaserCollision(self, player, laser):
-        if player.ifCollides(laser.front) and not self.playerDed:
+        if player.ifCollides(laser.front) and not self.playerDed: # TODO: switch to new collision function
             self.playerDed = True
             print("U died to a bad laser.")
 
