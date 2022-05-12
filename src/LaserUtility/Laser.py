@@ -69,9 +69,6 @@ class Laser:  # FIXME: sometimes quirky behavior on bounce
         elif self.framesUntilFlip != -1:
             self.framesUntilFlip -= 1
 
-    def getFrontPoint(self):
-        return self.front.moveModel.x, self.front.moveModel.y
-
     def draw(self):
         if self.framesUntilFlip >= 0 and self.framesUntilFlip != -1:
             p1 = (self.front.moveModel.x, self.front.moveModel.y)

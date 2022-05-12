@@ -1,7 +1,8 @@
 from src.Collisons.CollisionFunctions import ifPolygonCollidesWithRound, ifPointCollidesWithLine, \
     whichSurfaceOfPolygonCollidesWithRound
+from src.Collisons.RoundCollisonModel import RoundCollisionModel
 from src.LaserUtility.Laser import Laser
-from src.Structures import RectangleWall
+from src.Structures import RectangleWall, Column
 
 
 class CollisionManager:
@@ -19,6 +20,8 @@ class CollisionManager:
             self.laserList.append(obj)
         if isinstance(obj, RectangleWall):
             self.wallList.append(obj)
+        if isinstance(obj, Column):
+            self.roundCollisionModels.append(obj)
 
     def update(self):
         for i in range(len(self.roundCollisionModels)):
