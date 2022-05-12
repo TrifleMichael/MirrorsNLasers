@@ -87,6 +87,19 @@ def lineTangentToPoints(p1, p2):
     line = [[0, 0], [1, 0]]
     return rotate2dLine(line[0], line[1], [0, 0], rAng)
 
+def movePointAwayFromSurface(point, surface, distance):
+    ang = lineAngle(surface[0], surface[1])
+    l, r = rotate2dLine(surface[0], surface[1], [0, 0], ang)
+    p = apply2dRotation(point, ang)
+    if p[0] < l[0]:
+        p[0] -= distance
+    else:
+        p[0] += distance
+
+    p = apply2dRotation(p, -ang)
+    return p
+
+#print(movePointAwayFromSurface([0.5, 0.5], [[0, 0], [1, 1]], 1))
 
 #print(surfaceContainsPointShadow([[950, 330], [800, 500]], [900, 430]))
 

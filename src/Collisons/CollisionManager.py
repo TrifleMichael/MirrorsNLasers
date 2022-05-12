@@ -2,9 +2,11 @@ from src.Collisons.CollisionFunctions import ifPointCollidesWithLine, \
     ifRoundCollidesWithRound, surfaceOfPolygonRoundCollision
 from src.Collisons.RoundCollisonModel import RoundCollisionModel
 from src.LaserUtility.Laser import Laser
+from src.Structures.Pit import Pit
 from src.Structures.RectangleWall import RectangleWall
 from src.Structures.Column import Column
 from src.Structures.PolygonWall import PolygonWall
+from src.Utility.EuclidianFunctions import movePointAwayFromSurface
 
 
 class CollisionManager:
@@ -16,6 +18,7 @@ class CollisionManager:
         self.laserList = []
         self.wallList = []
         self.polygonWallList = []
+        self.pitList = []
 
         self.playerDed = False
 
@@ -28,6 +31,8 @@ class CollisionManager:
             self.columnList.append(obj)
         if isinstance(obj, PolygonWall):
             self.polygonWallList.append(obj)
+        if isinstance(obj, Pit):
+            self.pitList.append(obj)
 
     def update(self):
         for column in self.columnList:
@@ -49,6 +54,15 @@ class CollisionManager:
                 for laser in self.laserList:
                     self.wallLaserCollision(wall, laser)
 
+        for pit in self.pitList:
+            self.playerPitCollision(self.player, pit)
+
+    def playerPitCollision(self, player, pit):
+        surface = surfaceOfPolygonRoundCollision(pit.collisionModel, player)
+        if surface is not None:
+            player.vx = 0
+            player.vy = 0
+            player.x, player.y = movePointAwayFromSurface([player.x, player.y], surface, 1)
 
     def playerLaserCollision(self, player, laser):
         if player.ifCollides(laser.front) and not self.playerDed:

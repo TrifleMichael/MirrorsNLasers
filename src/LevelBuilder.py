@@ -3,6 +3,7 @@ import json
 from src.Level import Level
 from src.Player import Player
 from src.LaserUtility.Laser import Laser
+from src.Structures.Pit import Pit
 
 from src.Structures.RectangleWall import RectangleWall
 from src.Structures.Column import Column
@@ -21,6 +22,12 @@ class LevelBuilder:
         wall = RectangleWall(x, y, width, height)
         self.level.structureManager.add(wall)
         self.level.collisionManager.add(wall)
+
+    def addPit(self, data):
+        pl = data["pointList"]
+        pit = Pit(pl)
+        self.level.collisionManager.add(pit)
+        self.level.structureManager.add(pit)
 
 
     def addColumn(self, data):
@@ -65,5 +72,8 @@ class LevelBuilder:
 
         for polygon_wall_data in levelJson.get("polygonWalls", []):
             self.addPolygonWall(polygon_wall_data)
+
+        for pit_data in levelJson.get("pits", []):
+            self.addPit(pit_data)
 
         return self.level
