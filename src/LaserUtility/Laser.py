@@ -1,14 +1,15 @@
 import math
 from math import sin, cos, sqrt
 
-from src.Sprites import LineSprite, MultiLineSprite
+from src.Sprites.LineSprite import LineSprite
+from src.Sprites.MultiLineSprite import MultiLineSprite
 from src.Collisons.CollidingBall import CollidingBall
 from src.Utility.EuclidianFunctions import lineAngle, bounceVector, pointToLineDistance, surfaceContainsPointShadow, \
     lineTangentToPoints
 from src.Settings import frameDuration
 
 
-class Laser:  # FIXME: sometimes quirky behavior on bounce
+class Laser:
     def __init__(self, r, x1, y1, x2, y2, speed):
         self.front = CollidingBall(x1, y1, r)
         self.end = CollidingBall(x2, y2, r)

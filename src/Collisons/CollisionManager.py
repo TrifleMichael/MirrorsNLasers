@@ -2,7 +2,9 @@ from src.Collisons.CollisionFunctions import ifPointCollidesWithLine, \
     ifRoundCollidesWithRound, surfaceOfPolygonRoundCollision
 from src.Collisons.RoundCollisonModel import RoundCollisionModel
 from src.LaserUtility.Laser import Laser
-from src.Structures import RectangleWall, Column, PolygonWall
+from src.Structures.RectangleWall import RectangleWall
+from src.Structures.Column import Column
+from src.Structures.PolygonWall import PolygonWall
 
 
 class CollisionManager:

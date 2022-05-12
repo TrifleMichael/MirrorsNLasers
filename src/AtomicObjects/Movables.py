@@ -1,5 +1,6 @@
 from math import copysign
 
+
 class NonInertialObject:
     """An object that moves with constant velocity in a given direction."""
     def __init__(self, x, y):

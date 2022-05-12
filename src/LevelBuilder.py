@@ -1,9 +1,13 @@
 import json
 
-from src.LaserUtility.Laser import Laser
-from src.Structures import Column, RectangleWall, PolygonWall
 from src.Level import Level
 from src.Player import Player
+from src.LaserUtility.Laser import Laser
+
+from src.Structures.RectangleWall import RectangleWall
+from src.Structures.Column import Column
+from src.Structures.PolygonWall import PolygonWall
+
 
 
 class LevelBuilder:

@@ -1,7 +1,7 @@
 import math
 
 import pygame
-from src.Sprites import CircleSprite
+from src.Sprites.CircleSprite import CircleSprite
 from src.AtomicObjects.Mirror import Mirror
 from src.AtomicObjects.Movables import InertialObject
 from src.Collisons.RoundCollisonModel import RoundCollisionModel
