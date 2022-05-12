@@ -4,9 +4,14 @@ from src.Utility.EuclidianFunctions import pointToLineDistance, pointToSegmentDi
 # TODO: Transfer all main collision functions here
 
 pointLineEpsilon = 4
+pointToPointEpsilon = 4
 
 
 def surfaceOfPolygonRoundCollision(polygonCollisonModel, roundCollisionModel):
+    for point in polygonCollisonModel.pointList:
+        if pointToPointDistance(point, roundCollisionModel.getPoint()) < roundCollisionModel.r + pointToPointEpsilon:
+            return point
+
     listLen = len(polygonCollisonModel.pointList)
     for i in range(listLen):
         testedSegment = [polygonCollisonModel.pointList[i % listLen], polygonCollisonModel.pointList[(i + 1) % listLen]]
