@@ -1,8 +1,8 @@
-from src.Collisons.CollisionFunctions import ifPolygonCollidesWithRound, ifPointCollidesWithLine, \
-    whichSurfaceOfPolygonCollidesWithRound, ifRoundCollidesWithRound
+from src.Collisons.CollisionFunctions import ifPointCollidesWithLine, \
+    ifRoundCollidesWithRound, surfaceOfPolygonRoundCollision
 from src.Collisons.RoundCollisonModel import RoundCollisionModel
 from src.LaserUtility.Laser import Laser
-from src.Structures import RectangleWall, Column
+from src.Structures import RectangleWall, Column, PolygonWall
 
 
 class CollisionManager:
@@ -11,8 +11,9 @@ class CollisionManager:
         self.player = player
 
         self.columnList = []
-        self.laserList = []  # Laser type
+        self.laserList = []
         self.wallList = []
+        self.polygonWallList = []
 
         self.playerDed = False
 
@@ -23,6 +24,8 @@ class CollisionManager:
             self.wallList.append(obj)
         if isinstance(obj, Column):
             self.columnList.append(obj)
+        if isinstance(obj, PolygonWall):
+            self.polygonWallList.append(obj)
 
     def update(self):
         for column in self.columnList:
@@ -36,13 +39,14 @@ class CollisionManager:
             self.laserMirrorCollision(self.playerMirror, laser)
             self.playerLaserCollision(self.player, laser)
 
-        for wall in self.wallList:
+        for wall in self.wallList + self.polygonWallList:
             self.wallPlayerCollision(self.player, wall)
 
-        for wall in self.wallList:
+        for wall in self.wallList + self.polygonWallList:
             if wall.reflective:
                 for laser in self.laserList:
                     self.wallLaserCollision(wall, laser)
+
 
     def playerLaserCollision(self, player, laser):
         if player.ifCollides(laser.front) and not self.playerDed:
@@ -50,13 +54,14 @@ class CollisionManager:
             print("U died to a bad laser.")
 
     def wallLaserCollision(self, wall, laser):
-        if ifPolygonCollidesWithRound(wall.collisionModel, laser.front):
-            surface = whichSurfaceOfPolygonCollidesWithRound(wall.collisionModel, laser.front)
+        surface = surfaceOfPolygonRoundCollision(wall.collisionModel, laser.front)
+        if surface is not None:
             laser.reactToCollision(surface)
 
     def wallPlayerCollision(self, player, wall):
-        if ifPolygonCollidesWithRound(wall.collisionModel, player): # TODO: Transfer wall to polygon
-            player.reactToFlatCollision( whichSurfaceOfPolygonCollidesWithRound(wall.collisionModel, player) )
+        surface = surfaceOfPolygonRoundCollision(wall.collisionModel, player)
+        if surface is not None:
+            player.reactToFlatCollision(surface)
 
     def columnPlayerCollision(self, column, player):
         if ifRoundCollidesWithRound(player, column):

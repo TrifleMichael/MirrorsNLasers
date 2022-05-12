@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from src.Collisons.PolygonCollisionModel import PolygonCollisionModel
 from src.Collisons.RoundCollisonModel import RoundCollisionModel
-from src.Sprites import RectangleSprite, CircleSprite
+from src.Sprites import RectangleSprite, CircleSprite, PolygonSprite
 
 
 class Structure(ABC):
@@ -26,6 +26,16 @@ class RectangleWall(Structure):
 
     def draw(self):
         self.sprite.draw(self.x, self.y)
+
+
+class PolygonWall(Structure):
+    def __init__(self, pointsList):
+        self.collisionModel = PolygonCollisionModel(pointsList)
+        self.sprite = PolygonSprite(pointsList)
+        self.reflective = True
+
+    def draw(self):
+        self.sprite.draw()
 
 
 class Column(Structure, RoundCollisionModel):

@@ -1,32 +1,21 @@
-from src.Utility.EuclidianFunctions import pointToLineDistance, pointToSegmentDistance, pointToPointDistance
+from src.Utility.EuclidianFunctions import pointToLineDistance, pointToSegmentDistance, pointToPointDistance, \
+    surfaceContainsPointShadow
 
 # TODO: Transfer all main collision functions here
 
 pointLineEpsilon = 4
 
 
-def ifPolygonCollidesWithRound(polygonCollisonModel, roundCollisionModel):
+def surfaceOfPolygonRoundCollision(polygonCollisonModel, roundCollisionModel):
     minDistance = float('inf')
     listLen = len(polygonCollisonModel.pointList)
     for i in range(listLen):
-        pld = pointToSegmentDistance(
-            [polygonCollisonModel.pointList[i % listLen], polygonCollisonModel.pointList[(i + 1) % listLen]],
-            roundCollisionModel.getPoint())
-        minDistance = min(pld, minDistance)
-    return minDistance < pointLineEpsilon + roundCollisionModel.r
-
-
-def whichSurfaceOfPolygonCollidesWithRound(polygonCollisonModel,
-                                           roundCollisionModel):  # TODO: Make one function with the one above
-    minDistance = float('inf')
-    listLen = len(polygonCollisonModel.pointList)
-    for i in range(listLen):
-        pld = pointToSegmentDistance(
-            [polygonCollisonModel.pointList[i % listLen], polygonCollisonModel.pointList[(i + 1) % listLen]],
-            roundCollisionModel.getPoint())
-        minDistance = min(pld, minDistance)
-        if minDistance < pointLineEpsilon + roundCollisionModel.r:
-            return [polygonCollisonModel.pointList[i % listLen], polygonCollisonModel.pointList[(i + 1) % listLen]]
+        testedSegment = [polygonCollisonModel.pointList[i % listLen], polygonCollisonModel.pointList[(i + 1) % listLen]]
+        if surfaceContainsPointShadow(testedSegment, roundCollisionModel.getPoint()):
+            pld = pointToSegmentDistance(testedSegment, roundCollisionModel.getPoint())
+            minDistance = min(pld, minDistance)
+            if minDistance < pointLineEpsilon + roundCollisionModel.r:
+                return testedSegment
     return None
 
 
