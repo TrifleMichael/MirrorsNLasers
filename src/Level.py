@@ -1,8 +1,9 @@
 import time
 
-from src.Sprites import RectangleSprite
+from src.Sprites.RectangleSprite import RectangleSprite
 from src.Collisons.CollisionManager import CollisionManager
-from src.Managers import LaserManager, StructureManager
+from src.LaserUtility.LaserManager import LaserManager
+from src.Structures import StructureManager
 from src.Settings import xResolution, yResolution
 
 

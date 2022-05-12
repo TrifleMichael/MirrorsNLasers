@@ -1,8 +1,8 @@
 from src.Collisons.CollisionFunctions import ifPolygonCollidesWithRound, ifPointCollidesWithLine, \
     whichSurfaceOfPolygonCollidesWithRound
-from src.Collisons.RoundCollisonModel import RoundCollisionModel
 from src.LaserUtility.Laser import Laser
-from src.Structures import RectangleWall, Column
+from src.Structures.RectangleWall import RectangleWall
+from src.Structures.Column import Column
 
 
 class CollisionManager:
