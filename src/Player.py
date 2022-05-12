@@ -5,6 +5,7 @@ from src.Sprites import CircleSprite
 from src.AtomicObjects.Mirror import Mirror
 from src.AtomicObjects.Movables import InertialObject
 from src.Collisons.RoundCollisonModel import RoundCollisionModel
+from src.Utility.EuclidianFunctions import lineTangentToPoints, bounceVector
 
 
 class Player(InertialObject, RoundCollisionModel):
@@ -51,6 +52,13 @@ class Player(InertialObject, RoundCollisionModel):
     def reactToCollision(self):
         self.vx *= -1
         self.vy *= -1
+
+    def reactToRoundCollision(self, point):
+        flipSurface = lineTangentToPoints(point, self.getPoint())
+        self.reactToFlatCollision(flipSurface)
+
+    def reactToFlatCollision(self, surface):
+        self.vx, self.vy = bounceVector((self.vx, self.vy), surface[0], surface[1])
 
     def draw(self):
         """Draws the player and his mirror"""
