@@ -58,7 +58,7 @@ def pointToLineDistance(line, point):  # TODO: Name does not match order of argu
 
 def surfaceContainsPointShadow(surface, point):
     """Checks if the shadow of point cast perpendicular to the surface lands on it"""
-    surfaceAngle = lineAngle(surface[0], surface[1])
+    surfaceAngle = -lineAngle(surface[0], surface[1])
     rotatedPoint = apply2dRotation(point, surfaceAngle)
     rotatedSurface = rotate2dLine(surface[0], surface[1], [0, 0], surfaceAngle)
     return rotatedSurface[0][1] <= rotatedPoint[1] <= rotatedSurface[1][1] \
@@ -80,6 +80,18 @@ def pointToSegmentDistance(segment, point):
         return min(pointToPointDistance(start, rPoint),
                    pointToPointDistance(end, rPoint))
 
+
+def lineTangentToPoints(p1, p2):
+    m = (p1[0]+p2[0]) / 2, (p1[1]+p2[1]) / 2
+    rAng = lineAngle(m, p2)
+    line = [[0, 0], [1, 0]]
+    return rotate2dLine(line[0], line[1], [0, 0], rAng)
+
+
+#print(surfaceContainsPointShadow([[950, 330], [800, 500]], [900, 430]))
+
+#lineTangentToPoints([-2.3, 0], [0, 1])
+#print(lineAngle([-1, -1], [1, 1]))
 
 
 # point = [400, 400]

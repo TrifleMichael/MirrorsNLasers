@@ -1,10 +1,13 @@
 import json
 
-from src.LaserUtility.Laser import Laser
-from src.Structures.RectangleWall import RectangleWall
-from src.Structures.Column import Column
 from src.Level import Level
 from src.Player import Player
+from src.LaserUtility.Laser import Laser
+
+from src.Structures.RectangleWall import RectangleWall
+from src.Structures.Column import Column
+from src.Structures.PolygonWall import PolygonWall
+
 
 
 class LevelBuilder:
@@ -38,6 +41,12 @@ class LevelBuilder:
         self.level.laserManager.add(laser)
         self.level.collisionManager.add(laser)
 
+    def addPolygonWall(self, data):
+        pl = data["pointList"]
+        polygonWall = PolygonWall(pl)
+        self.level.collisionManager.add(polygonWall)
+        self.level.structureManager.add(polygonWall)
+
     def build(self, path):
         with open(path, 'r') as f:
             levelJson = json.load(f)
@@ -53,5 +62,8 @@ class LevelBuilder:
 
         for laser_data in levelJson.get("lasers", []):
             self.addLaser(laser_data)
+
+        for polygon_wall_data in levelJson.get("polygonWalls", []):
+            self.addPolygonWall(polygon_wall_data)
 
         return self.level
