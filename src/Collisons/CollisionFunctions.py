@@ -7,14 +7,12 @@ pointLineEpsilon = 4
 
 
 def surfaceOfPolygonRoundCollision(polygonCollisonModel, roundCollisionModel):
-    minDistance = float('inf')
     listLen = len(polygonCollisonModel.pointList)
     for i in range(listLen):
         testedSegment = [polygonCollisonModel.pointList[i % listLen], polygonCollisonModel.pointList[(i + 1) % listLen]]
         if surfaceContainsPointShadow(testedSegment, roundCollisionModel.getPoint()):
             pld = pointToSegmentDistance(testedSegment, roundCollisionModel.getPoint())
-            minDistance = min(pld, minDistance)
-            if minDistance < pointLineEpsilon + roundCollisionModel.r:
+            if pld < pointLineEpsilon + roundCollisionModel.r:
                 return testedSegment
     return None
 
