@@ -7,11 +7,12 @@ from src.Structures import RectangleWall, Column
 
 class CollisionManager:
     def __init__(self, playerMirror, player):
-        self.roundCollisionModels = []  # colliders that don't move
-        self.laserList = []  # Laser type
-        self.wallList = []
         self.playerMirror = playerMirror
         self.player = player
+
+        self.roundCollisionModels = [player]  # colliders that don't move
+        self.laserList = []  # Laser type
+        self.wallList = []
 
         self.playerDed = False
 
