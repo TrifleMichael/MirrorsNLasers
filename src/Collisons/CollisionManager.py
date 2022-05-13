@@ -7,7 +7,7 @@ from src.Structures.Pit import Pit
 from src.Structures.RectangleWall import RectangleWall
 from src.Structures.Column import Column
 from src.Structures.PolygonWall import PolygonWall
-from src.Utility.EuclidianFunctions import movePointAwayFromSurface
+from src.Utility.EuclidianFunctions import movePointAwayFromSurface, movePointAwayFromPoint
 
 
 class CollisionManager:
@@ -78,12 +78,12 @@ class CollisionManager:
                 surface = result
                 player.vx = 0
                 player.vy = 0
-                player.x, player.y = movePointAwayFromSurface([player.x, player.y], surface, 1)
-            else: # TODO: That check doest differentiate [[], []] and [0, 0]
+                player.x, player.y = movePointAwayFromSurface(player.getPoint(), surface, 1)  # TODO: Export 1 to variable
+            else:
                 point = result
                 player.vx = 0
                 player.vy = 0
-                # TODO: Fill
+                player.x, player.y = movePointAwayFromPoint(player.getPoint(), point, 1)
 
     def playerLaserCollision(self, player, laser):
         if player.ifCollides(laser.front) and not self.playerDed:  # TODO: switch to new collision function
@@ -108,6 +108,7 @@ class CollisionManager:
                 player.reactToFlatCollision(surface)
             else:
                 point = result
+                player.x, player.y = movePointAwayFromPoint(player.getPoint(), point, 1)
                 player.reactToRoundCollision(point)
 
     def columnPlayerCollision(self, column, player):

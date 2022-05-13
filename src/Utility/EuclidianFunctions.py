@@ -104,6 +104,12 @@ def shiftLineToPoint(line, point):
     yShift = point[1] - line[0][1]
     return [[line[0][0] + xShift, line[0][1] + yShift], [line[1][0] + xShift, line[1][1] + yShift]]
 
+def movePointAwayFromPoint(point, repulsingPoint, distance):
+    vec = [point[0] - repulsingPoint[0], point[1] - repulsingPoint[1]]
+    vecLen = pointToPointDistance(vec, [0, 0])
+    vec = [vec[0] * distance / vecLen, vec[1] * distance / vecLen]
+    return [point[0] + vec[0], point[1] + vec[1]]
+
 
 #print(movePointAwayFromSurface([0.5, 0.5], [[0, 0], [1, 1]], 1))
 
