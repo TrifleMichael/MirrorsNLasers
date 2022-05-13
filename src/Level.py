@@ -6,6 +6,8 @@ from src.LaserUtility.LaserManager import LaserManager
 from src.Structures import StructureManager
 from src.Settings import xResolution, yResolution
 
+from src.Structures.LaserDetector import LogicManager
+
 
 class Level:
     """Responsible for managing the level simulation."""
@@ -14,6 +16,7 @@ class Level:
 
         self.structureManager = StructureManager()
         self.laserManager = LaserManager()
+        self.logicManager = LogicManager()
         self.collisionManager = CollisionManager(player.mirror, player)
 
         self.sprite = RectangleSprite(xResolution, yResolution, color=(40, 40, 40))
@@ -25,7 +28,7 @@ class Level:
         self.time = time.time()
 
         self.player.update(keys, dt)
-        self.structureManager.update(dt)
+        self.structureManager.update()
         self.collisionManager.update()
         self.laserManager.update(dt)
 
