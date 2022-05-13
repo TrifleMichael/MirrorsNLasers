@@ -3,6 +3,7 @@ import json
 from src.Level import Level
 from src.Player import Player
 from src.LaserUtility.Laser import Laser
+from src.Structures.Door import Door, Direction
 from src.Structures.LaserDetector import LaserDetector
 from src.Structures.Pit import Pit
 
@@ -60,6 +61,16 @@ class LevelBuilder:
         laserDetector = LaserDetector(pl)
         self.level.collisionManager.add(laserDetector)
         self.level.structureManager.add(laserDetector)
+        self.level.logicManager.addEmmiter(laserDetector, id=data["id"])
+
+    def addDoor(self, data):
+        x, y = data["x"], data["y"]
+        width = data["width"]
+        direction = Direction(data["direction"])
+
+        door = Door(x, y, width, direction)
+        self.level.structureManager.add(door)
+        self.level.logicManager.addReciever(door, id=data["id"])
 
 
     def build(self, path):
@@ -86,5 +97,8 @@ class LevelBuilder:
 
         for laser_detector_data in levelJson.get("laserDetectors", []):
             self.addLaserDetector(laser_detector_data)
+
+        for door_data in levelJson.get("doors", []):
+            self.addDoor(door_data)
 
         return self.level

@@ -8,9 +8,9 @@ class Structure(ABC):
         pass
 
 
-class StructureManager:  # TODO: add proper functionality
+class StructureManager:
     """Manages the structures"""
-    def __init__(self,):
+    def __init__(self):
         self.structureList = []
 
     def add(self, structure):
