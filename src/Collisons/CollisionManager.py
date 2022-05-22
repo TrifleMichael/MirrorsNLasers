@@ -7,7 +7,7 @@ from src.Structures.Pit import Pit
 from src.Structures.RectangleWall import RectangleWall
 from src.Structures.Column import Column
 from src.Structures.PolygonWall import PolygonWall
-from src.Utility.EuclidianFunctions import movePointAwayFromSurface
+from src.Utility.EuclidianFunctions import movePointAwayFromSurface, movePointAwayFromPoint
 
 
 class CollisionManager:
@@ -38,7 +38,6 @@ class CollisionManager:
         if isinstance(obj, LaserDetector):
             self.laserDetectorList.append(obj)
 
-
     def update(self):
         for column in self.columnList:
             for laser in self.laserList:
@@ -66,34 +65,51 @@ class CollisionManager:
             for laser in self.laserList:
                 self.laserDetectorLaserCollision(laserDetector, laser)
 
-
     def laserDetectorLaserCollision(self, laserDetector, laser):
-        surface = surfaceOfPolygonRoundCollision(laserDetector.collisionModel, laser.front)
-        if surface is not None:
+        result = surfaceOfPolygonRoundCollision(laserDetector.collisionModel, laser.front)
+        if result is not None:
             laserDetector.reactToCollision()
 
 
     def playerPitCollision(self, player, pit):
-        surface = surfaceOfPolygonRoundCollision(pit.collisionModel, player)
-        if surface is not None:
-            player.vx = 0
-            player.vy = 0
-            player.x, player.y = movePointAwayFromSurface([player.x, player.y], surface, 1)
+        result = surfaceOfPolygonRoundCollision(pit.collisionModel, player)
+        if result is not None:
+            if type(result[0]) is list or type(result[0]) is tuple:
+                surface = result
+                player.vx = 0
+                player.vy = 0
+                player.x, player.y = movePointAwayFromSurface(player.getPoint(), surface, 1)  # TODO: Export 1 to variable
+            else:
+                point = result
+                player.vx = 0
+                player.vy = 0
+                player.x, player.y = movePointAwayFromPoint(player.getPoint(), point, 1)
 
     def playerLaserCollision(self, player, laser):
-        if player.ifCollides(laser.front) and not self.playerDed: # TODO: switch to new collision function
+        if player.ifCollides(laser.front) and not self.playerDed:  # TODO: switch to new collision function
             self.playerDed = True
             print("U died to a bad laser.")
 
     def wallLaserCollision(self, wall, laser):
-        surface = surfaceOfPolygonRoundCollision(wall.collisionModel, laser.front)
-        if surface is not None:
-            laser.reactToCollision(surface)
+        result = surfaceOfPolygonRoundCollision(wall.collisionModel, laser.front)
+        if result is not None:
+            if type(result[0]) is list or type(result[0]) is tuple:
+                surface = result
+                laser.reactToCollision(surface)
+            else:
+                point = result
+                # TODO: Fill
 
     def wallPlayerCollision(self, player, wall):
-        surface = surfaceOfPolygonRoundCollision(wall.collisionModel, player)
-        if surface is not None:
-            player.reactToFlatCollision(surface)
+        result = surfaceOfPolygonRoundCollision(wall.collisionModel, player)
+        if result is not None:
+            if type(result[0]) is list or type(result[0]) is tuple:
+                surface = result
+                player.reactToFlatCollision(surface)
+            else:
+                point = result
+                player.x, player.y = movePointAwayFromPoint(player.getPoint(), point, 1)
+                player.reactToRoundCollision(point)
 
     def columnPlayerCollision(self, column, player):
         if ifRoundCollidesWithRound(player, column):
