@@ -3,6 +3,7 @@ import sys
 import time
 from time import sleep
 
+from src.GuidedMovementModels.BasicEnemy import BasicEnemy
 from src.LevelBuilder import LevelBuilder
 from src.Settings import frameDuration, xResolution, yResolution
 

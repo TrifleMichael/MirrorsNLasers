@@ -1,6 +1,7 @@
 from src.Collisons.CollisionFunctions import ifPointCollidesWithLine, \
     ifRoundCollidesWithRound, surfaceOfPolygonRoundCollision
 from src.Collisons.RoundCollisonModel import RoundCollisionModel
+from src.GuidedMovementModels import BasicEnemy
 from src.LaserUtility.Laser import Laser
 from src.Structures.LaserDetector import LaserDetector
 from src.Structures.Pit import Pit
@@ -21,6 +22,7 @@ class CollisionManager:
         self.polygonWallList = []
         self.pitList = []
         self.laserDetectorList = []
+        self.enemyList = []
 
         self.playerDed = False
 
@@ -37,6 +39,10 @@ class CollisionManager:
             self.pitList.append(obj)
         if isinstance(obj, LaserDetector):
             self.laserDetectorList.append(obj)
+
+    def addEnemy(self, enemy):  # is instance doesn't work for weird reasons
+        self.enemyList.append(enemy)
+
 
     def update(self):
         for column in self.columnList:
@@ -64,6 +70,14 @@ class CollisionManager:
         for laserDetector in self.laserDetectorList:
             for laser in self.laserList:
                 self.laserDetectorLaserCollision(laserDetector, laser)
+
+        for enemy in self.enemyList:
+            for wall in self.wallList:
+                self.enemyWallCollision(enemy, wall)
+
+    def enemyWallCollision(self, enemy, wall):
+        if surfaceOfPolygonRoundCollision(wall.collisionModel, enemy.collisionModel) is not None:
+            enemy.reactToWall(wall)
 
     def laserDetectorLaserCollision(self, laserDetector, laser):
         result = surfaceOfPolygonRoundCollision(laserDetector.collisionModel, laser.front)

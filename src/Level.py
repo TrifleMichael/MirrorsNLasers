@@ -1,5 +1,6 @@
 import time
 
+from src.GuidedMovementModels.EnemyManager import EnemyManager
 from src.Sprites.RectangleSprite import RectangleSprite
 from src.Collisons.CollisionManager import CollisionManager
 from src.LaserUtility.LaserManager import LaserManager
@@ -18,6 +19,7 @@ class Level:
         self.laserManager = LaserManager()
         self.logicManager = LogicManager()
         self.collisionManager = CollisionManager(player.mirror, player)
+        self.enemyManager = EnemyManager(self)
 
         self.sprite = RectangleSprite(xResolution, yResolution, color=(40, 40, 40))
         self.time = time.time()
@@ -31,10 +33,11 @@ class Level:
         self.structureManager.update()
         self.collisionManager.update()
         self.laserManager.update(dt)
+        self.enemyManager.update(dt)
 
     def addObject(self, obj):
         """Adds an object to the level. The object will be updated and drawn each frame."""
-        pass # TODO
+        pass
 
     def draw(self):
         """Draws all objects in the level. Draws everything."""
@@ -42,3 +45,4 @@ class Level:
         self.structureManager.draw()
         self.laserManager.draw()
         self.player.draw()
+        self.enemyManager.draw()
