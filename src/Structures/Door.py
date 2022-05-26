@@ -1,8 +1,11 @@
 from src.LogicManager import Receiver
+from src.Collisons.PolygonCollisionModel import PolygonCollisionModel
 from src.Sprites.LineSprite import LineSprite
 from src.Structures import Structure
 from enum import Enum
 from math import pi, cos, sin
+
+from src.Utility.EuclidianFunctions import rotate2dLine, lineAngle, apply2dRotation
 
 
 class Direction(Enum): # TODO: problably move this to a different file
@@ -23,6 +26,7 @@ class Door(Structure, Receiver):
         self.is_open = is_open
         self.rotation = direction.to_rotation()
         self.sprite = LineSprite(color=(139, 69, 19), width=15)
+        self.collisionModel = PolygonCollisionModel(self.getSurfacePoints())
 
     def draw(self):
         self.sprite.draw(*self.getSurfacePoints())
@@ -31,6 +35,8 @@ class Door(Structure, Receiver):
         if not self.is_open:
             self.is_open = True
             self.rotation += pi/2
+        self.sprite = LineSprite(color=(255, 228, 196), width=15)
+        self.collisionModel = PolygonCollisionModel([])
 
     def getSurfacePoints(self):
         p1 = (self.x, self.y)

@@ -71,6 +71,7 @@ class LevelBuilder:
         door = Door(x, y, width, direction)
         self.level.structureManager.add(door)
         self.level.logicManager.addReciever(door, id=data["id"])
+        self.level.collisionManager.add(door)
 
 
     def build(self, path):
