@@ -35,7 +35,6 @@ class Door(Structure, Receiver):
         if not self.is_open:
             self.is_open = True
             self.rotation += pi/2
-        self.sprite = LineSprite(color=(255, 228, 196), width=15)
         self.collisionModel = PolygonCollisionModel([])
 
     def getSurfacePoints(self):
