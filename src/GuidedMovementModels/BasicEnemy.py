@@ -3,7 +3,7 @@ from src.Collisons.CollisionFunctions import surfaceOfPolygonRoundCollision
 from src.Collisons.RoundCollisonModel import RoundCollisionModel
 from src.GuidedMovementModels.EnemyStates import EnemyState
 from src.Sprites.CircleSprite import CircleSprite
-from src.Utility.EuclidianFunctions import pointsNormalVector
+from src.Utility.EuclidianFunctions import pointsNormalVector, movePointAwayFromSurface
 
 
 class BasicEnemy:
@@ -23,16 +23,28 @@ class BasicEnemy:
     def getPoint(self):
         return self.movementModel.x, self.movementModel.y
 
+    def changePosition(self, x, y):
+        self.movementModel.x = x
+        self.movementModel.y = y
+        self.collisionModel.x = x
+        self.collisionModel.y = y
+
     def move(self, dir_x, dir_y, dt):
         self.movementModel.move(dir_x, dir_y, dt)
         self.collisionModel.x = self.movementModel.x
         self.collisionModel.y = self.movementModel.y
 
     def reactToWall(self, wall):
-        print("Enemy hit the wall")
+        self.state = EnemyState.standingStill
+        collisionSurface = surfaceOfPolygonRoundCollision(wall.collisionModel, self.collisionModel)
+        pts = movePointAwayFromSurface(self.getPoint(), collisionSurface, 1)
+        self.changePosition(pts[0], pts[1])
 
 
-    def evaluateMove(self, dt):
+    def evaluateMove(self):
+        self.state = EnemyState.approachingPlayer
+
+    def performMove(self, dt):
         if self.state == EnemyState.approachingPlayer:
             direction = pointsNormalVector(self.getPoint(), self.enemyGuider.getPlayerLocation())
             self.move(direction[0], direction[1], dt)

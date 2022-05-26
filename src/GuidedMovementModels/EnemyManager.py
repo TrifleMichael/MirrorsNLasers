@@ -12,7 +12,8 @@ class EnemyManager:
 
     def update(self, dt):
         for enemy in self.enemyList:
-            enemy.evaluateMove(dt)
+            enemy.performMove(dt)  # Enemy must move before evaluating move, as evaluation can update during game loop
+            enemy.evaluateMove()
 
     def addEnemy(self, enemy):
         self.enemyList.append(enemy)
