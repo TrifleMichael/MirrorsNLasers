@@ -2,6 +2,7 @@ from src.Collisons.CollisionFunctions import ifPointCollidesWithLine, \
     ifRoundCollidesWithRound, surfaceOfPolygonRoundCollision
 from src.Collisons.RoundCollisonModel import RoundCollisionModel
 from src.LaserUtility.Laser import Laser
+from src.Structures.Door import Door
 from src.Structures.LaserDetector import LaserDetector
 from src.Structures.Pit import Pit
 from src.Structures.RectangleWall import RectangleWall
@@ -21,6 +22,7 @@ class CollisionManager:
         self.polygonWallList = []
         self.pitList = []
         self.laserDetectorList = []
+        self.doorList = []
 
         self.playerDed = False
 
@@ -37,6 +39,8 @@ class CollisionManager:
             self.pitList.append(obj)
         if isinstance(obj, LaserDetector):
             self.laserDetectorList.append(obj)
+        if isinstance(obj, Door):
+            self.doorList.append(obj)
 
     def update(self):
         for column in self.columnList:
@@ -64,6 +68,14 @@ class CollisionManager:
         for laserDetector in self.laserDetectorList:
             for laser in self.laserList:
                 self.laserDetectorLaserCollision(laserDetector, laser)
+
+        for door in self.doorList:
+            self.playerDoorCollision(self.player, door)
+
+    def playerDoorCollision(self, player, door):
+        result = surfaceOfPolygonRoundCollision(door.collisionModel, player)
+        if result is not None:
+            player.reactToFlatCollision(result)
 
     def laserDetectorLaserCollision(self, laserDetector, laser):
         result = surfaceOfPolygonRoundCollision(laserDetector.collisionModel, laser.front)

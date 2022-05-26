@@ -1,7 +1,10 @@
+from src.Collisons.PolygonCollisionModel import PolygonCollisionModel
 from src.Sprites.LineSprite import LineSprite
 from src.Structures import Structure
 from enum import Enum
 from math import pi, cos, sin
+
+from src.Utility.EuclidianFunctions import rotate2dLine, lineAngle, apply2dRotation
 
 
 class Direction(Enum): # TODO: problably move this to a different file
@@ -24,10 +27,13 @@ class Door(Structure):
         self.is_open = is_open
         self.rotation = direction.to_rotation()
         self.sprite = LineSprite(color=(255, 228, 196), width=15)
+        self.collisionModel = PolygonCollisionModel(self.getSurfacePoints())
 
     def toggle(self):
         self.is_open = not self.is_open
         self.rotation += pi/2 if self.is_open else -pi/2
+        self.collisionModel = PolygonCollisionModel([])
+        # remove collision model after opening so it doesnt teleport into player
 
     def getSurfacePoints(self):
         p1 = (self.x, self.y)
