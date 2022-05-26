@@ -3,7 +3,7 @@ from src.Collisons.CollisionFunctions import surfaceOfPolygonRoundCollision
 from src.Collisons.RoundCollisonModel import RoundCollisionModel
 from src.GuidedMovementModels.EnemyStates import EnemyState
 from src.Sprites.CircleSprite import CircleSprite
-from src.Utility.EuclidianFunctions import pointsNormalVector, movePointAwayFromSurface
+from src.Utility.EuclidianFunctions import pointsNormalVector, movePointAwayFromSurface, movePointAwayFromPoint
 
 
 class BasicEnemy:
@@ -36,10 +36,18 @@ class BasicEnemy:
 
     def reactToWall(self, wall):
         self.state = EnemyState.standingStill
-        collisionSurface = surfaceOfPolygonRoundCollision(wall.collisionModel, self.collisionModel)
-        pts = movePointAwayFromSurface(self.getPoint(), collisionSurface, 1)
-        self.changePosition(pts[0], pts[1])
+        collisionBody = surfaceOfPolygonRoundCollision(wall.collisionModel, self.collisionModel)
+        if type(collisionBody[0]) is list or type(collisionBody[0]) is tuple:
+            pts = movePointAwayFromSurface(self.getPoint(), collisionBody, 2)
+            self.changePosition(pts[0], pts[1])
+        else:
+            pts = movePointAwayFromPoint(self.getPoint(), collisionBody, 2)
+            self.changePosition(pts[0], pts[1])
 
+    def reactToColumn(self, column):
+        self.state = EnemyState.standingStill
+        pts = movePointAwayFromPoint(self.getPoint(), column.getPoint(), 2)
+        self.changePosition(pts[0], pts[1])
 
     def evaluateMove(self):
         self.state = EnemyState.approachingPlayer

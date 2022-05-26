@@ -72,8 +72,14 @@ class CollisionManager:
                 self.laserDetectorLaserCollision(laserDetector, laser)
 
         for enemy in self.enemyList:
-            for wall in self.wallList:
+            for wall in self.wallList + self.polygonWallList:
                 self.enemyWallCollision(enemy, wall)
+            for column in self.columnList:
+                self.enemyColumnColision(enemy, column)
+
+    def enemyColumnColision(self, enemy, column):
+        if ifRoundCollidesWithRound(enemy.collisionModel, column):
+            enemy.reactToColumn(column)
 
     def enemyWallCollision(self, enemy, wall):
         if surfaceOfPolygonRoundCollision(wall.collisionModel, enemy.collisionModel) is not None:
