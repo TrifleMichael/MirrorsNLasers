@@ -8,6 +8,7 @@ from src.Structures.Pit import Pit
 from src.Structures.RectangleWall import RectangleWall
 from src.Structures.Column import Column
 from src.Structures.PolygonWall import PolygonWall
+from src.Structures.WinFlag import WinFlag
 from src.Utility.EuclidianFunctions import movePointAwayFromSurface, movePointAwayFromPoint
 
 
@@ -22,9 +23,8 @@ class CollisionManager:
         self.polygonWallList = []
         self.pitList = []
         self.laserDetectorList = []
+        self.winFlags = []
         self.doorList = []
-
-        self.playerDed = False
 
     def add(self, obj):
         if isinstance(obj, Laser):
@@ -39,6 +39,8 @@ class CollisionManager:
             self.pitList.append(obj)
         if isinstance(obj, LaserDetector):
             self.laserDetectorList.append(obj)
+        if isinstance(obj, WinFlag):
+            self.winFlags.append(obj)
         if isinstance(obj, Door):
             self.doorList.append(obj)
 
@@ -69,6 +71,9 @@ class CollisionManager:
             for laser in self.laserList:
                 self.laserDetectorLaserCollision(laserDetector, laser)
 
+        for flag in self.winFlags:
+            self.playerFlagCollision(self.player, flag)
+            
         for door in self.doorList:
             self.playerDoorCollision(self.player, door)
 
@@ -81,6 +86,12 @@ class CollisionManager:
         result = surfaceOfPolygonRoundCollision(laserDetector.collisionModel, laser.front)
         if result is not None:
             laserDetector.reactToCollision()
+
+
+    def playerFlagCollision(self, player, flag):
+        result = surfaceOfPolygonRoundCollision(flag.collisionModel, player)
+        if result is not None:
+            player.win = True
 
 
     def playerPitCollision(self, player, pit):
@@ -98,9 +109,8 @@ class CollisionManager:
                 player.x, player.y = movePointAwayFromPoint(player.getPoint(), point, 1)
 
     def playerLaserCollision(self, player, laser):
-        if player.ifCollides(laser.front) and not self.playerDed:  # TODO: switch to new collision function
-            self.playerDed = True
-            print("U died to a bad laser.")
+        if player.ifCollides(laser.front) and player.alive:  # TODO: switch to new collision function
+            player.damage()
 
     def wallLaserCollision(self, wall, laser):
         result = surfaceOfPolygonRoundCollision(wall.collisionModel, laser.front)
