@@ -1,5 +1,6 @@
 from enum import Enum
 from src import xResolution, yResolution
+from math import pi
 
 
 class ScreenCorner(Enum):
@@ -19,3 +20,13 @@ class ScreenCorner(Enum):
 
     def isTop(self):
         return self.value == 1 or self.value == 2
+
+
+class Direction(Enum): # TODO: problably move this to a different file
+    RIGHT = 1
+    UP = 2
+    LEFT = 3
+    DOWN = 4
+
+    def to_rotation(self):
+        return (self.value-1)*pi/2

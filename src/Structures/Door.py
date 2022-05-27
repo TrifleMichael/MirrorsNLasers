@@ -2,20 +2,10 @@ from src.LogicManager import Receiver
 from src.Collisons.PolygonCollisionModel import PolygonCollisionModel
 from src.Sprites.LineSprite import LineSprite
 from src.Structures import Structure
-from enum import Enum
+from src.Enums import Direction
 from math import pi, cos, sin
 
 from src.Utility.EuclidianFunctions import rotate2dLine, lineAngle, apply2dRotation
-
-
-class Direction(Enum): # TODO: problably move this to a different file
-    RIGHT = 1
-    DOWN = 2
-    LEFT = 3
-    UP = 4
-
-    def to_rotation(self):
-        return self.value*pi/2
 
 
 class Door(Structure, Receiver):
