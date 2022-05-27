@@ -3,11 +3,13 @@ from src.Collisons.CollisionFunctions import ifPointCollidesWithLine, \
 from src.Collisons.RoundCollisonModel import RoundCollisionModel
 from src.GuidedMovementModels import BasicEnemy
 from src.LaserUtility.Laser import Laser
+from src.Structures.Door import Door
 from src.Structures.LaserDetector import LaserDetector
 from src.Structures.Pit import Pit
 from src.Structures.RectangleWall import RectangleWall
 from src.Structures.Column import Column
 from src.Structures.PolygonWall import PolygonWall
+from src.Structures.WinFlag import WinFlag
 from src.Utility.EuclidianFunctions import movePointAwayFromSurface, movePointAwayFromPoint
 
 
@@ -23,8 +25,8 @@ class CollisionManager:
         self.pitList = []
         self.laserDetectorList = []
         self.enemyList = []
-
-        self.playerDed = False
+        self.winFlags = []
+        self.doorList = []
 
     def add(self, obj):
         if isinstance(obj, Laser):
@@ -39,6 +41,10 @@ class CollisionManager:
             self.pitList.append(obj)
         if isinstance(obj, LaserDetector):
             self.laserDetectorList.append(obj)
+        if isinstance(obj, WinFlag):
+            self.winFlags.append(obj)
+        if isinstance(obj, Door):
+            self.doorList.append(obj)
 
     def addEnemy(self, enemy):  # is instance doesn't work for weird reasons
         self.enemyList.append(enemy)
@@ -76,6 +82,16 @@ class CollisionManager:
                 self.enemyWallCollision(enemy, wall)
             for column in self.columnList:
                 self.enemyColumnColision(enemy, column)
+        for flag in self.winFlags:
+            self.playerFlagCollision(self.player, flag)
+            
+        for door in self.doorList:
+            self.playerDoorCollision(self.player, door)
+
+    def playerDoorCollision(self, player, door):
+        result = surfaceOfPolygonRoundCollision(door.collisionModel, player)
+        if result is not None:
+            player.reactToFlatCollision(result)
 
     def enemyColumnColision(self, enemy, column):
         if ifRoundCollidesWithRound(enemy.collisionModel, column):
@@ -89,6 +105,12 @@ class CollisionManager:
         result = surfaceOfPolygonRoundCollision(laserDetector.collisionModel, laser.front)
         if result is not None:
             laserDetector.reactToCollision()
+
+
+    def playerFlagCollision(self, player, flag):
+        result = surfaceOfPolygonRoundCollision(flag.collisionModel, player)
+        if result is not None:
+            player.win = True
 
 
     def playerPitCollision(self, player, pit):
@@ -106,9 +128,8 @@ class CollisionManager:
                 player.x, player.y = movePointAwayFromPoint(player.getPoint(), point, 1)
 
     def playerLaserCollision(self, player, laser):
-        if player.ifCollides(laser.front) and not self.playerDed:  # TODO: switch to new collision function
-            self.playerDed = True
-            print("U died to a bad laser.")
+        if player.ifCollides(laser.front) and player.alive:  # TODO: switch to new collision function
+            player.damage()
 
     def wallLaserCollision(self, wall, laser):
         result = surfaceOfPolygonRoundCollision(wall.collisionModel, laser.front)

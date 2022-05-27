@@ -19,6 +19,10 @@ class Player(InertialObject, RoundCollisionModel):
         self.rotation = 0
         self.mirror = Mirror(self.x, self.y, width=150, rotation=0)
 
+        self.hp = 100
+        self.alive = True
+        self.win = False
+
         self.sprite = CircleSprite(radius, color=(255, 0, 0))
 
     def update(self, keys, dt):
@@ -31,6 +35,11 @@ class Player(InertialObject, RoundCollisionModel):
 
     def readKeys(self, keys):
         """Reads the keys and sets player's direction accordingly."""
+        if not keys:
+            self.dir_y = 0
+            self.dir_x = 0
+            return
+
         self.dir_y = keys[pygame.K_s] - keys[pygame.K_w]
         self.dir_x = keys[pygame.K_d] - keys[pygame.K_a]
         norm = (self.dir_x ** 2 + self.dir_y ** 2) ** 0.5
@@ -58,9 +67,15 @@ class Player(InertialObject, RoundCollisionModel):
         flipSurface = shiftLineToPoint(flipSurface, point)
         self.reactToFlatCollision(flipSurface)
 
-    def reactToFlatCollision(self, surface):
-        self.vx, self.vy = bounceVector((self.vx, self.vy), surface[0], surface[1])
-        self.x, self.y = movePointAwayFromSurface(self.getPoint(), surface, 4)
+    def reactToFlatCollision(self, result):
+        if type(result[0]) is list or type(result[0]) is tuple:
+            self.vx, self.vy = bounceVector((self.vx, self.vy), result[0], result[1])
+            self.x, self.y = movePointAwayFromSurface(self.getPoint(), result, 4)
+
+    def damage(self, damage=25):
+        self.hp -= damage
+        if self.hp <= 0:
+            self.alive = False
 
     def draw(self):
         """Draws the player and his mirror"""

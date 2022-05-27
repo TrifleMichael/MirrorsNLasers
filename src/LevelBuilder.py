@@ -11,12 +11,23 @@ from src.Structures.Pit import Pit
 from src.Structures.RectangleWall import RectangleWall
 from src.Structures.Column import Column
 from src.Structures.PolygonWall import PolygonWall
-
+from src.Structures.WinFlag import WinFlag
 
 
 class LevelBuilder:
     def __init__(self):
         self.level = None
+        self.handlers = {
+            "rectangleWalls": self.addRectangleWall,
+            "columns": self.addColumn,
+            "lasers": self.addLaser,
+            "polygonWalls": self.addPolygonWall,
+            "pits": self.addPit,
+            "laserDetectors": self.addLaserDetector,
+            "doors": self.addDoor,
+            "winFlags": self.addWinFlag,
+            "enemies": self.addBasicEnemy
+        }
 
     def addRectangleWall(self, data):
         x, y = data["x"], data["y"]
@@ -72,6 +83,13 @@ class LevelBuilder:
         door = Door(x, y, width, direction)
         self.level.structureManager.add(door)
         self.level.logicManager.addReciever(door, id=data["id"])
+        self.level.collisionManager.add(door)
+
+    def addWinFlag(self, data):
+        x, y = data["x"], data["y"]
+        winFlag = WinFlag(x, y)
+        self.level.collisionManager.add(winFlag)
+        self.level.structureManager.add(winFlag)
 
     def addBasicEnemy(self, data):
         x, y, = data["x"], data["y"]
@@ -87,26 +105,10 @@ class LevelBuilder:
         player = levelJson["player"]
         self.level = Level(Player(player["x"], player["y"]))
 
-        for col_data in levelJson.get("columns", []):
-            self.addColumn(col_data)
-
-        for wall_data in levelJson.get("rectangleWalls", []):
-            self.addRectangleWall(wall_data)
-
-        for laser_data in levelJson.get("lasers", []):
-            self.addLaser(laser_data)
-
-        for polygon_wall_data in levelJson.get("polygonWalls", []):
-            self.addPolygonWall(polygon_wall_data)
-
-        for pit_data in levelJson.get("pits", []):
-            self.addPit(pit_data)
-
-        for laser_detector_data in levelJson.get("laserDetectors", []):
-            self.addLaserDetector(laser_detector_data)
-
-        for door_data in levelJson.get("doors", []):
-            self.addDoor(door_data)
+        for item_type, items in levelJson.items():
+            handler = self.handlers.get(item_type, lambda x: None)
+            for data in items:
+                handler(data)
 
         for enemy_data in levelJson.get("enemies", []):
             self.addBasicEnemy(enemy_data)

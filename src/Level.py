@@ -7,7 +7,7 @@ from src.LaserUtility.LaserManager import LaserManager
 from src.Structures import StructureManager
 from src.Settings import xResolution, yResolution
 
-from src.Structures.LaserDetector import LogicManager
+from src.LogicManager import LogicManager
 
 
 class Level:
