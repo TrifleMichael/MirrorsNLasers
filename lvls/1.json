@@ -74,7 +74,7 @@
       "x": 1200,
       "y": 620,
       "width": 150,
-      "direction": 0,
+      "direction": 1,
       "id": "door1"
     }
   ],
