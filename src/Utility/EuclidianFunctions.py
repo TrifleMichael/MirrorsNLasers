@@ -89,14 +89,14 @@ def lineTangentToPoints(p1, p2):
 
 def movePointAwayFromSurface(point, surface, distance):
     ang = lineAngle(surface[0], surface[1])
-    l, r = rotate2dLine(surface[0], surface[1], [0, 0], ang)
-    p = apply2dRotation(point, ang)
+    l, r = rotate2dLine(surface[0], surface[1], [0, 0], -ang)
+    p = apply2dRotation(point, -ang)
     if p[0] < l[0]:
         p[0] -= distance
     else:
         p[0] += distance
 
-    p = apply2dRotation(p, -ang)
+    p = apply2dRotation(p, ang)
     return p
 
 def shiftLineToPoint(line, point):
