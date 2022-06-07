@@ -1,5 +1,6 @@
 import json
 
+from src.GuidedMovementModels.BasicEnemy import BasicEnemy
 from src.Level import Level
 from src.Player import Player
 from src.LaserUtility.Laser import Laser
@@ -24,7 +25,8 @@ class LevelBuilder:
             "pits": self.addPit,
             "laserDetectors": self.addLaserDetector,
             "doors": self.addDoor,
-            "winFlags": self.addWinFlag
+            "winFlags": self.addWinFlag,
+            "enemies": self.addBasicEnemy
         }
 
     def addRectangleWall(self, data):
@@ -85,10 +87,16 @@ class LevelBuilder:
 
     def addWinFlag(self, data):
         x, y = data["x"], data["y"]
-
         winFlag = WinFlag(x, y)
         self.level.collisionManager.add(winFlag)
         self.level.structureManager.add(winFlag)
+
+    def addBasicEnemy(self, data):
+        x, y, = data["x"], data["y"]
+        r = data["r"]
+        enemy = BasicEnemy(x, y, r, self.level.enemyManager)
+        self.level.enemyManager.addEnemy(enemy)
+        self.level.collisionManager.addEnemy(enemy)
 
     def build(self, path):
         with open(path, 'r') as f:
@@ -101,5 +109,8 @@ class LevelBuilder:
             handler = self.handlers.get(item_type, lambda x: None)
             for data in items:
                 handler(data)
+
+        for enemy_data in levelJson.get("enemies", []):
+            self.addBasicEnemy(enemy_data)
 
         return self.level

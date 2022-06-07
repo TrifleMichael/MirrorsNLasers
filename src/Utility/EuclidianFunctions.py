@@ -110,6 +110,14 @@ def movePointAwayFromPoint(point, repulsingPoint, distance):
     vec = [vec[0] * distance / vecLen, vec[1] * distance / vecLen]
     return [point[0] + vec[0], point[1] + vec[1]]
 
+def pointsNormalVector(p1, p2):
+    """Returns a vector of length 1 pointing from p1 to p2"""
+    dist = pointToPointDistance(p1, p2)
+    return (p2[0] - p1[0]) / dist, (p2[1] - p1[1]) / dist
+
+
+
+
 
 #print(movePointAwayFromSurface([0.5, 0.5], [[0, 0], [1, 1]], 1))
 

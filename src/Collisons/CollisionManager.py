@@ -1,6 +1,7 @@
 from src.Collisons.CollisionFunctions import ifPointCollidesWithLine, \
     ifRoundCollidesWithRound, surfaceOfPolygonRoundCollision
 from src.Collisons.RoundCollisonModel import RoundCollisionModel
+from src.GuidedMovementModels import BasicEnemy
 from src.LaserUtility.Laser import Laser
 from src.Structures.Door import Door
 from src.Structures.LaserDetector import LaserDetector
@@ -23,6 +24,7 @@ class CollisionManager:
         self.polygonWallList = []
         self.pitList = []
         self.laserDetectorList = []
+        self.enemyList = []
         self.winFlags = []
         self.doorList = []
 
@@ -43,6 +45,10 @@ class CollisionManager:
             self.winFlags.append(obj)
         if isinstance(obj, Door):
             self.doorList.append(obj)
+
+    def addEnemy(self, enemy):  # is instance doesn't work for weird reasons
+        self.enemyList.append(enemy)
+
 
     def update(self):
         for column in self.columnList:
@@ -71,6 +77,11 @@ class CollisionManager:
             for laser in self.laserList:
                 self.laserDetectorLaserCollision(laserDetector, laser)
 
+        for enemy in self.enemyList:
+            for wall in self.wallList + self.polygonWallList:
+                self.enemyWallCollision(enemy, wall)
+            for column in self.columnList:
+                self.enemyColumnColision(enemy, column)
         for flag in self.winFlags:
             self.playerFlagCollision(self.player, flag)
             
@@ -81,6 +92,14 @@ class CollisionManager:
         result = surfaceOfPolygonRoundCollision(door.collisionModel, player)
         if result is not None:
             player.reactToFlatCollision(result)
+
+    def enemyColumnColision(self, enemy, column):
+        if ifRoundCollidesWithRound(enemy.collisionModel, column):
+            enemy.reactToColumn(column)
+
+    def enemyWallCollision(self, enemy, wall):
+        if surfaceOfPolygonRoundCollision(wall.collisionModel, enemy.collisionModel) is not None:
+            enemy.reactToWall(wall)
 
     def laserDetectorLaserCollision(self, laserDetector, laser):
         result = surfaceOfPolygonRoundCollision(laserDetector.collisionModel, laser.front)
