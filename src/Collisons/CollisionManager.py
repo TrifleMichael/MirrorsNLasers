@@ -84,12 +84,18 @@ class CollisionManager:
                 self.enemyColumnColision(enemy, column)
             for laser in self.laserList:
                 self.enemyLaserCollision(enemy, laser)
+            for pit in self.pitList:
+                self.enemyPitCollision(enemy, pit)
 
         for flag in self.winFlags:
             self.playerFlagCollision(self.player, flag)
             
         for door in self.doorList:
             self.playerDoorCollision(self.player, door)
+
+    def enemyPitCollision(self, enemy, pit):
+        if surfaceOfPolygonRoundCollision(pit.collisionModel, enemy.collisionModel) is not None:
+            enemy.reactToPit(pit)
 
     def enemyLaserCollision(self, enemy, laser):
         if ifRoundCollidesWithRound(enemy.collisionModel, laser.front) or ifRoundCollidesWithRound(enemy.collisionModel, laser.end):

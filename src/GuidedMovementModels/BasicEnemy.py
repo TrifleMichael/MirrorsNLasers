@@ -12,7 +12,7 @@ from src.Utility.EuclidianFunctions import pointsNormalVector, movePointAwayFrom
 
 class BasicEnemy:
     def __init__(self, x, y, r, enemyManager):
-        self.movementModel = NonInertialObject(x, y) # TODO: Add collision model
+        self.movementModel = NonInertialObject(x, y)
         self.collisionModel = RoundCollisionModel(x, y, r)
         self.sprite = CircleSprite(r)
         self.state = EnemyState.approachingPlayer
@@ -38,6 +38,16 @@ class BasicEnemy:
         self.movementModel.move(dir_x, dir_y, dt)
         self.collisionModel.x = self.movementModel.x
         self.collisionModel.y = self.movementModel.y
+
+    def reactToPit(self, pit):
+        self.flipDirection()
+        collisionBody = surfaceOfPolygonRoundCollision(pit.collisionModel, self.collisionModel)
+        if type(collisionBody[0]) is list or type(collisionBody[0]) is tuple:
+            pts = movePointAwayFromSurface(self.getPoint(), collisionBody, 2)
+            self.changePosition(pts[0], pts[1])
+        else:
+            pts = movePointAwayFromPoint(self.getPoint(), collisionBody, 2)
+            self.changePosition(pts[0], pts[1])
 
     def reactToLaser(self, laser):
         self.enemyGuider.removeEnemy(self)
