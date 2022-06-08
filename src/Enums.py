@@ -22,7 +22,7 @@ class ScreenCorner(Enum):
         return self.value == 1 or self.value == 2
 
 
-class Direction(Enum): # TODO: problably move this to a different file
+class Direction(Enum):
     RIGHT = 1
     UP = 2
     LEFT = 3
@@ -30,3 +30,6 @@ class Direction(Enum): # TODO: problably move this to a different file
 
     def to_rotation(self):
         return (self.value-1)*pi/2
+
+    def rotate90(self, n=1):
+        return Direction((self.value+n-1)%4+1)

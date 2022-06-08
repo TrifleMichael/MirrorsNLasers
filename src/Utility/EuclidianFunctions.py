@@ -118,7 +118,6 @@ def pointsNormalVector(p1, p2):
 
 
 
-
 #print(movePointAwayFromSurface([0.5, 0.5], [[0, 0], [1, 1]], 1))
 
 #print(surfaceContainsPointShadow([[950, 330], [800, 500]], [900, 430]))
