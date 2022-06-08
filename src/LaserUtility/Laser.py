@@ -36,10 +36,10 @@ class Laser:
     def setupStartingSpeed(self, speed):
         normalVec = pointsNormalVector([self.end.moveModel.x, self.end.moveModel.y], [self.front.moveModel.x, self.front.moveModel.y])
         speedVec = extendVector([[0, 0], normalVec[:]], speed)
-        self.front.moveModel.vx = normalVec[0]
-        self.front.moveModel.vy = normalVec[1]
-        self.end.moveModel.vx = normalVec[0]
-        self.end.moveModel.vy = normalVec[1]
+        self.front.moveModel.vx = speedVec[1][0]
+        self.front.moveModel.vy = speedVec[1][1]
+        self.end.moveModel.vx = speedVec[1][0]
+        self.end.moveModel.vy = speedVec[1][1]
 
     def move(self, dt):
         self.front.move(1, 1, dt)
