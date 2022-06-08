@@ -110,7 +110,4 @@ class LevelBuilder:
             for data in items:
                 handler(data)
 
-        for enemy_data in levelJson.get("enemies", []):
-            self.addBasicEnemy(enemy_data)
-
         return self.level
