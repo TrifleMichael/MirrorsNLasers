@@ -24,6 +24,9 @@ class BasicEnemy:
         self.circlingCountdown = 0
         self.laserCountDown = 10
 
+        self.deathTimer = 60
+        self.deathTimerOn = False
+
     def draw(self):
         self.sprite.draw(self.movementModel.x, self.movementModel.y)
 
@@ -52,7 +55,7 @@ class BasicEnemy:
             self.changePosition(pts[0], pts[1])
 
     def reactToLaser(self, laser):
-        self.enemyGuider.removeEnemy(self)
+        self.deathTimerOn = True
 
     def shootAtPlayer(self):  # direction given as vector
         self.enemyGuider.shootLaserAtPlayer(self)
@@ -104,6 +107,13 @@ class BasicEnemy:
         if self.laserCountDown == 0:
             self.shootAtPlayer()
             self.laserCountDown = 180
+
+        if self.deathTimerOn:
+            if self.sprite.color[0] < 250:
+                self.sprite.color[0] += 2
+            self.deathTimer -= 1
+            if self.deathTimer == 0:
+                self.enemyGuider.removeEnemy(self)
 
         if self.state == EnemyState.approachingPlayer:
             direction = pointsNormalVector(self.getPoint(), self.enemyGuider.getPlayerLocation())
