@@ -1,3 +1,4 @@
+from math import pi
 from random import randrange
 
 from src.AtomicObjects.Movables import NonInertialObject
@@ -42,7 +43,7 @@ class BasicEnemy:
         self.enemyGuider.removeEnemy(self)
 
     def reactToWall(self, wall):
-        self.state = EnemyState.standingStill
+        self.flipDirection()
         collisionBody = surfaceOfPolygonRoundCollision(wall.collisionModel, self.collisionModel)
         if type(collisionBody[0]) is list or type(collisionBody[0]) is tuple:
             pts = movePointAwayFromSurface(self.getPoint(), collisionBody, 2)
@@ -52,10 +53,19 @@ class BasicEnemy:
             self.changePosition(pts[0], pts[1])
 
     def reactToColumn(self, column):
-        self.state = EnemyState.standingStill
+        self.flipDirection()
         pts = movePointAwayFromPoint(self.getPoint(), column.getPoint(), 2)
         self.changePosition(pts[0], pts[1])
 
+    def flipDirection(self):
+        if self.state == EnemyState.approachingPlayer:
+            self.state = EnemyState.escapingPlayer
+        elif self.state == EnemyState.escapingPlayer:
+            self.state = EnemyState.approachingPlayer
+        elif self.state == EnemyState.circlingPlayerRight:
+            self.state = EnemyState.circlingPlayerLeft
+        elif self.state == EnemyState.circlingPlayerLeft:
+            self.state = EnemyState.circlingPlayerRight
 
     def evaluateMove(self):
         if pointToPointDistance(self.enemyGuider.getPlayerLocation(), self.getPoint()) > 400:
