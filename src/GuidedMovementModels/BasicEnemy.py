@@ -20,7 +20,9 @@ class BasicEnemy:
 
         self.movementModel.vx = 90
         self.movementModel.vy = 90
+
         self.circlingCountdown = 0
+        self.laserCountDown = 10
 
     def draw(self):
         self.sprite.draw(self.movementModel.x, self.movementModel.y)
@@ -50,7 +52,11 @@ class BasicEnemy:
             self.changePosition(pts[0], pts[1])
 
     def reactToLaser(self, laser):
-        self.enemyGuider.removeEnemy(self)
+        pass
+        #self.enemyGuider.removeEnemy(self)
+
+    def shootAtPlayer(self):  # direction given as vector
+        self.enemyGuider.shootLaserAtPlayer(self)
 
     def reactToWall(self, wall):
         self.flipDirection()
@@ -95,6 +101,11 @@ class BasicEnemy:
 
 
     def performMove(self, dt):
+        self.laserCountDown -= 1
+        if self.laserCountDown == 0:
+            self.shootAtPlayer()
+            self.laserCountDown = 180
+
         if self.state == EnemyState.approachingPlayer:
             direction = pointsNormalVector(self.getPoint(), self.enemyGuider.getPlayerLocation())
             self.move(direction[0], direction[1], dt)
