@@ -5,7 +5,7 @@ from src.Sprites.LineSprite import LineSprite
 from src.Sprites.MultiLineSprite import MultiLineSprite
 from src.Collisons.CollidingBall import CollidingBall
 from src.Utility.EuclidianFunctions import lineAngle, bounceVector, pointToLineDistance, surfaceContainsPointShadow, \
-    lineTangentToPoints, pointsNormalVector, extendVector
+    lineTangentToPoints, pointsNormalVector, extendVector, movePointAwayFromSurface, movePointAwayFromPoint
 from src.Settings import frameDuration
 
 
@@ -60,13 +60,14 @@ class Laser:
     def reactToCollision(self, flipSurface):
         """Bounces of surface defined by two points"""
         self.front.moveModel.vx, self.front.moveModel.vy = bounceVector((self.front.moveModel.vx, self.front.moveModel.vy), flipSurface[0], flipSurface[1])
-
         self.bounceImmunityFrames = self.maxBounceImmunityFrames
         self.flipCoords = (self.front.moveModel.x, self.front.moveModel.y)
+        self.front.moveModel.x, self.front.moveModel.y = movePointAwayFromSurface(self.getFrontPoint(), flipSurface, 2)
         currentSpeed = sqrt(self.end.moveModel.vx ** 2 + self.end.moveModel.vy ** 2)
-        self.framesUntilFlip = int(self.length / currentSpeed / frameDuration * 1.4)
+        self.framesUntilFlip = int(self.length / currentSpeed / frameDuration)
 
     def reactToRoundCollision(self, point):
+        self.front.moveModel.x, self.front.moveModel.y = movePointAwayFromPoint(self.getFrontPoint(), point, 2)
         flipSurface = lineTangentToPoints(self.front.getPoint(), point)
         self.reactToCollision(flipSurface)
 
