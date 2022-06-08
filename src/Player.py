@@ -10,7 +10,7 @@ from src.Utility.EuclidianFunctions import lineTangentToPoints, bounceVector, mo
 
 class Player(InertialObject, RoundCollisionModel):
     """A player is a movable object that can be controlled by (yeah) the player."""
-    def __init__(self, x, y, radius=50):
+    def __init__(self, x, y, radius=40):
         InertialObject.__init__(self, x, y)
         RoundCollisionModel.__init__(self, x, y, r=50)
 

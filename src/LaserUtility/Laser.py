@@ -62,12 +62,12 @@ class Laser:
         self.front.moveModel.vx, self.front.moveModel.vy = bounceVector((self.front.moveModel.vx, self.front.moveModel.vy), flipSurface[0], flipSurface[1])
         self.bounceImmunityFrames = self.maxBounceImmunityFrames
         self.flipCoords = (self.front.moveModel.x, self.front.moveModel.y)
-        self.front.moveModel.x, self.front.moveModel.y = movePointAwayFromSurface(self.getFrontPoint(), flipSurface, 2)
+        #self.front.moveModel.x, self.front.moveModel.y = movePointAwayFromSurface(self.getFrontPoint(), flipSurface, 2)
         currentSpeed = sqrt(self.end.moveModel.vx ** 2 + self.end.moveModel.vy ** 2)
         self.framesUntilFlip = int(self.length / currentSpeed / frameDuration)
 
     def reactToRoundCollision(self, point):
-        self.front.moveModel.x, self.front.moveModel.y = movePointAwayFromPoint(self.getFrontPoint(), point, 2)
+        self.front.moveModel.x, self.front.moveModel.y = movePointAwayFromPoint(self.getFrontPoint(), point, 4)
         flipSurface = lineTangentToPoints(self.front.getPoint(), point)
         self.reactToCollision(flipSurface)
 

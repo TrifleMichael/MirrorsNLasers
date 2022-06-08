@@ -52,7 +52,8 @@ class BasicEnemy:
             self.changePosition(pts[0], pts[1])
 
     def reactToLaser(self, laser):
-        self.enemyGuider.removeEnemy(self)
+        pass
+        #self.enemyGuider.removeEnemy(self)
 
     def shootAtPlayer(self):  # direction given as vector
         self.enemyGuider.shootLaserAtPlayer(self)

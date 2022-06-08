@@ -152,6 +152,7 @@ class CollisionManager:
                 laser.reactToCollision(surface)
             else:
                 point = result
+                laser.reactToRoundCollision(point)
                 # TODO: Fill
 
     def wallPlayerCollision(self, player, wall):

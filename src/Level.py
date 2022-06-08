@@ -27,14 +27,14 @@ class Level:
 
     def update(self, keys):
         """Updates all objects in the level. Updates everything."""
-        dt = time.time() - self.time
+        frameDuration = 0.016
         self.time = time.time()
 
-        self.player.update(keys, dt)
+        self.player.update(keys, frameDuration)
         self.structureManager.update()
         self.collisionManager.update()
-        self.laserManager.update(dt)
-        self.enemyManager.update(dt)
+        self.laserManager.update(frameDuration)
+        self.enemyManager.update(frameDuration)
 
     def addObject(self, obj):
         """Adds an object to the level. The object will be updated and drawn each frame."""
