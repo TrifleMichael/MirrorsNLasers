@@ -82,11 +82,18 @@ class CollisionManager:
                 self.enemyWallCollision(enemy, wall)
             for column in self.columnList:
                 self.enemyColumnColision(enemy, column)
+            for laser in self.laserList:
+                self.enemyLaserCollision(enemy, laser)
+
         for flag in self.winFlags:
             self.playerFlagCollision(self.player, flag)
             
         for door in self.doorList:
             self.playerDoorCollision(self.player, door)
+
+    def enemyLaserCollision(self, enemy, laser):
+        if ifRoundCollidesWithRound(enemy.collisionModel, laser.front) or ifRoundCollidesWithRound(enemy.collisionModel, laser.end):
+            enemy.reactToLaser(laser)
 
     def playerDoorCollision(self, player, door):
         result = surfaceOfPolygonRoundCollision(door.collisionModel, player)

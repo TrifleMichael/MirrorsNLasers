@@ -21,3 +21,7 @@ class EnemyManager:
     def draw(self):
         for enemy in self.enemyList:
             enemy.draw()
+
+    def removeEnemy(self, enemy):
+        self.enemyList.remove(enemy)
+        self.level.collisionManager.enemyList.remove(enemy)
