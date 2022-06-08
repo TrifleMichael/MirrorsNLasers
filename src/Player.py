@@ -10,7 +10,7 @@ from src.Utility.EuclidianFunctions import lineTangentToPoints, bounceVector, mo
 
 class Player(InertialObject, RoundCollisionModel):
     """A player is a movable object that can be controlled by (yeah) the player."""
-    def __init__(self, x, y, radius=50):
+    def __init__(self, x, y, radius=40):
         InertialObject.__init__(self, x, y)
         RoundCollisionModel.__init__(self, x, y, r=50)
 
@@ -69,8 +69,8 @@ class Player(InertialObject, RoundCollisionModel):
 
     def reactToFlatCollision(self, result):
         if type(result[0]) is list or type(result[0]) is tuple:
-            self.vx, self.vy = bounceVector((self.vx, self.vy), result[0], result[1])
-            self.x, self.y = movePointAwayFromSurface(self.getPoint(), result, 4)
+            self.vx, self.vy = bounceVector((self.vx, self.vy), result[0], result[1], 0.2)
+            self.x, self.y = movePointAwayFromSurface(self.getPoint(), result, 2)
 
     def damage(self, damage=25):
         self.hp -= damage

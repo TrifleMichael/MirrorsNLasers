@@ -10,7 +10,7 @@ from src.Structures.RectangleWall import RectangleWall
 from src.Structures.Column import Column
 from src.Structures.PolygonWall import PolygonWall
 from src.Structures.WinFlag import WinFlag
-from src.Utility.EuclidianFunctions import movePointAwayFromSurface, movePointAwayFromPoint
+from src.Utility.EuclidianFunctions import movePointAwayFromSurface, movePointAwayFromPoint, pointToPointDistance
 
 
 class CollisionManager:
@@ -49,7 +49,6 @@ class CollisionManager:
     def addEnemy(self, enemy):  # is instance doesn't work for weird reasons
         self.enemyList.append(enemy)
 
-
     def update(self):
         for column in self.columnList:
             for laser in self.laserList:
@@ -78,6 +77,10 @@ class CollisionManager:
                 self.laserDetectorLaserCollision(laserDetector, laser)
 
         for enemy in self.enemyList:
+            for otherEnemy in self.enemyList:
+                if self is not otherEnemy:
+                    self.enemyEnemyCollision(enemy, otherEnemy)
+
             for wall in self.wallList + self.polygonWallList:
                 self.enemyWallCollision(enemy, wall)
             for column in self.columnList:
@@ -89,16 +92,24 @@ class CollisionManager:
 
         for flag in self.winFlags:
             self.playerFlagCollision(self.player, flag)
-            
+
         for door in self.doorList:
             self.playerDoorCollision(self.player, door)
+
+    def enemyEnemyCollision(self, enemy1, enemy2):
+        # TODO: Fix
+        # Quickfix because the same references are not differentiated by is
+        if not pointToPointDistance(enemy1.getPoint(), enemy2.getPoint()) == 0:
+            if ifRoundCollidesWithRound(enemy1.collisionModel, enemy2.collisionModel):
+                enemy1.reactToRoundCollision(enemy2)
 
     def enemyPitCollision(self, enemy, pit):
         if surfaceOfPolygonRoundCollision(pit.collisionModel, enemy.collisionModel) is not None:
             enemy.reactToPit(pit)
 
     def enemyLaserCollision(self, enemy, laser):
-        if ifRoundCollidesWithRound(enemy.collisionModel, laser.front) or ifRoundCollidesWithRound(enemy.collisionModel, laser.end):
+        if ifRoundCollidesWithRound(enemy.collisionModel, laser.front) or ifRoundCollidesWithRound(enemy.collisionModel,
+                                                                                                   laser.end):
             enemy.reactToLaser(laser)
 
     def playerDoorCollision(self, player, door):
@@ -108,7 +119,7 @@ class CollisionManager:
 
     def enemyColumnColision(self, enemy, column):
         if ifRoundCollidesWithRound(enemy.collisionModel, column):
-            enemy.reactToColumn(column)
+            enemy.reactToRoundCollision(column)
 
     def enemyWallCollision(self, enemy, wall):
         if surfaceOfPolygonRoundCollision(wall.collisionModel, enemy.collisionModel) is not None:
@@ -119,12 +130,10 @@ class CollisionManager:
         if result is not None:
             laserDetector.reactToCollision()
 
-
     def playerFlagCollision(self, player, flag):
         result = surfaceOfPolygonRoundCollision(flag.collisionModel, player)
         if result is not None:
             player.win = True
-
 
     def playerPitCollision(self, player, pit):
         result = surfaceOfPolygonRoundCollision(pit.collisionModel, player)
@@ -133,7 +142,8 @@ class CollisionManager:
                 surface = result
                 player.vx = 0
                 player.vy = 0
-                player.x, player.y = movePointAwayFromSurface(player.getPoint(), surface, 1)  # TODO: Export 1 to variable
+                player.x, player.y = movePointAwayFromSurface(player.getPoint(), surface,
+                                                              1)  # TODO: Export 1 to variable
             else:
                 point = result
                 player.vx = 0
@@ -152,6 +162,7 @@ class CollisionManager:
                 laser.reactToCollision(surface)
             else:
                 point = result
+                laser.reactToRoundCollision(point)
                 # TODO: Fill
 
     def wallPlayerCollision(self, player, wall):
