@@ -3,8 +3,8 @@ from src.Utility.EuclidianFunctions import pointToLineDistance, pointToSegmentDi
 
 # TODO: Transfer all main collision functions here
 
-pointLineEpsilon = 6
-pointToPointEpsilon = 6
+pointLineEpsilon = 3
+pointToPointEpsilon = 3
 
 
 def surfaceOfPolygonRoundCollision(polygonCollisonModel, roundCollisionModel):

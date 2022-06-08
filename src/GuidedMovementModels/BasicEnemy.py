@@ -52,8 +52,7 @@ class BasicEnemy:
             self.changePosition(pts[0], pts[1])
 
     def reactToLaser(self, laser):
-        pass
-        #self.enemyGuider.removeEnemy(self)
+        self.enemyGuider.removeEnemy(self)
 
     def shootAtPlayer(self):  # direction given as vector
         self.enemyGuider.shootLaserAtPlayer(self)
@@ -68,9 +67,9 @@ class BasicEnemy:
             pts = movePointAwayFromPoint(self.getPoint(), collisionBody, 2)
             self.changePosition(pts[0], pts[1])
 
-    def reactToColumn(self, column):
+    def reactToRoundCollision(self, roundCollisionModel):
         self.flipDirection()
-        pts = movePointAwayFromPoint(self.getPoint(), column.getPoint(), 2)
+        pts = movePointAwayFromPoint(self.getPoint(), roundCollisionModel.getPoint(), 2)
         self.changePosition(pts[0], pts[1])
 
     def flipDirection(self):

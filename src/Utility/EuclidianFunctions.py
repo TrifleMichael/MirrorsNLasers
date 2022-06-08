@@ -35,11 +35,11 @@ def lineAngle(p1, p2):
     return -(math.atan2(p2[0] - p1[0], p2[1] - p1[1]) - math.pi) % (2 * math.pi)
 
 
-def bounceVector(vec, p1, p2):
+def bounceVector(vec, p1, p2, dampening=0):
     """Reflects vector of a surface defined by two points"""
     surfaceAngle = lineAngle(p1, p2)
     vec = apply2dRotation(vec, -surfaceAngle)
-    vec[0] *= -1
+    vec[0] *= -1 * (1-dampening)
     vec = apply2dRotation(vec, surfaceAngle)
     return vec
 
@@ -109,6 +109,8 @@ def shiftLineToPoint(line, point):
 
 def movePointAwayFromPoint(point, repulsingPoint, distance):
     vec = [point[0] - repulsingPoint[0], point[1] - repulsingPoint[1]]
+    if vec == [0, 0]:
+        return point[:]
     vecLen = pointToPointDistance(vec, [0, 0])
     vec = [vec[0] * distance / vecLen, vec[1] * distance / vecLen]
     return [point[0] + vec[0], point[1] + vec[1]]
