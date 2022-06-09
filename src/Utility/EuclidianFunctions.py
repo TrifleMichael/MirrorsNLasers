@@ -35,11 +35,11 @@ def lineAngle(p1, p2):
     return -(math.atan2(p2[0] - p1[0], p2[1] - p1[1]) - math.pi) % (2 * math.pi)
 
 
-def bounceVector(vec, p1, p2):
+def bounceVector(vec, p1, p2, dampening=0):
     """Reflects vector of a surface defined by two points"""
     surfaceAngle = lineAngle(p1, p2)
     vec = apply2dRotation(vec, -surfaceAngle)
-    vec[0] *= -1
+    vec[0] *= -1 * (1-dampening)
     vec = apply2dRotation(vec, surfaceAngle)
     return vec
 
@@ -82,33 +82,39 @@ def pointToSegmentDistance(segment, point):
 
 
 def lineTangentToPoints(p1, p2):
-    m = (p1[0]+p2[0]) / 2, (p1[1]+p2[1]) / 2
+    m = (p1[0] + p2[0]) / 2, (p1[1] + p2[1]) / 2
     rAng = lineAngle(m, p2)
     line = [[0, 0], [1, 0]]
     return rotate2dLine(line[0], line[1], [0, 0], rAng)
 
+
 def movePointAwayFromSurface(point, surface, distance):
     ang = lineAngle(surface[0], surface[1])
-    l, r = rotate2dLine(surface[0], surface[1], [0, 0], -ang)
-    p = apply2dRotation(point, -ang)
+    l, r = rotate2dLine(surface[0], surface[1], [0, 0], ang)
+    p = apply2dRotation(point, ang)
     if p[0] < l[0]:
         p[0] -= distance
     else:
         p[0] += distance
 
-    p = apply2dRotation(p, ang)
+    p = apply2dRotation(p, -ang)
     return p
+
 
 def shiftLineToPoint(line, point):
     xShift = point[0] - line[0][0]
     yShift = point[1] - line[0][1]
     return [[line[0][0] + xShift, line[0][1] + yShift], [line[1][0] + xShift, line[1][1] + yShift]]
 
+
 def movePointAwayFromPoint(point, repulsingPoint, distance):
     vec = [point[0] - repulsingPoint[0], point[1] - repulsingPoint[1]]
+    if vec == [0, 0]:
+        return point[:]
     vecLen = pointToPointDistance(vec, [0, 0])
     vec = [vec[0] * distance / vecLen, vec[1] * distance / vecLen]
     return [point[0] + vec[0], point[1] + vec[1]]
+
 
 def pointsNormalVector(p1, p2):
     """Returns a vector of length 1 pointing from p1 to p2"""
@@ -116,14 +122,23 @@ def pointsNormalVector(p1, p2):
     return (p2[0] - p1[0]) / dist, (p2[1] - p1[1]) / dist
 
 
+def extendVector(vec, param):
+    """Makes vector param times longer, while holding the first point of vector in place"""
+    return [[vec[0][0], vec[0][1]],
+            [(vec[1][0] - vec[0][0]) * param + vec[0][0], (vec[1][1] - vec[0][1]) * param + vec[0][1]]]
 
+def sumVectors(vec1, vec2):
+    return [[vec1[0][0] + vec2[0][0], vec1[0][1] + vec2[0][1]], [vec1[1][0] + vec2[1][0], vec1[1][1] + vec2[1][1]]]
 
-#print(movePointAwayFromSurface([0.5, 0.5], [[0, 0], [1, 1]], 1))
+def shiftVector(vec, dx, dy):
+    return [[vec[0][0] + dx, vec[0][1] + dy], [vec[1][0] + dx, vec[1][1] + dy]]
 
-#print(surfaceContainsPointShadow([[950, 330], [800, 500]], [900, 430]))
+# print(movePointAwayFromSurface([0.5, 0.5], [[0, 0], [1, 1]], 1))
 
-#lineTangentToPoints([-2.3, 0], [0, 1])
-#print(lineAngle([-1, -1], [1, 1]))
+# print(surfaceContainsPointShadow([[950, 330], [800, 500]], [900, 430]))
+
+# lineTangentToPoints([-2.3, 0], [0, 1])
+# print(lineAngle([-1, -1], [1, 1]))
 
 
 # point = [400, 400]

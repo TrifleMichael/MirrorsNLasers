@@ -14,7 +14,7 @@ from src.Gui.Banner import Banner
 
 def mainLoop():
     level_files = ['lvls/3.json', 'lvls/1.json', 'lvls/2.json']
-    lvl_number = 0
+    lvl_number = 2
     level = None
 
     startBanner = Banner("Press space to start")

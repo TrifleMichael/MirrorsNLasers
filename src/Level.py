@@ -1,6 +1,7 @@
 import time
 
 from src.GuidedMovementModels.EnemyManager import EnemyManager
+from src.LaserUtility.Laser import Laser
 from src.Sprites.RectangleSprite import RectangleSprite
 from src.Collisons.CollisionManager import CollisionManager
 from src.LaserUtility.LaserManager import LaserManager
@@ -26,18 +27,27 @@ class Level:
 
     def update(self, keys):
         """Updates all objects in the level. Updates everything."""
-        dt = time.time() - self.time
+        frameDuration = 0.016
         self.time = time.time()
 
-        self.player.update(keys, dt)
+        self.player.update(keys, frameDuration)
         self.structureManager.update()
         self.collisionManager.update()
-        self.laserManager.update(dt)
-        self.enemyManager.update(dt)
+        self.laserManager.update(frameDuration)
+        self.enemyManager.update(frameDuration)
 
     def addObject(self, obj):
         """Adds an object to the level. The object will be updated and drawn each frame."""
         pass
+
+    def addLaser(self, laserVec):
+        x1, y1 = laserVec[0]
+        x2, y2 = laserVec[1]
+        r = 1
+        speed = 200
+        laser = Laser(r, x1, y1, x2, y2, speed)
+        self.laserManager.add(laser)
+        self.collisionManager.add(laser)
 
     def draw(self):
         """Draws all objects in the level. Draws everything."""
