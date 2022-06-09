@@ -70,8 +70,8 @@ class Player(InertialObject, RoundCollisionModel):
 
     def reactToFlatCollision(self, result):
         if type(result[0]) is list or type(result[0]) is tuple:
-            self.vx, self.vy = bounceVector((self.vx, self.vy), result[0], result[1])
-            self.x, self.y = movePointAwayFromSurface(self.getPoint(), result, 4)
+            self.vx, self.vy = bounceVector((self.vx, self.vy), result[0], result[1], 0.2)
+            self.x, self.y = movePointAwayFromSurface(self.getPoint(), result, 2)
 
     def damage(self, damage=25):
         self.hp -= damage

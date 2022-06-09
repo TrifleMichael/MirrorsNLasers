@@ -34,6 +34,9 @@ class Direction(Enum):
     def to_rotation(self):
         """ Returns the rotation of the direction in radians (0 is right, counterclockwise)."""
         return (self.value - 1) * pi / 2
+      
+    def rotate90(self, n=1):
+        return Direction((self.value+n-1)%4+1)
 
 
 class GameState(Enum):
