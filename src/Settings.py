@@ -1,4 +1,4 @@
 xResolution = 1400
 yResolution = 850
-frameDuration = 1/80
-
+FPS = 80
+MAX_LIVES = 3

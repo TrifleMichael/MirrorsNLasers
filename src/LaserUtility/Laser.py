@@ -1,12 +1,12 @@
 import math
 from math import sin, cos, sqrt
 
+from src.Collisons.CollidingBall import CollidingBall
+from src.Settings import FPS
 from src.Sprites.LineSprite import LineSprite
 from src.Sprites.MultiLineSprite import MultiLineSprite
-from src.Collisons.CollidingBall import CollidingBall
 from src.Utility.EuclidianFunctions import lineAngle, bounceVector, pointToLineDistance, surfaceContainsPointShadow, \
     lineTangentToPoints
-from src.Settings import frameDuration
 
 
 class Laser:
@@ -57,7 +57,7 @@ class Laser:
         self.bounceImmunityFrames = self.maxBounceImmunityFrames
         self.flipCoords = (self.front.moveModel.x, self.front.moveModel.y)
         currentSpeed = sqrt(self.end.moveModel.vx ** 2 + self.end.moveModel.vy ** 2)
-        self.framesUntilFlip = int(self.length / currentSpeed / frameDuration * 1.4)
+        self.framesUntilFlip = int(self.length * FPS / currentSpeed * 1.4)
 
     def reactToRoundCollision(self, point):
         flipSurface = lineTangentToPoints(self.front.getPoint(), point)

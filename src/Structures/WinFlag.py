@@ -7,6 +7,7 @@ shape = [(0, 0), (80, 40), (0, 80)]
 
 
 class WinFlag(Structure):
+    """A wall is an immovable structure that makes player complete a level upon reaching."""
     def __init__(self, x, y):
         self.x, self.y = x, y
         self.collisionModel = PolygonCollisionModel([(x+xs, y+ys) for xs, ys in shape])
