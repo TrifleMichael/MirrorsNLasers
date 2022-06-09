@@ -5,7 +5,6 @@ from src.Structures import Structure
 
 class Column(Structure, RoundCollisionModel):
     """ A column is an immovable round object."""
-
     def __init__(self, x, y, radius):
         RoundCollisionModel.__init__(self, x, y, radius)
         self.sprite = CircleSprite(radius, color=(128, 128, 0))

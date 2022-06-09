@@ -1,14 +1,17 @@
+
 import time
 
 from src.GuidedMovementModels.EnemyManager import EnemyManager
 from src.LaserUtility.Laser import Laser
 from src.Sprites.RectangleSprite import RectangleSprite
-from src.Collisons.CollisionManager import CollisionManager
-from src.LaserUtility.LaserManager import LaserManager
-from src.Structures import StructureManager
-from src.Settings import xResolution, yResolution
 
+from src.Collisons.CollisionManager import CollisionManager
+from src.GuidedMovementModels.EnemyManager import EnemyManager
+from src.LaserUtility.LaserManager import LaserManager
 from src.LogicManager import LogicManager
+from src.Settings import xResolution, yResolution, FPS
+from src.Sprites.RectangleSprite import RectangleSprite
+from src.Structures import StructureManager
 
 
 class Level:
@@ -23,22 +26,15 @@ class Level:
         self.enemyManager = EnemyManager(self)
 
         self.sprite = RectangleSprite(xResolution, yResolution, color=(40, 40, 40))
-        self.time = time.time()
 
     def update(self, keys):
-        """Updates all objects in the level. Updates everything."""
-        frameDuration = 0.016
-        self.time = time.time()
-
-        self.player.update(keys, frameDuration)
+        """Updates all objects in the level."""
+        dt = 1 / FPS
+        self.player.update(keys, dt)
         self.structureManager.update()
         self.collisionManager.update()
-        self.laserManager.update(frameDuration)
-        self.enemyManager.update(frameDuration)
-
-    def addObject(self, obj):
-        """Adds an object to the level. The object will be updated and drawn each frame."""
-        pass
+        self.laserManager.update(dt)
+        self.enemyManager.update(dt)
 
     def addLaser(self, laserVec):
         x1, y1 = laserVec[0]
@@ -50,7 +46,7 @@ class Level:
         self.collisionManager.add(laser)
 
     def draw(self):
-        """Draws all objects in the level. Draws everything."""
+        """Draws all objects in the level."""
         self.sprite.draw(0, 0)
         self.structureManager.draw()
         self.laserManager.draw()

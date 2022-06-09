@@ -27,7 +27,7 @@ class InertialObject(NonInertialObject):
         NonInertialObject.__init__(self, x, y)
         self.acc = 4000
         self.slow = 0.90
-        self.slow_const = 30
+        self.slow_const = 20
         self.maxSpeed = 400
         self.vx = 0
         self.vy = 0
@@ -45,17 +45,17 @@ class InertialObject(NonInertialObject):
         self.y += self.vy*dt
 
         self.vx += self.acc*dir_x*dt
-        self.vy += self.acc*dir_y*dt
+        self.vy += self.acc * dir_y * dt
 
         self.vx *= self.slow
         self.vy *= self.slow
 
-        speed = (self.vx**2 + self.vy**2)**0.5
+        speed = (self.vx ** 2 + self.vy ** 2) ** 0.5
         if speed > self.maxSpeed:
-            self.vx *= self.maxSpeed/speed
-            self.vy *= self.maxSpeed/speed
+            self.vx *= self.maxSpeed / speed
+            self.vy *= self.maxSpeed / speed
 
-        self.vx = (self.vx - self.slow_const*self.sgn(self.vx)*dt) if abs(self.vx) > self.slow_const else 0
-        self.vy = (self.vy - self.slow_const*self.sgn(self.vy)*dt) if abs(self.vy) > self.slow_const else 0
-
-
+        if not dir_x:
+            self.vx = (self.vx - self.slow_const * self.sgn(self.vx) * dt) if abs(self.vx) > self.slow_const else 0
+        if not dir_y:
+            self.vy = (self.vy - self.slow_const * self.sgn(self.vy) * dt) if abs(self.vy) > self.slow_const else 0

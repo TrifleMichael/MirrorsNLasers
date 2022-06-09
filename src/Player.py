@@ -1,10 +1,11 @@
 import math
 
 import pygame
-from src.Sprites.CircleSprite import CircleSprite
+
 from src.AtomicObjects.Mirror import Mirror
 from src.AtomicObjects.Movables import InertialObject
 from src.Collisons.RoundCollisonModel import RoundCollisionModel
+from src.Sprites.CircleSprite import CircleSprite
 from src.Utility.EuclidianFunctions import lineTangentToPoints, bounceVector, movePointAwayFromSurface, shiftLineToPoint
 
 
@@ -12,12 +13,12 @@ class Player(InertialObject, RoundCollisionModel):
     """A player is a movable object that can be controlled by (yeah) the player."""
     def __init__(self, x, y, radius=40):
         InertialObject.__init__(self, x, y)
-        RoundCollisionModel.__init__(self, x, y, r=50)
+        RoundCollisionModel.__init__(self, x, y, r=30)
 
         self.dir_y = 0
         self.dir_x = 0
         self.rotation = 0
-        self.mirror = Mirror(self.x, self.y, width=150, rotation=0)
+        self.mirror = Mirror(self.x, self.y, width=120, rotation=0)
 
         self.hp = 100
         self.alive = True
@@ -30,7 +31,7 @@ class Player(InertialObject, RoundCollisionModel):
         self.readKeys(keys)
         self.move(self.dir_x, self.dir_y, dt)
 
-        self.mirror.setPosition(self.x + 60*math.cos(self.rotation), self.y + 60*math.sin(self.rotation))
+        self.mirror.setPosition(self.x + 50 * math.cos(self.rotation), self.y + 50 * math.sin(self.rotation))
         self.mirror.setRotation(self.rotation)
 
     def readKeys(self, keys):

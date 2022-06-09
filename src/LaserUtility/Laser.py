@@ -6,7 +6,7 @@ from src.Sprites.MultiLineSprite import MultiLineSprite
 from src.Collisons.CollidingBall import CollidingBall
 from src.Utility.EuclidianFunctions import lineAngle, bounceVector, pointToLineDistance, surfaceContainsPointShadow, \
     lineTangentToPoints, pointsNormalVector, extendVector, movePointAwayFromSurface, movePointAwayFromPoint
-from src.Settings import frameDuration
+from src.Settings import FPS
 
 
 class Laser:
@@ -64,7 +64,7 @@ class Laser:
         self.flipCoords = (self.front.moveModel.x, self.front.moveModel.y)
         #self.front.moveModel.x, self.front.moveModel.y = movePointAwayFromSurface(self.getFrontPoint(), flipSurface, 2)
         currentSpeed = sqrt(self.end.moveModel.vx ** 2 + self.end.moveModel.vy ** 2)
-        self.framesUntilFlip = int(self.length / currentSpeed / frameDuration)
+        self.framesUntilFlip = int(self.length * FPS / currentSpeed)
 
     def reactToRoundCollision(self, point):
         self.front.moveModel.x, self.front.moveModel.y = movePointAwayFromPoint(self.getFrontPoint(), point, 4)

@@ -121,6 +121,7 @@ def pointsNormalVector(p1, p2):
     dist = pointToPointDistance(p1, p2)
     return (p2[0] - p1[0]) / dist, (p2[1] - p1[1]) / dist
 
+# print(movePointAwayFromSurface([0.5, 0.5], [[0, 0], [1, 1]], 1))
 
 def extendVector(vec, param):
     """Makes vector param times longer, while holding the first point of vector in place"""
