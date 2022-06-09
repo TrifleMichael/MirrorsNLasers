@@ -10,5 +10,5 @@ class PolygonSprite(Sprite):
         self.color = color or (0, 0, 0)
         self.segmentList = segmentList
 
-    def draw(self):
-        pygame.draw.polygon(display, self.color, self.segmentList)
+    def draw(self, segmentList=None):
+        pygame.draw.polygon(display, self.color, segmentList or self.segmentList)
