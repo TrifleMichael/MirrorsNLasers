@@ -33,8 +33,8 @@ class Level:
         self.player.update(keys, dt)
         self.structureManager.update()
         self.collisionManager.update()
-        self.laserManager.update(frameDuration)
-        self.enemyManager.update(frameDuration)
+        self.laserManager.update(dt)
+        self.enemyManager.update(dt)
 
     def addLaser(self, laserVec):
         x1, y1 = laserVec[0]
