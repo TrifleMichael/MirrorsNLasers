@@ -2,6 +2,7 @@ from src.Collisons.CollisionFunctions import ifPointCollidesWithLine, \
     ifRoundCollidesWithRound, surfaceOfPolygonRoundCollision
 from src.LaserUtility.Laser import Laser
 from src.Structures.Door import Door
+from src.Structures.LaserCannon import LaserCannon
 from src.Structures.LaserDetector import LaserDetector
 from src.Structures.Pit import Pit
 from src.Structures.RectangleWall import RectangleWall
@@ -25,6 +26,7 @@ class CollisionManager:
         self.enemyList = []
         self.winFlags = []
         self.doorList = []
+        self.laserCannons = []
 
     def add(self, obj):
         if isinstance(obj, Laser):
@@ -43,6 +45,8 @@ class CollisionManager:
             self.winFlags.append(obj)
         if isinstance(obj, Door):
             self.doorList.append(obj)
+        if isinstance(obj, LaserCannon):
+            self.laserCannons.append(obj)
 
     def addEnemy(self, enemy):  # is instance doesn't work for weird reasons
         self.enemyList.append(enemy)
@@ -97,6 +101,10 @@ class CollisionManager:
                 self.laserDoorCollision(laser, door)
             for enemy in self.enemyList:
                 self.enemyDoorCollision(enemy, door)
+
+        for laserCannon in self.laserCannons:
+            pass  # TODO
+
 
     def enemyDoorCollision(self, enemy, door):
         result = surfaceOfPolygonRoundCollision(door.collisionModel, enemy.collisionModel)

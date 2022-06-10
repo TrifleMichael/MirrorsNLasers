@@ -36,7 +36,7 @@ class Level:
         x1, y1 = laserVec[0]
         x2, y2 = laserVec[1]
         r = 1
-        speed = 200
+        speed = 300
         laser = Laser(r, x1, y1, x2, y2, speed, self.laserManager)
         self.laserManager.add(laser)
         self.collisionManager.add(laser)

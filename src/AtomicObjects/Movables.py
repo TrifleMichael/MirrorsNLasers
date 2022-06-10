@@ -28,7 +28,7 @@ class InertialObject(NonInertialObject):
         self.acc = 4000
         self.slow = 0.90
         self.slow_const = 20
-        self.maxSpeed = 400
+        self.maxSpeed = 300
         self.vx = 0
         self.vy = 0
 

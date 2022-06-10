@@ -11,6 +11,7 @@ from src.Structures.Pit import Pit
 from src.Structures.PolygonWall import PolygonWall
 from src.Structures.RectangleWall import RectangleWall
 from src.Structures.WinFlag import WinFlag
+from src.Structures.LaserCannon import LaserCannon
 
 
 class LevelBuilder:
@@ -30,7 +31,8 @@ class LevelBuilder:
             "laserDetectors": self._addLaserDetector,
             "doors": self._addDoor,
             "winFlags": self._addWinFlag,
-            "enemies": self._addBasicEnemy
+            "enemies": self._addBasicEnemy,
+            "laserCannons": self._addLaserCannon
         }
 
         self.level_files = level_files
@@ -102,6 +104,16 @@ class LevelBuilder:
         enemy = BasicEnemy(x, y, r, self.level.enemyManager)
         self.level.enemyManager.addEnemy(enemy)
         self.level.collisionManager.addEnemy(enemy)
+
+    def _addLaserCannon(self, data):
+        x, y = data["x"], data["y"]
+        radius = data["radius"]
+        dir = Direction(data["direction"])
+        laserCannon = LaserCannon(x, y, dir, radius)
+        self.level.structureManager.add(laserCannon)
+        self.level.laserManager.addCannon(laserCannon)
+        self.level.collisionManager.add(laserCannon)
+
 
     def build(self, level_num):
         with open(self.level_files[level_num], 'r') as f:
