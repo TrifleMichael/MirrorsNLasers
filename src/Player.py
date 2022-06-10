@@ -20,7 +20,6 @@ class Player(InertialObject, RoundCollisionModel):
         self.rotation = 0
         self.mirror = Mirror(self.x, self.y, width=120, rotation=0)
 
-        self.hp = 100
         self.alive = True
         self.win = False
 
@@ -73,10 +72,8 @@ class Player(InertialObject, RoundCollisionModel):
             self.vx, self.vy = bounceVector((self.vx, self.vy), result[0], result[1], 0.2)
             self.x, self.y = movePointAwayFromSurface(self.getPoint(), result, 2)
 
-    def damage(self, damage=25):
-        self.hp -= damage
-        if self.hp <= 0:
-            self.alive = False
+    def damage(self):
+        self.alive = False
 
     def draw(self):
         """Draws the player and his mirror"""
