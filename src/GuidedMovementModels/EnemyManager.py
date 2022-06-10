@@ -1,6 +1,4 @@
-from src import display
-from src.GuidedMovementModels.BasicEnemy import BasicEnemy
-from src.Utility.EuclidianFunctions import pointsNormalVector, extendVector, sumVectors, shiftVector
+from src.Utility.EuclidianFunctions import pointsNormalVector, extendVector, shiftVector
 
 
 class EnemyManager:

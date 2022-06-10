@@ -1,4 +1,4 @@
-from src.Utility.EuclidianFunctions import pointToLineDistance, pointToSegmentDistance, pointToPointDistance, \
+from src.Utility.EuclidianFunctions import pointToSegmentDistance, pointToPointDistance, \
     surfaceContainsPointShadow
 
 pointLineEpsilon = 5

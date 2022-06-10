@@ -1,4 +1,3 @@
-from src.Utility.EuclidianFunctions import pointToLineDistance
 
 
 class PolygonCollisionModel:

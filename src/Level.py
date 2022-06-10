@@ -1,9 +1,5 @@
 
-import time
-
-from src.GuidedMovementModels.EnemyManager import EnemyManager
 from src.LaserUtility.Laser import Laser
-from src.Sprites.RectangleSprite import RectangleSprite
 
 from src.Collisons.CollisionManager import CollisionManager
 from src.GuidedMovementModels.EnemyManager import EnemyManager

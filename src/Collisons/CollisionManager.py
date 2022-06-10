@@ -1,7 +1,5 @@
 from src.Collisons.CollisionFunctions import ifPointCollidesWithLine, \
     ifRoundCollidesWithRound, surfaceOfPolygonRoundCollision
-from src.Collisons.RoundCollisonModel import RoundCollisionModel
-from src.GuidedMovementModels import BasicEnemy
 from src.LaserUtility.Laser import Laser
 from src.Structures.Door import Door
 from src.Structures.LaserDetector import LaserDetector

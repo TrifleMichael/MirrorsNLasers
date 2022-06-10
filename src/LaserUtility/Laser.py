@@ -1,11 +1,10 @@
-import math
-from math import sin, cos, sqrt
+from math import sqrt
 
 from src.Sprites.LineSprite import LineSprite
 from src.Sprites.MultiLineSprite import MultiLineSprite
 from src.Collisons.CollidingBall import CollidingBall
-from src.Utility.EuclidianFunctions import lineAngle, bounceVector, pointToLineDistance, surfaceContainsPointShadow, \
-    lineTangentToPoints, pointsNormalVector, extendVector, movePointAwayFromSurface, movePointAwayFromPoint
+from src.Utility.EuclidianFunctions import bounceVector, pointToLineDistance, surfaceContainsPointShadow, \
+    lineTangentToPoints, pointsNormalVector, extendVector, movePointAwayFromPoint
 from src.Settings import FPS
 
 
