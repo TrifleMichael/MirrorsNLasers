@@ -93,7 +93,7 @@ class BasicEnemy:
 
     def performMove(self, dt):
         self.laserCountDown -= 1
-        if self.laserCountDown == 0:
+        if self.laserCountDown == 0 and pointToPointDistance(self.enemyGuider.getPlayerLocation(), self.getPoint()) < 600:
             self.shootAtPlayer()
             self.laserCountDown = 180
 
