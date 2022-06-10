@@ -95,6 +95,20 @@ class CollisionManager:
 
         for door in self.doorList:
             self.playerDoorCollision(self.player, door)
+            for laser in self.laserList:
+                self.laserDoorCollision(laser, door)
+            for enemy in self.enemyList:
+                self.enemyDoorCollision(enemy, door)
+
+    def enemyDoorCollision(self, enemy, door):
+        result = surfaceOfPolygonRoundCollision(door.collisionModel, enemy.collisionModel)
+        if result is not None:
+            enemy.reactToPolygon(door.collisionModel)
+
+    def laserDoorCollision(self, laser, door):
+        result = surfaceOfPolygonRoundCollision(door.collisionModel, laser.front)
+        if result is not None:
+            laser.reactToCollision(result)
 
     def enemyEnemyCollision(self, enemy1, enemy2):
         # TODO: Fix
@@ -105,7 +119,7 @@ class CollisionManager:
 
     def enemyPitCollision(self, enemy, pit):
         if surfaceOfPolygonRoundCollision(pit.collisionModel, enemy.collisionModel) is not None:
-            enemy.reactToPit(pit)
+            enemy.reactToPolygon(pit.collisionModel)
 
     def enemyLaserCollision(self, enemy, laser):
         if ifRoundCollidesWithRound(enemy.collisionModel, laser.front) or ifRoundCollidesWithRound(enemy.collisionModel,
@@ -123,7 +137,7 @@ class CollisionManager:
 
     def enemyWallCollision(self, enemy, wall):
         if surfaceOfPolygonRoundCollision(wall.collisionModel, enemy.collisionModel) is not None:
-            enemy.reactToWall(wall)
+            enemy.reactToPolygon(wall.collisionModel)
 
     def laserDetectorLaserCollision(self, laserDetector, laser):
         result = surfaceOfPolygonRoundCollision(laserDetector.collisionModel, laser.front)

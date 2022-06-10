@@ -44,25 +44,15 @@ class BasicEnemy:
         self.collisionModel.x = self.movementModel.x
         self.collisionModel.y = self.movementModel.y
 
-    def reactToPit(self, pit):
-        self.flipDirection()
-        collisionBody = surfaceOfPolygonRoundCollision(pit.collisionModel, self.collisionModel)
-        if type(collisionBody[0]) is list or type(collisionBody[0]) is tuple:
-            pts = movePointAwayFromSurface(self.getPoint(), collisionBody, 2)
-            self.changePosition(pts[0], pts[1])
-        else:
-            pts = movePointAwayFromPoint(self.getPoint(), collisionBody, 2)
-            self.changePosition(pts[0], pts[1])
-
     def reactToLaser(self, laser):
         self.deathTimerOn = True
 
     def shootAtPlayer(self):  # direction given as vector
         self.enemyGuider.shootLaserAtPlayer(self)
 
-    def reactToWall(self, wall):
+    def reactToPolygon(self, collisionModel):
         self.flipDirection()
-        collisionBody = surfaceOfPolygonRoundCollision(wall.collisionModel, self.collisionModel)
+        collisionBody = surfaceOfPolygonRoundCollision(collisionModel, self.collisionModel)
         if type(collisionBody[0]) is list or type(collisionBody[0]) is tuple:
             pts = movePointAwayFromSurface(self.getPoint(), collisionBody, 2)
             self.changePosition(pts[0], pts[1])
