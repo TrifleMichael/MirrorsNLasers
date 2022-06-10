@@ -137,6 +137,23 @@ def sumVectors(vec1, vec2):
 def shiftVector(vec, dx, dy):
     return [[vec[0][0] + dx, vec[0][1] + dy], [vec[1][0] + dx, vec[1][1] + dy]]
 
+
+def ifLineBetweenTwoPoints(line, p1, p2):
+    angle = lineAngle(line[0], line[1])
+    p1 = apply2dRotation(p1, -angle)
+    p2 = apply2dRotation(p2, -angle)
+    line = rotate2dLine(line[0], line[1], [0, 0], -angle)
+    return p1[0] <= line[0][0] <= p2[0] or p2[0] <= line[0][0] <= p1[0]
+
+
+def flipPointOverLine(point, line, otherSideDistance = 30):
+    angle = lineAngle(line[0], line[1])
+    p = apply2dRotation(point, -angle)
+    line = rotate2dLine(line[0], line[1], [0, 0], -angle)
+    p = [otherSideDistance * p[0] / abs(p[0]) + line[0][0], p[1]]
+    p = apply2dRotation(p, angle)
+    return p
+
 # print(movePointAwayFromSurface([0.5, 0.5], [[0, 0], [1, 1]], 1))
 
 # print(surfaceContainsPointShadow([[950, 330], [800, 500]], [900, 430]))
