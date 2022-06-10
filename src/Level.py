@@ -20,7 +20,7 @@ class Level:
         self.player = player
 
         self.structureManager = StructureManager()
-        self.laserManager = LaserManager()
+        self.laserManager = LaserManager(self)
         self.logicManager = LogicManager()
         self.collisionManager = CollisionManager(player.mirror, player)
         self.enemyManager = EnemyManager(self)
@@ -41,7 +41,7 @@ class Level:
         x2, y2 = laserVec[1]
         r = 1
         speed = 200
-        laser = Laser(r, x1, y1, x2, y2, speed)
+        laser = Laser(r, x1, y1, x2, y2, speed, self.laserManager)
         self.laserManager.add(laser)
         self.collisionManager.add(laser)
 
