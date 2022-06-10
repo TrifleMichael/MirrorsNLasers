@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 
 class Structure(ABC):
     """Abstract class for all sprites. Forces child classes to implement draw."""
+
     @abstractmethod
     def draw(self, *args, **kwargs):
         pass
@@ -10,6 +11,7 @@ class Structure(ABC):
 
 class StructureManager:
     """Manages the structures"""
+
     def __init__(self):
         self.structureList = []
 

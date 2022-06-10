@@ -1,5 +1,6 @@
 class LaserManager:
     """Manages the lasers"""
+
     def __init__(self, level):
         self.level = level
         self.laserList = []

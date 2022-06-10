@@ -1,13 +1,13 @@
 from src.Collisons.CollisionFunctions import ifPointCollidesWithLine, \
     ifRoundCollidesWithRound, surfaceOfPolygonRoundCollision
 from src.LaserUtility.Laser import Laser
+from src.Structures.Column import Column
 from src.Structures.Door import Door
 from src.Structures.LaserCannon import LaserCannon
 from src.Structures.LaserDetector import LaserDetector
 from src.Structures.Pit import Pit
-from src.Structures.RectangleWall import RectangleWall
-from src.Structures.Column import Column
 from src.Structures.PolygonWall import PolygonWall
+from src.Structures.RectangleWall import RectangleWall
 from src.Structures.WinFlag import WinFlag
 from src.Utility.EuclidianFunctions import movePointAwayFromSurface, movePointAwayFromPoint, pointToPointDistance
 
@@ -104,7 +104,6 @@ class CollisionManager:
 
         for laserCannon in self.laserCannons:
             pass  # TODO
-
 
     def enemyDoorCollision(self, enemy, door):
         result = surfaceOfPolygonRoundCollision(door.collisionModel, enemy.collisionModel)

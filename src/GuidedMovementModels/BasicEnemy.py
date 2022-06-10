@@ -91,7 +91,6 @@ class BasicEnemy:
         else:
             self.circlingCountdown -= 1
 
-
     def performMove(self, dt):
         self.laserCountDown -= 1
         if self.laserCountDown == 0:

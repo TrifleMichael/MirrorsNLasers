@@ -1,13 +1,14 @@
-from src.LogicManager import Receiver
 from src.Collisons.PolygonCollisionModel import PolygonCollisionModel
+from src.Enums import Direction
+from src.LogicManager import Receiver
 from src.Sprites.PolygonSprite import PolygonSprite
 from src.Structures import Structure
-from src.Enums import Direction
 from src.Utility.EuclidianFunctions import apply2dRotation
 
 
 class Door(Structure, Receiver):
     """A door is a structure that can be opened and closed"""
+
     def __init__(self, x, y, width, direction: Direction, girth=20, is_open=False):
         self.x, self.y = x, y
         self.width = width

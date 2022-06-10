@@ -39,6 +39,3 @@ class EnemyManager:
         laserVector = [resultVector[1], resultVector[0]]
 
         self.level.addLaser(laserVector)
-
-
-

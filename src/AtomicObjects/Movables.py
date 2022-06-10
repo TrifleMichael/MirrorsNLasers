@@ -3,6 +3,7 @@ from math import copysign
 
 class NonInertialObject:
     """An object that moves with constant velocity in a given direction."""
+
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -10,8 +11,8 @@ class NonInertialObject:
         self.vy = 300
 
     def move(self, dir_x, dir_y, dt):
-        self.x += self.vx*dir_x*dt
-        self.y += self.vy*dir_y*dt
+        self.x += self.vx * dir_x * dt
+        self.y += self.vy * dir_y * dt
 
     def getPosition(self):
         return self.x, self.y
@@ -23,6 +24,7 @@ class NonInertialObject:
 
 class InertialObject(NonInertialObject):
     """An object that accelerates in a given direction. Moves in the direction of its momentum."""
+
     def __init__(self, x, y):
         NonInertialObject.__init__(self, x, y)
         self.acc = 4000
@@ -41,10 +43,10 @@ class InertialObject(NonInertialObject):
         self.maxSpeed = maxSpeed
 
     def move(self, dir_x, dir_y, dt):
-        self.x += self.vx*dt
-        self.y += self.vy*dt
+        self.x += self.vx * dt
+        self.y += self.vy * dt
 
-        self.vx += self.acc*dir_x*dt
+        self.vx += self.acc * dir_x * dt
         self.vy += self.acc * dir_y * dt
 
         self.vx *= self.slow

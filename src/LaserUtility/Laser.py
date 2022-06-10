@@ -1,11 +1,11 @@
 from math import sqrt
 
+from src.Collisons.CollidingBall import CollidingBall
+from src.Settings import FPS
 from src.Sprites.LineSprite import LineSprite
 from src.Sprites.MultiLineSprite import MultiLineSprite
-from src.Collisons.CollidingBall import CollidingBall
 from src.Utility.EuclidianFunctions import bounceVector, pointToLineDistance, surfaceContainsPointShadow, \
     lineTangentToPoints, pointsNormalVector, extendVector, movePointAwayFromPoint
-from src.Settings import FPS
 
 
 class Laser:
@@ -33,7 +33,8 @@ class Laser:
         self.existenceTimer = 600
 
     def setupStartingSpeed(self, speed):
-        normalVec = pointsNormalVector([self.end.moveModel.x, self.end.moveModel.y], [self.front.moveModel.x, self.front.moveModel.y])
+        normalVec = pointsNormalVector([self.end.moveModel.x, self.end.moveModel.y],
+                                       [self.front.moveModel.x, self.front.moveModel.y])
         speedVec = extendVector([[0, 0], normalVec[:]], speed)
         self.front.moveModel.vx = speedVec[1][0]
         self.front.moveModel.vy = speedVec[1][1]
@@ -64,16 +65,18 @@ class Laser:
 
     def collidesWithSurface(self, surface):
         ptld = pointToLineDistance(surface, (self.front.moveModel.x, self.front.moveModel.y))
-        if self.collisionEpsilon >= ptld and surfaceContainsPointShadow(surface, [self.front.moveModel.x, self.front.moveModel.y]):
+        if self.collisionEpsilon >= ptld and surfaceContainsPointShadow(surface, [self.front.moveModel.x,
+                                                                                  self.front.moveModel.y]):
             if self.bounceImmunityFrames == 0:
                 self.reactToCollision(surface)
 
     def reactToCollision(self, flipSurface):
         """Bounces of surface defined by two points"""
-        self.front.moveModel.vx, self.front.moveModel.vy = bounceVector((self.front.moveModel.vx, self.front.moveModel.vy), flipSurface[0], flipSurface[1])
+        self.front.moveModel.vx, self.front.moveModel.vy = bounceVector(
+            (self.front.moveModel.vx, self.front.moveModel.vy), flipSurface[0], flipSurface[1])
         self.bounceImmunityFrames = self.maxBounceImmunityFrames
         self.flipCoords = (self.front.moveModel.x, self.front.moveModel.y)
-        #self.front.moveModel.x, self.front.moveModel.y = movePointAwayFromSurface(self.getFrontPoint(), flipSurface, 2)
+        # self.front.moveModel.x, self.front.moveModel.y = movePointAwayFromSurface(self.getFrontPoint(), flipSurface, 2)
         currentSpeed = sqrt(self.end.moveModel.vx ** 2 + self.end.moveModel.vy ** 2)
         self.framesUntilFlip = int(self.length * FPS / currentSpeed)
 

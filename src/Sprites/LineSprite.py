@@ -6,6 +6,7 @@ from src.Sprites import Sprite
 
 class LineSprite(Sprite):
     """A line sprite. Needs two points to be drawn."""
+
     def __init__(self, color=None, width=5, p1=None, p2=None):
         self.color = color or (0, 0, 0)
         self.width = width

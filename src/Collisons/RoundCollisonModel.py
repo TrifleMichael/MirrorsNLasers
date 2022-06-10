@@ -1,5 +1,6 @@
-from src.Utility.EuclidianFunctions import distance
 from abc import abstractmethod
+
+from src.Utility.EuclidianFunctions import distance
 
 
 class RoundCollisionModel:

@@ -6,12 +6,12 @@ from src.Level import Level
 from src.Player import Player
 from src.Structures.Column import Column
 from src.Structures.Door import Door, Direction
+from src.Structures.LaserCannon import LaserCannon
 from src.Structures.LaserDetector import LaserDetector
 from src.Structures.Pit import Pit
 from src.Structures.PolygonWall import PolygonWall
 from src.Structures.RectangleWall import RectangleWall
 from src.Structures.WinFlag import WinFlag
-from src.Structures.LaserCannon import LaserCannon
 
 
 class LevelBuilder:
@@ -113,7 +113,6 @@ class LevelBuilder:
         self.level.structureManager.add(laserCannon)
         self.level.laserManager.addCannon(laserCannon)
         self.level.collisionManager.add(laserCannon)
-
 
     def build(self, level_num):
         with open(self.level_files[level_num], 'r') as f:

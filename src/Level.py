@@ -1,8 +1,6 @@
-
-from src.LaserUtility.Laser import Laser
-
 from src.Collisons.CollisionManager import CollisionManager
 from src.GuidedMovementModels.EnemyManager import EnemyManager
+from src.LaserUtility.Laser import Laser
 from src.LaserUtility.LaserManager import LaserManager
 from src.LogicManager import LogicManager
 from src.Settings import xResolution, yResolution, FPS
@@ -12,6 +10,7 @@ from src.Structures import StructureManager
 
 class Level:
     """Responsible for managing the level simulation."""
+
     def __init__(self, player):
         self.player = player
 

@@ -1,7 +1,7 @@
 import math
 
-from src.Sprites.LineSprite import LineSprite
 from src.AtomicObjects.Movables import NonInertialObject
+from src.Sprites.LineSprite import LineSprite
 
 
 class Mirror(NonInertialObject):
@@ -35,4 +35,3 @@ class Mirror(NonInertialObject):
     def draw(self):
         """Draws the mirror"""
         self.sprite.draw(*self.getSurface())
-

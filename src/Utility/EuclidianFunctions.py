@@ -39,7 +39,7 @@ def bounceVector(vec, p1, p2, dampening=0):
     """Reflects vector of a surface defined by two points"""
     surfaceAngle = lineAngle(p1, p2)
     vec = apply2dRotation(vec, -surfaceAngle)
-    vec[0] *= -1 * (1-dampening)
+    vec[0] *= -1 * (1 - dampening)
     vec = apply2dRotation(vec, surfaceAngle)
     return vec
 
@@ -121,6 +121,7 @@ def pointsNormalVector(p1, p2):
     dist = pointToPointDistance(p1, p2)
     return (p2[0] - p1[0]) / dist, (p2[1] - p1[1]) / dist
 
+
 # print(movePointAwayFromSurface([0.5, 0.5], [[0, 0], [1, 1]], 1))
 
 def extendVector(vec, param):
@@ -128,8 +129,10 @@ def extendVector(vec, param):
     return [[vec[0][0], vec[0][1]],
             [(vec[1][0] - vec[0][0]) * param + vec[0][0], (vec[1][1] - vec[0][1]) * param + vec[0][1]]]
 
+
 def sumVectors(vec1, vec2):
     return [[vec1[0][0] + vec2[0][0], vec1[0][1] + vec2[0][1]], [vec1[1][0] + vec2[1][0], vec1[1][1] + vec2[1][1]]]
+
 
 def shiftVector(vec, dx, dy):
     return [[vec[0][0] + dx, vec[0][1] + dy], [vec[1][0] + dx, vec[1][1] + dy]]
