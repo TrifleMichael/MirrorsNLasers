@@ -9,7 +9,7 @@ from src.Gui.Hud import Hud
 from src.LevelBuilder import LevelBuilder
 from src.Settings import FPS, MAX_LIVES
 
-level_files = ['lvls/3.json', 'lvls/1.json', 'lvls/2.json']
+level_files = ['lvls/1.json', 'lvls/2.json', 'lvls/3.json']
 
 
 class App:
@@ -84,6 +84,9 @@ class App:
         if self._key_down(pygame.K_q):
             self.quit()
         if self._key_down(pygame.K_ESCAPE):
+            self.state = GameState.PLAYING
+        if self._key_down(pygame.K_r):
+            self.level = self.levelBuilder.build(self.level_num)
             self.state = GameState.PLAYING
 
     def updateDead(self):

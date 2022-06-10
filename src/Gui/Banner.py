@@ -43,30 +43,31 @@ class BannerPresets:
         self.texts = {
             GameState.START: [
                 "Welcome to the game!",
-                "Press space to start.",
+                "Press [space] to start.",
             ],
             GameState.PAUSED: [
                 "Paused!",
-                "Press escape to resume.",
+                "Press [esc] to resume.",
+                "Press [r] to restart.",
             ],
             GameState.DEAD: [
                 "You died!",
-                "Press space to try again.",
+                "Press [space] to try again.",
             ],
             GameState.WON: [
                 "You won!",
-                "Press space to go to next level.",
+                "Press [space] to go to next level.",
             ],
             GameState.OVER: [
                 "You lost all lives!",
-                "Press space to return to main menu.",
+                "Press [space] to return to main menu.",
             ],
             GameState.COMPLETED: [
                 "You completed all levels!",
-                "Press space to return to main menu.",
+                "Press [space] to return to main menu.",
             ],
         }
-        self.texts = {k: v + ["Press q to quit."] for k, v in self.texts.items()}
+        self.texts = {k: v + ["Press [q] to quit."] for k, v in self.texts.items()}
 
         self.banners = {key: Banner(text[0], *text[1:]) for key, text in self.texts.items()}
 
