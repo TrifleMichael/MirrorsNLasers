@@ -142,8 +142,7 @@ class CollisionManager:
                 surface = result
                 player.vx = 0
                 player.vy = 0
-                player.x, player.y = movePointAwayFromSurface(player.getPoint(), surface,
-                                                              1)  # TODO: Export 1 to variable
+                player.x, player.y = movePointAwayFromSurface(player.getPoint(), surface, 1)
             else:
                 point = result
                 player.vx = 0
@@ -163,7 +162,6 @@ class CollisionManager:
             else:
                 point = result
                 laser.reactToRoundCollision(point)
-                # TODO: Fill
 
     def wallPlayerCollision(self, player, wall):
         result = surfaceOfPolygonRoundCollision(wall.collisionModel, player)

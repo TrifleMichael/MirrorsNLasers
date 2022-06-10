@@ -10,7 +10,8 @@ from src.Settings import frameDuration
 
 
 class Laser:
-    def __init__(self, r, x1, y1, x2, y2, speed):
+    def __init__(self, r, x1, y1, x2, y2, speed, laserManager):
+        self.laserManager = laserManager
         self.front = CollidingBall(x1, y1, r)
         self.end = CollidingBall(x2, y2, r)
 
@@ -27,11 +28,10 @@ class Laser:
         self.flipCoords = None
 
         self.collisionEpsilon = 5
-
         self.bounceImmunityFrames = 0
         self.maxBounceImmunityFrames = 30
-
         self.setupStartingSpeed(speed)
+        self.existenceTimer = 600
 
     def setupStartingSpeed(self, speed):
         normalVec = pointsNormalVector([self.end.moveModel.x, self.end.moveModel.y], [self.front.moveModel.x, self.front.moveModel.y])
@@ -42,11 +42,23 @@ class Laser:
         self.end.moveModel.vy = speedVec[1][1]
 
     def move(self, dt):
+        self.tickExistenceTimer()
         self.front.move(1, 1, dt)
         self.end.move(1, 1, dt)
         self.flipCountDown()
         if self.bounceImmunityFrames != 0:
             self.bounceImmunityFrames -= 1
+
+    def tickExistenceTimer(self):
+        self.existenceTimer -= 1
+        if self.existenceTimer <= 100:
+            color = [self.multiLineSprite.color[0] - 1.8, 0, self.multiLineSprite.color[2] - 1.8]
+            color[0] = max(0, color[0])
+            color[2] = max(0, color[2])
+            self.multiLineSprite.color = (color[0], color[1], color[2])
+            self.lineSprite.color = (color[0], color[1], color[2])
+        if self.existenceTimer <= 0:
+            self.laserManager.deleteLaser(self)
 
     def ifCollidesWithRCM(self, otherRCM):
         return otherRCM.ifCollides(self.front)

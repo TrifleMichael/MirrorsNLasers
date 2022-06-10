@@ -1,6 +1,7 @@
 class LaserManager:
     """Manages the lasers"""
-    def __init__(self,):
+    def __init__(self, level):
+        self.level = level
         self.laserList = []
 
     def add(self, laser):
@@ -13,3 +14,7 @@ class LaserManager:
     def draw(self):
         for laser in self.laserList:
             laser.draw()
+
+    def deleteLaser(self, laser):
+        self.laserList.remove(laser)
+        self.level.collisionManager.laserList.remove(laser)

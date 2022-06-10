@@ -58,7 +58,7 @@ class LevelBuilder:
         y1, y2 = data["y1"], data["y2"]
         speed = data["speed"]
 
-        laser = Laser(r, x1, y1, x2, y2, speed)
+        laser = Laser(r, x1, y1, x2, y2, speed, self.level.laserManager)
         self.level.laserManager.add(laser)
         self.level.collisionManager.add(laser)
 

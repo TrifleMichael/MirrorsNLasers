@@ -1,8 +1,6 @@
 from src.Utility.EuclidianFunctions import pointToLineDistance, pointToSegmentDistance, pointToPointDistance, \
     surfaceContainsPointShadow
 
-# TODO: Transfer all main collision functions here
-
 pointLineEpsilon = 5
 pointToPointEpsilon = 5
 
