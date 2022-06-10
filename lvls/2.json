@@ -37,9 +37,6 @@
   ],
   "lasers": [],
   "polygonWalls": [
-    {
-      "pointList": [[420, 600], [540, 800], [590, 820], [450, 570]]
-    },
 
     {
       "pointList": [
