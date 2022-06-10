@@ -146,12 +146,12 @@ def ifLineBetweenTwoPoints(line, p1, p2):
     return p1[0] <= line[0][0] <= p2[0] or p2[0] <= line[0][0] <= p1[0]
 
 
-def flipPointOverLine(point, line, otherSideDistance = 2):
+def flipPointOverLine(point, line, otherSideDistance = 30):
     angle = lineAngle(line[0], line[1])
-    apply2dRotation(point, -angle)
+    p = apply2dRotation(point, -angle)
     line = rotate2dLine(line[0], line[1], [0, 0], -angle)
-    p = [-otherSideDistance * point[0] / abs(point[0]) + line[0][0], point[1]]
-    apply2dRotation(p, angle)
+    p = [otherSideDistance * p[0] / abs(p[0]) + line[0][0], p[1]]
+    p = apply2dRotation(p, angle)
     return p
 
 # print(movePointAwayFromSurface([0.5, 0.5], [[0, 0], [1, 1]], 1))

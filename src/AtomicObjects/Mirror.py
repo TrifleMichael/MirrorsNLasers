@@ -24,6 +24,9 @@ class Mirror(NonInertialObject):
 
         return p1, p2
 
+    def getPastSurface(self):
+        return self.pastSurface[:]
+
     def getSurfaceNormal(self):
         """Returns the normal vector of the mirror surface"""
         cos, sin = math.cos(self.rotation), math.sin(self.rotation)

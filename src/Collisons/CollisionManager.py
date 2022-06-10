@@ -10,7 +10,7 @@ from src.Structures.PolygonWall import PolygonWall
 from src.Structures.RectangleWall import RectangleWall
 from src.Structures.WinFlag import WinFlag
 from src.Utility.EuclidianFunctions import movePointAwayFromSurface, movePointAwayFromPoint, pointToPointDistance, \
-    ifLineBetweenTwoPoints, flipPointOverLine, pointToLineDistance
+    ifLineBetweenTwoPoints, flipPointOverLine, pointToLineDistance, surfaceContainsPointShadow
 
 
 class CollisionManager:
@@ -205,9 +205,10 @@ class CollisionManager:
             laser.reactToRoundCollision(column.getPoint())
 
     def laserMirrorCollision(self, mirror, laser):
-        if ifLineBetweenTwoPoints(mirror.pastSurface, laser.getFrontPoint(), laser.pastHeadPosition):
-            laser.front.moveModel.x, laser.front.moveModel.y = flipPointOverLine(laser.getFrontPoint(), mirror.getSurface())
-            laser.reactToCollision(mirror.getSurface())
+        if ifLineBetweenTwoPoints(mirror.getPastSurface(), laser.getFrontPoint(), laser.pastHeadPosition):
+            if surfaceContainsPointShadow(mirror.getPastSurface(), laser.getFrontPoint()):
+                laser.front.moveModel.x, laser.front.moveModel.y = flipPointOverLine(laser.getFrontPoint(), mirror.getSurface())
+                laser.reactToCollision(mirror.getSurface())
         if ifPointCollidesWithLine(laser.getFrontPoint(), mirror.getSurface()):
             laser.reactToCollision(mirror.getSurface())
 
