@@ -153,30 +153,3 @@ def flipPointOverLine(point, line, otherSideDistance = 30):
     p = [otherSideDistance * p[0] / abs(p[0]) + line[0][0], p[1]]
     p = apply2dRotation(p, angle)
     return p
-
-# print(movePointAwayFromSurface([0.5, 0.5], [[0, 0], [1, 1]], 1))
-
-# print(surfaceContainsPointShadow([[950, 330], [800, 500]], [900, 430]))
-
-# lineTangentToPoints([-2.3, 0], [0, 1])
-# print(lineAngle([-1, -1], [1, 1]))
-
-
-# point = [400, 400]
-# segment = [[440, 358], [343, 470]]
-# print(pointToSegmentDistance(segment, point))
-
-# print(pointToSegmentDistance([[0, 0], [1, 0]], [2, 0.5]))
-
-# l = 100
-# for i in range(l):
-#     angle = i / l * 2 * math.pi
-#     print("angle:", angle, "line angle:", lineAngle(rotate2dLine([0, 0], [0, -1], [0, 0], angle)[0], rotate2dLine([0, 0], [0, -1], [0, 0], angle)[1]))
-
-# print(rotate2dLine([0, 0], [0, -1], [0, 0], math.pi/2))
-
-# print(lineAngle([0, 0], [0, -1]))
-# print(lineAngle([0, 0], [1, -1]))
-# print(lineAngle([0, 0], [1, 0]))
-# print(lineAngle([0, 0], [1, 1]))
-# print(lineAngle([0, 0], [0, 1]))
