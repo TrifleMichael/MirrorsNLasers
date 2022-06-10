@@ -32,6 +32,8 @@ class Laser:
         self.setupStartingSpeed(speed)
         self.existenceTimer = 600
 
+        self.pastHeadPosition = self.getFrontPoint()
+
     def setupStartingSpeed(self, speed):
         normalVec = pointsNormalVector([self.end.moveModel.x, self.end.moveModel.y],
                                        [self.front.moveModel.x, self.front.moveModel.y])
@@ -42,6 +44,7 @@ class Laser:
         self.end.moveModel.vy = speedVec[1][1]
 
     def move(self, dt):
+        self.pastHeadPosition = self.getFrontPoint()
         self.tickExistenceTimer()
         self.front.move(1, 1, dt)
         self.end.move(1, 1, dt)

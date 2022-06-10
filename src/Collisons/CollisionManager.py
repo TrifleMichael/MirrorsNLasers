@@ -9,7 +9,8 @@ from src.Structures.Pit import Pit
 from src.Structures.PolygonWall import PolygonWall
 from src.Structures.RectangleWall import RectangleWall
 from src.Structures.WinFlag import WinFlag
-from src.Utility.EuclidianFunctions import movePointAwayFromSurface, movePointAwayFromPoint, pointToPointDistance
+from src.Utility.EuclidianFunctions import movePointAwayFromSurface, movePointAwayFromPoint, pointToPointDistance, \
+    ifLineBetweenTwoPoints, flipPointOverLine, pointToLineDistance, surfaceContainsPointShadow
 
 
 class CollisionManager:
@@ -119,7 +120,6 @@ class CollisionManager:
                 laser.reactToRoundCollision(result)
 
     def enemyEnemyCollision(self, enemy1, enemy2):
-        # TODO: Fix
         # Quickfix because the same references are not differentiated by is
         if not pointToPointDistance(enemy1.getPoint(), enemy2.getPoint()) == 0:
             if ifRoundCollidesWithRound(enemy1.collisionModel, enemy2.collisionModel):
@@ -205,5 +205,10 @@ class CollisionManager:
             laser.reactToRoundCollision(column.getPoint())
 
     def laserMirrorCollision(self, mirror, laser):
+        if ifLineBetweenTwoPoints(mirror.getPastSurface(), laser.getFrontPoint(), laser.pastHeadPosition):
+            if surfaceContainsPointShadow(mirror.getPastSurface(), laser.getFrontPoint()):
+                laser.front.moveModel.x, laser.front.moveModel.y = flipPointOverLine(laser.getFrontPoint(), mirror.getSurface())
+                laser.reactToCollision(mirror.getSurface())
         if ifPointCollidesWithLine(laser.getFrontPoint(), mirror.getSurface()):
             laser.reactToCollision(mirror.getSurface())
+

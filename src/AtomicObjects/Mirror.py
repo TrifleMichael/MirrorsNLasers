@@ -13,6 +13,7 @@ class Mirror(NonInertialObject):
         self.rotation = rotation
 
         self.sprite = LineSprite(width=10, color=(32, 178, 170))
+        self.pastSurface = self.getSurface()
 
     def getSurface(self):
         """Returns the surface of the mirror represented by 2 points"""
@@ -23,6 +24,9 @@ class Mirror(NonInertialObject):
 
         return p1, p2
 
+    def getPastSurface(self):
+        return self.pastSurface[:]
+
     def getSurfaceNormal(self):
         """Returns the normal vector of the mirror surface"""
         cos, sin = math.cos(self.rotation), math.sin(self.rotation)
@@ -31,6 +35,7 @@ class Mirror(NonInertialObject):
     def setRotation(self, rotation):
         """Sets the rotation of the mirror"""
         self.rotation = rotation
+        self.pastSurface = self.getSurface()
 
     def draw(self):
         """Draws the mirror"""
