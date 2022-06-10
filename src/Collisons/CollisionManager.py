@@ -113,7 +113,10 @@ class CollisionManager:
     def laserDoorCollision(self, laser, door):
         result = surfaceOfPolygonRoundCollision(door.collisionModel, laser.front)
         if result is not None:
-            laser.reactToCollision(result)
+            if type(result[0]) is list or type(result[0]) is tuple:
+                laser.reactToCollision(result)
+            else:
+                laser.reactToRoundCollision(result)
 
     def enemyEnemyCollision(self, enemy1, enemy2):
         # TODO: Fix
